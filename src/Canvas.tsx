@@ -14,7 +14,7 @@ const Checkerboard = styled.div`
 
 const Canvas = ({ seriesTitle = "", seriesSubTitle = "" }) => {
   return (
-    <Checkerboard style={{ width: 1280, height: 720 }}>
+    <Checkerboard id="canvas" style={{ width: 1280, height: 720 }}>
       <SeriesTitle seriesTitle={seriesTitle} />
       <SeriesSubTitle seriesSubTitle={seriesSubTitle} />
     </Checkerboard>
