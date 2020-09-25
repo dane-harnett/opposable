@@ -12,4 +12,7 @@ module.exports = {
     rules,
   },
   plugins,
+  resolve: {
+    extensions: [".js", ".ts", ".jsx", ".tsx", ".css"],
+  },
 };
