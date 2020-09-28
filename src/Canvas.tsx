@@ -1,4 +1,5 @@
 import * as React from "react";
+import EpisodeName from "./EpisodeName";
 import SeriesTitle from "./SeriesTitle";
 import SeriesSubTitle from "./SeriesSubTitle";
 import styled from "styled-components";
@@ -12,11 +13,26 @@ const Checkerboard = styled.div`
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 `;
 
-const Canvas = ({ seriesTitle = "", seriesSubTitle = "" }) => {
+interface CanvasProps {
+  width: number;
+  height: number;
+  seriesTitle: string;
+  seriesSubTitle: string;
+  episodeName: string;
+}
+
+const Canvas = ({
+  width,
+  height,
+  seriesTitle = "",
+  seriesSubTitle = "",
+  episodeName = "",
+}: CanvasProps) => {
   return (
-    <Checkerboard id="canvas" style={{ width: 1280, height: 720 }}>
+    <Checkerboard id="canvas" style={{ width, height, position: "relative" }}>
       <SeriesTitle seriesTitle={seriesTitle} />
       <SeriesSubTitle seriesSubTitle={seriesSubTitle} />
+      <EpisodeName name={episodeName} />
     </Checkerboard>
   );
 };

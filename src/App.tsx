@@ -22,17 +22,33 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
+  const [canvasSize, setCanvasSize] = useState("720p");
   const [seriesTitle, setSeriesTitle] = useState("[[SERIES TITLE]]");
   const [seriesSubTitle, setSeriesSubTitle] = useState("[[SERIES SUB TITLE]]");
+  const [episodeName, setEpisodeName] = useState("[[EPISODE NAME]]");
+
+  const canvasWidth = canvasSize === "720p" ? 1280 : 1920;
+  const canvasHeight = canvasSize === "720p" ? 720 : 1080;
+
   return (
     <div style={{ display: "flex" }}>
       <GlobalStyle />
-      <Canvas seriesTitle={seriesTitle} seriesSubTitle={seriesSubTitle} />
+      <Canvas
+        width={canvasWidth}
+        height={canvasHeight}
+        seriesTitle={seriesTitle}
+        seriesSubTitle={seriesSubTitle}
+        episodeName={episodeName}
+      />
       <Inspector
+        canvasSize={canvasSize}
+        setCanvasSize={setCanvasSize}
         seriesTitle={seriesTitle}
         setSeriesTitle={setSeriesTitle}
         seriesSubTitle={seriesSubTitle}
         setSeriesSubTitle={setSeriesSubTitle}
+        episodeName={episodeName}
+        setEpisodeName={setEpisodeName}
       />
     </div>
   );
