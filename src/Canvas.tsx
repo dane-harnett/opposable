@@ -1,8 +1,7 @@
 import * as React from "react";
-import EpisodeName from "./EpisodeName";
-import SeriesTitle from "./SeriesTitle";
-import SeriesSubTitle from "./SeriesSubTitle";
+import { useContext } from "react";
 import styled from "styled-components";
+import TemplateContext from "./TemplateContext";
 
 const Checkerboard = styled.div`
   background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
@@ -16,23 +15,14 @@ const Checkerboard = styled.div`
 interface CanvasProps {
   width: number;
   height: number;
-  seriesTitle: string;
-  seriesSubTitle: string;
-  episodeName: string;
+  children?: React.ReactNode;
 }
 
-const Canvas = ({
-  width,
-  height,
-  seriesTitle = "",
-  seriesSubTitle = "",
-  episodeName = "",
-}: CanvasProps) => {
+const Canvas = ({ width, height }: CanvasProps) => {
+  const { template } = useContext(TemplateContext);
   return (
     <Checkerboard id="canvas" style={{ width, height, position: "relative" }}>
-      <SeriesTitle seriesTitle={seriesTitle} />
-      <SeriesSubTitle seriesSubTitle={seriesSubTitle} />
-      <EpisodeName name={episodeName} />
+      {template?.Component && <template.Component />}
     </Checkerboard>
   );
 };
