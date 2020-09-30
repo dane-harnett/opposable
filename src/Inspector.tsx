@@ -5,18 +5,31 @@ import TemplateContext from "./TemplateContext";
 interface InspectorProps {
   canvasSize: string;
   setCanvasSize: (canvasSize: string) => void;
+  setBgImage: (imageURL: string) => void;
 }
 
-const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
+const Inspector = ({
+  canvasSize,
+  setCanvasSize,
+  setBgImage,
+}: InspectorProps) => {
   const { template, setField, selectTemplate } = useContext(TemplateContext);
 
   return (
     <div style={{ borderLeft: "1px solid black", width: 200, height: 720 }}>
       Inspector
       <br />
+      <br />
+      Template:
+      <br />
       <button onClick={() => selectTemplate("Basic")}>Basic Template</button>
       <button onClick={() => selectTemplate("Basic2")}>Basic 2 Template</button>
-      Canvas size:
+      <br />
+      <br />
+      Canvas:
+      <br />
+      Size:
+      <br />
       <select
         onChange={(e) => {
           setCanvasSize(e.target.value);
@@ -30,6 +43,18 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
         </option>
       </select>
       <br />
+      Background image:
+      <br />
+      <input
+        type="file"
+        onChange={(e) => {
+          setBgImage(URL.createObjectURL(e.target?.files?.[0]));
+        }}
+      />
+      <br />
+      <br />
+      Template variables:
+      <br />
       {template?.Schema?.map((schemaItem) => (
         <>
           {schemaItem.label}
@@ -41,6 +66,7 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
           <br />
         </>
       ))}
+      <br />
       <button
         onClick={() => {
           const node = document.getElementById("canvas");

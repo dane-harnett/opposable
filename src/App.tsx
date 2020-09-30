@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
+  const [bgImage, setBgImage] = useState("");
   const [canvasSize, setCanvasSize] = useState("720p");
 
   const canvasWidth = canvasSize === "720p" ? 1280 : 1920;
@@ -32,8 +33,12 @@ const App = () => {
     <TemplateProvider>
       <div style={{ display: "flex" }}>
         <GlobalStyle />
-        <Canvas width={canvasWidth} height={canvasHeight} />
-        <Inspector canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
+        <Canvas width={canvasWidth} height={canvasHeight} bgImage={bgImage} />
+        <Inspector
+          canvasSize={canvasSize}
+          setCanvasSize={setCanvasSize}
+          setBgImage={setBgImage}
+        />
       </div>
     </TemplateProvider>
   );

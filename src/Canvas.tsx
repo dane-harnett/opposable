@@ -16,12 +16,29 @@ interface CanvasProps {
   width: number;
   height: number;
   children?: React.ReactNode;
+  bgImage: string;
 }
 
-const Canvas = ({ width, height }: CanvasProps) => {
+const Canvas = ({ bgImage, width, height }: CanvasProps) => {
   const { template } = useContext(TemplateContext);
   return (
-    <Checkerboard id="canvas" style={{ width, height, position: "relative" }}>
+    <Checkerboard
+      id="canvas"
+      style={{
+        width,
+        height,
+        position: "relative",
+        zIndex: -2,
+      }}
+    >
+      {bgImage !== "" && (
+        <img
+          src={bgImage}
+          width={width}
+          height={height}
+          style={{ position: "absolute", zIndex: -1 }}
+        />
+      )}
       {template?.Component && <template.Component />}
     </Checkerboard>
   );
