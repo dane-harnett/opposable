@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
-import Basic, { Schema as BasicSchema } from "./templates/basic";
-import Basic2, { Schema as Basic2Schema } from "./templates/basic2";
+import { TemplateState } from "./TemplateProvider";
 
 interface SchemaItem {
   name: string;
@@ -13,15 +12,11 @@ export type Schema = Array<SchemaItem>;
 
 const TemplateContext = createContext<{
   setField: (fieldName: string, fieldValue: string) => void;
-  template?: {
-    Schema: Schema;
-    Component: typeof Basic | typeof Basic2;
-    data?: any;
-  };
-  setTemplateName: (templateName: string) => void;
+  template?: TemplateState;
+  selectTemplate: (templateName: string) => void;
 }>({
   setField: () => {},
-  setTemplateName: () => {},
+  selectTemplate: () => {},
 });
 
 export default TemplateContext;

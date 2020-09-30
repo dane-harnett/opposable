@@ -8,16 +8,14 @@ interface InspectorProps {
 }
 
 const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
-  const { template, setField, setTemplateName } = useContext(TemplateContext);
+  const { template, setField, selectTemplate } = useContext(TemplateContext);
 
   return (
     <div style={{ borderLeft: "1px solid black", width: 200, height: 720 }}>
       Inspector
       <br />
-      <button onClick={() => setTemplateName("Basic")}>Basic Template</button>
-      <button onClick={() => setTemplateName("Basic2")}>
-        Basic 2 Template
-      </button>
+      <button onClick={() => selectTemplate("Basic")}>Basic Template</button>
+      <button onClick={() => selectTemplate("Basic2")}>Basic 2 Template</button>
       Canvas size:
       <select
         onChange={(e) => {
