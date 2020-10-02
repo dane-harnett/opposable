@@ -34,13 +34,10 @@ const Inspector = ({
         onChange={(e) => {
           setCanvasSize(e.target.value);
         }}
+        value={canvasSize}
       >
-        <option value="720p" selected={canvasSize === "720p"}>
-          720p
-        </option>
-        <option value="1080p" selected={canvasSize === "1080"}>
-          1080p
-        </option>
+        <option value="720p">720p</option>
+        <option value="1080p">1080p</option>
       </select>
       <br />
       Background image:
@@ -55,8 +52,8 @@ const Inspector = ({
       <br />
       Template variables:
       <br />
-      {template?.Schema?.map((schemaItem) => (
-        <>
+      {template?.Schema?.map((schemaItem, index) => (
+        <React.Fragment key={index}>
           {schemaItem.label}
           <input
             type="text"
@@ -64,7 +61,7 @@ const Inspector = ({
             onChange={(evt) => setField(schemaItem.name, evt.target.value)}
           />
           <br />
-        </>
+        </React.Fragment>
       ))}
       <br />
       <button
