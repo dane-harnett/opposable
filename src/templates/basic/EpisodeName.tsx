@@ -7,7 +7,7 @@ const EpisodeName = ({ name = "" }) => {
         backgroundColor: "#F0DEBA",
         color: "#7B2529",
         fontFamily: "Lato",
-        fontSize: "48px",
+        fontSize: "64px",
         fontStyle: "italic",
         fontWeight: "bold",
         padding: 8,

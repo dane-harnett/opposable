@@ -7,7 +7,7 @@ const SeriesTitle = ({ seriesTitle = "" }) => {
         backgroundColor: "#7B2529",
         color: "#FFFFFF",
         fontFamily: "Lato",
-        fontSize: "64px",
+        fontSize: "80px",
         fontStyle: "italic",
         fontWeight: "bold",
         padding: 16,

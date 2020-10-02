@@ -15,10 +15,6 @@ const Basic = () => {
   const { template } = useContext(TemplateContext);
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,700&display=swap"
-        rel="stylesheet"
-      />
       <SeriesTitle seriesTitle={template?.data.seriesTitle} />
       <SeriesSubTitle seriesSubTitle={template?.data.seriesSubTitle} />
       <EpisodeName name={template?.data.episodeName} />

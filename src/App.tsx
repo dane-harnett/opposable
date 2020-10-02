@@ -8,12 +8,11 @@ import TemplateProvider from "./TemplateProvider";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
   * {
-      box-sizing: border-box;
+    box-sizing: border-box;
   }
   body {
-      background-color: #ccc;
+    background-color: #ccc;
     margin: 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
