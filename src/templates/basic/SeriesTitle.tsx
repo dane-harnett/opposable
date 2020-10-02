@@ -5,9 +5,12 @@ const SeriesTitle = ({ seriesTitle = "" }) => {
     <div
       style={{
         backgroundColor: "#7B2529",
-        color: "#F0DEBA",
-        fontSize: "48px",
-        padding: 8,
+        color: "#FFFFFF",
+        fontFamily: "Lato",
+        fontSize: "64px",
+        fontStyle: "italic",
+        fontWeight: "bold",
+        padding: 16,
         width: "100%",
       }}
     >

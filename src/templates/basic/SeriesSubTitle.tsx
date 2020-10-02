@@ -6,7 +6,10 @@ const SeriesSubTitle = ({ seriesSubTitle = "" }) => {
       style={{
         backgroundColor: "#F0DEBA",
         color: "#7B2529",
-        fontSize: "32px",
+        fontFamily: "Lato",
+        fontSize: "48px",
+        fontStyle: "italic",
+        fontWeight: "bold",
         padding: 8,
         width: "100%",
       }}
