@@ -1,7 +1,53 @@
 import * as React from "react";
 import { useContext } from "react";
 import domtoimage from "dom-to-image";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  makeStyles,
+} from "@material-ui/core";
 import TemplateContext from "./TemplateContext";
+import Draggable from "react-draggable";
+
+function PaperComponent(props: any) {
+  return (
+    <Draggable
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+    >
+      <Paper {...props} />
+    </Draggable>
+  );
+}
+function BackdropComponent(props: any) {
+  return <div>{props.children}</div>;
+}
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  formControl: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
+  },
+  textField: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
+  },
+}));
+
 interface InspectorProps {
   canvasSize: string;
   setCanvasSize: (canvasSize: string) => void;
@@ -14,73 +60,98 @@ const Inspector = ({
   setBgImage,
 }: InspectorProps) => {
   const { template, setField, selectTemplate } = useContext(TemplateContext);
+  const classes = useStyles();
 
   return (
-    <div style={{ borderLeft: "1px solid black", width: 200, height: 720 }}>
-      Inspector
-      <br />
-      <br />
-      Template:
-      <br />
-      <button onClick={() => selectTemplate("Basic")}>Basic Template</button>
-      <button onClick={() => selectTemplate("Basic2")}>Basic 2 Template</button>
-      <br />
-      <br />
-      Canvas:
-      <br />
-      Size:
-      <br />
-      <select
-        onChange={(e) => {
-          setCanvasSize(e.target.value);
-        }}
-        value={canvasSize}
-      >
-        <option value="720p">720p</option>
-        <option value="1080p">1080p</option>
-      </select>
-      <br />
-      Background image:
-      <br />
-      <input
-        type="file"
-        onChange={(e) => {
-          setBgImage(URL.createObjectURL(e.target?.files?.[0]));
-        }}
-      />
-      <br />
-      <br />
-      Template variables:
-      <br />
-      {template?.Schema?.map((schemaItem, index) => (
-        <React.Fragment key={index}>
-          {schemaItem.label}
-          <input
-            type="text"
-            value={template?.data[schemaItem.name]}
-            onChange={(evt) => setField(schemaItem.name, evt.target.value)}
-          />
-          <br />
-        </React.Fragment>
-      ))}
-      <br />
-      <button
-        onClick={() => {
-          const node = document.getElementById("canvas");
-          if (!node) {
-            return;
-          }
-          domtoimage.toPng(node).then(function (dataUrl: string) {
-            var link = document.createElement("a");
-            link.download = "thumbnail.png";
-            link.href = dataUrl;
-            link.click();
-          });
-        }}
-      >
-        Save as PNG
-      </button>
-    </div>
+    <Dialog
+      open={true}
+      BackdropComponent={BackdropComponent}
+      PaperComponent={PaperComponent}
+      aria-labelledby="draggable-dialog-title"
+    >
+      <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
+        Inspector
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          <form className={classes.form}>
+            <FormControl className={classes.formControl} variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Template
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                onChange={(event) =>
+                  selectTemplate(event.target.value as string)
+                }
+                label="Template"
+                value={template?.name}
+              >
+                <MenuItem value={"Basic"}>Basic</MenuItem>
+                <MenuItem value={"Basic2"}>Basic2</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl} variant="outlined">
+              <InputLabel id="demo-simple-select-outlined-label">
+                Canvas size:
+              </InputLabel>
+              <Select
+                onChange={(event) =>
+                  setCanvasSize(event.target.value as string)
+                }
+                label="Canvas size"
+                value={canvasSize}
+              >
+                <MenuItem value={"720p"}>720p</MenuItem>
+                <MenuItem value={"1080p"}>1080p</MenuItem>
+              </Select>
+            </FormControl>
+            Background image:
+            <input
+              type="file"
+              onChange={(e) => {
+                setBgImage(URL.createObjectURL(e.target?.files?.[0]));
+              }}
+            />
+            Template variables:
+            {template?.Schema?.map((schemaItem, index) => (
+              <React.Fragment key={index}>
+                <TextField
+                  className={classes.textField}
+                  label={schemaItem.label}
+                  variant="outlined"
+                  value={template?.data[schemaItem.name]}
+                  onChange={(evt) =>
+                    setField(schemaItem.name, evt.target.value)
+                  }
+                />
+              </React.Fragment>
+            ))}
+          </form>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            const node = document.getElementById("canvas");
+            if (!node) {
+              return;
+            }
+            domtoimage.toPng(node).then(function (dataUrl: string) {
+              var link = document.createElement("a");
+              link.download = "thumbnail.png";
+              link.href = dataUrl;
+              link.click();
+            });
+          }}
+        >
+          Save as PNG
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

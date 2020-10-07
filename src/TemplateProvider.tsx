@@ -26,12 +26,14 @@ export interface TemplateState {
   Schema: Schema;
   Component: typeof Basic | typeof Basic2;
   data: { [key: string]: string };
+  name: string;
 }
 
 const initialTemplateState = {
   Schema: BasicSchema,
   Component: Basic,
   data: mapSchemaToData(BasicSchema),
+  name: "Basic",
 };
 
 interface SelectTemplateAction {
@@ -75,6 +77,7 @@ const templateReducer = (state: TemplateState, action: TemplateAction) => {
         Schema: schema,
         Component: component,
         data: mapSchemaToData(schema, state.data),
+        name: action.payload.name,
       };
       break;
   }

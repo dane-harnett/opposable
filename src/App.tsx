@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <TemplateProvider>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <GlobalStyle />
         <Canvas width={canvasWidth} height={canvasHeight} bgImage={bgImage} />
         <Inspector

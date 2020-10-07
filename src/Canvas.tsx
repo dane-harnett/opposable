@@ -36,7 +36,10 @@ const Canvas = ({ bgImage, width, height }: CanvasProps) => {
           src={bgImage}
           width={width}
           height={height}
-          style={{ position: "absolute", zIndex: -1 }}
+          style={{
+            position: "absolute",
+            zIndex: -1,
+          }}
         />
       )}
       {template?.Component && <template.Component />}
