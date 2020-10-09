@@ -1,15 +1,16 @@
 import * as React from "react";
 import { useReducer } from "react";
-import TemplateContext, { Schema } from "./TemplateContext";
+import { IComponent } from "./App";
+import TemplateContext, { ISchema, ISchemaItem } from "./TemplateContext";
 import Basic, { Schema as BasicSchema } from "./templates/basic";
 import Basic2, { Schema as Basic2Schema } from "./templates/basic2";
 
 const mapSchemaToData = (
-  schema: Schema,
+  schema: ISchema,
   data: { [key: string]: string } = {}
 ) => {
   return Object.fromEntries(
-    schema.map((schemaItem) => {
+    schema.map((schemaItem: ISchemaItem) => {
       return [
         schemaItem.name,
         data[schemaItem.name] ? data[schemaItem.name] : schemaItem.defaultValue,
@@ -18,22 +19,35 @@ const mapSchemaToData = (
   );
 };
 
+const mapSchemaItemToComponent: (schemaItem: ISchemaItem) => IComponent = (
+  schemaItem: ISchemaItem
+) => ({
+  title: schemaItem.name,
+  type: "TEMPLATE_ITEM",
+  value: schemaItem.component,
+});
+const mapSchemaToComponents = (schema: ISchema) => {
+  return schema.map(mapSchemaItemToComponent);
+};
+
 interface TemplateProviderProps {
   children: React.ReactNode;
 }
 
 export interface TemplateState {
-  Schema: Schema;
+  Schema: ISchema;
   Component: typeof Basic | typeof Basic2;
   data: { [key: string]: string };
   name: string;
+  components: IComponent[];
 }
 
-const initialTemplateState = {
+const initialTemplateState: TemplateState = {
   Schema: BasicSchema,
   Component: Basic,
   data: mapSchemaToData(BasicSchema),
   name: "Basic",
+  components: mapSchemaToComponents(BasicSchema),
 };
 
 interface SelectTemplateAction {
@@ -49,11 +63,30 @@ interface ChangeFieldAction {
     fieldValue: string;
   };
 }
+interface AddImageAction {
+  type: "ADD_IMAGE";
+  payload: {
+    image: string;
+  };
+}
+type TemplateAction = ChangeFieldAction | SelectTemplateAction | AddImageAction;
 
-type TemplateAction = ChangeFieldAction | SelectTemplateAction;
-
-const templateReducer = (state: TemplateState, action: TemplateAction) => {
+const templateReducer = (
+  state: TemplateState = initialTemplateState,
+  action: TemplateAction
+) => {
   switch (action.type) {
+    case "ADD_IMAGE":
+      return {
+        ...state,
+        components: state.components.concat([
+          {
+            title: "Untitled",
+            type: "IMAGE",
+            value: action.payload.image,
+          },
+        ]),
+      };
     case "CHANGE_FIELD":
       return {
         ...state,
@@ -62,7 +95,6 @@ const templateReducer = (state: TemplateState, action: TemplateAction) => {
           [action.payload.fieldName]: action.payload.fieldValue,
         },
       };
-      break;
     case "SELECT_TEMPLATE":
       // @todo: need to handle unlimited templates
       let schema = BasicSchema,
@@ -78,10 +110,9 @@ const templateReducer = (state: TemplateState, action: TemplateAction) => {
         Component: component,
         data: mapSchemaToData(schema, state.data),
         name: action.payload.name,
+        components: mapSchemaToComponents(schema),
       };
-      break;
   }
-  return state;
 };
 const TemplateProvider = ({ children }: TemplateProviderProps) => {
   const [state, dispatch] = useReducer(templateReducer, initialTemplateState);
@@ -89,6 +120,14 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
   return (
     <TemplateContext.Provider
       value={{
+        addImage: (image) => {
+          dispatch({
+            type: "ADD_IMAGE",
+            payload: {
+              image,
+            },
+          });
+        },
         setField: (fieldName, fieldValue) => {
           dispatch({
             type: "CHANGE_FIELD",

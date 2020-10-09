@@ -1,6 +1,9 @@
 import * as React from "react";
+import { useContext } from "react";
+import TemplateContext from "../../TemplateContext";
 
-const SeriesSubTitle = ({ seriesSubTitle = "" }) => {
+const SeriesSubTitle = ({ zIndex }: { zIndex: number }) => {
+  const { template } = useContext(TemplateContext);
   return (
     <div
       style={{
@@ -12,9 +15,10 @@ const SeriesSubTitle = ({ seriesSubTitle = "" }) => {
         fontWeight: "bold",
         padding: 8,
         width: "100%",
+        zIndex,
       }}
     >
-      {seriesSubTitle}
+      {template?.data.seriesSubTitle}
     </div>
   );
 };

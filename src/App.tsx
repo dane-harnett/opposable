@@ -21,8 +21,14 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+type ComponentType = "IMAGE" | "TEMPLATE_ITEM";
+export interface IComponent {
+  title: string;
+  type: ComponentType;
+  value: any;
+}
+
 const App = () => {
-  const [bgImage, setBgImage] = useState("");
   const [canvasSize, setCanvasSize] = useState("720p");
 
   const canvasWidth = canvasSize === "720p" ? 1280 : 1920;
@@ -32,12 +38,8 @@ const App = () => {
     <TemplateProvider>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <GlobalStyle />
-        <Canvas width={canvasWidth} height={canvasHeight} bgImage={bgImage} />
-        <Inspector
-          canvasSize={canvasSize}
-          setCanvasSize={setCanvasSize}
-          setBgImage={setBgImage}
-        />
+        <Canvas width={canvasWidth} height={canvasHeight} />
+        <Inspector canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
       </div>
     </TemplateProvider>
   );

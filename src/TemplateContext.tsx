@@ -1,20 +1,23 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { TemplateState } from "./TemplateProvider";
 
-interface SchemaItem {
+export interface ISchemaItem {
   name: string;
   type: string;
   label: string;
   defaultValue: string;
+  component: any;
 }
 
-export type Schema = Array<SchemaItem>;
+export type ISchema = Array<ISchemaItem>;
 
 const TemplateContext = createContext<{
+  addImage: (image: string) => void;
   setField: (fieldName: string, fieldValue: string) => void;
   template?: TemplateState;
   selectTemplate: (templateName: string) => void;
 }>({
+  addImage: () => {},
   setField: () => {},
   selectTemplate: () => {},
 });

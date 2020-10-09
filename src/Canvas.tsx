@@ -2,6 +2,7 @@ import * as React from "react";
 import { useContext } from "react";
 import styled from "styled-components";
 import TemplateContext from "./TemplateContext";
+import { IComponent } from "./App";
 
 const Checkerboard = styled.div`
   background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
@@ -16,10 +17,9 @@ interface CanvasProps {
   width: number;
   height: number;
   children?: React.ReactNode;
-  bgImage: string;
 }
 
-const Canvas = ({ bgImage, width, height }: CanvasProps) => {
+const Canvas = ({ width, height }: CanvasProps) => {
   const { template } = useContext(TemplateContext);
   return (
     <Checkerboard
@@ -27,21 +27,30 @@ const Canvas = ({ bgImage, width, height }: CanvasProps) => {
       style={{
         width,
         height,
+        overflow: "hidden",
         position: "relative",
         zIndex: -2,
       }}
     >
-      {bgImage !== "" && (
-        <img
-          src={bgImage}
-          width={width}
-          height={height}
-          style={{
-            position: "absolute",
-            zIndex: -1,
-          }}
-        />
-      )}
+      {template?.components.map((comp: IComponent, index: number) => {
+        if (comp.type === "IMAGE") {
+          return (
+            <img
+              src={comp.value}
+              width={width}
+              height={height}
+              style={{
+                position: "absolute",
+                zIndex: template?.components.length - index,
+              }}
+            />
+          );
+        }
+        if (comp.type === "TEMPLATE_ITEM") {
+          return <comp.value zIndex={template?.components.length - index} />;
+        }
+        return null;
+      })}
       {template?.Component && <template.Component />}
     </Checkerboard>
   );

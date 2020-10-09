@@ -1,20 +1,27 @@
 import * as React from "react";
+import { useContext } from "react";
+import TemplateContext from "../../TemplateContext";
 
-const EpisodeName = ({ name = "" }) => {
+const EpisodeName = ({ zIndex }: { zIndex: number }) => {
+  const { template } = useContext(TemplateContext);
   return (
     <div
       style={{
         backgroundColor: "#F0DEBA",
         color: "#7B2529",
-        fontSize: "32px",
+        fontFamily: "Lato",
+        fontSize: "64px",
+        fontStyle: "italic",
+        fontWeight: "bold",
         padding: 8,
         width: "calc(100% - 400px)",
         position: "absolute",
         bottom: 0,
         right: 0,
+        zIndex,
       }}
     >
-      {name}
+      {template?.data.episodeName}
     </div>
   );
 };

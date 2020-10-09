@@ -16,8 +16,9 @@ import {
   TextField,
   makeStyles,
 } from "@material-ui/core";
-import TemplateContext from "./TemplateContext";
 import Draggable from "react-draggable";
+import TemplateContext from "./TemplateContext";
+import { IComponent } from "./App";
 
 function PaperComponent(props: any) {
   return (
@@ -51,15 +52,12 @@ const useStyles = makeStyles((theme) => ({
 interface InspectorProps {
   canvasSize: string;
   setCanvasSize: (canvasSize: string) => void;
-  setBgImage: (imageURL: string) => void;
 }
 
-const Inspector = ({
-  canvasSize,
-  setCanvasSize,
-  setBgImage,
-}: InspectorProps) => {
-  const { template, setField, selectTemplate } = useContext(TemplateContext);
+const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
+  const { addImage, template, setField, selectTemplate } = useContext(
+    TemplateContext
+  );
   const classes = useStyles();
 
   return (
@@ -107,11 +105,11 @@ const Inspector = ({
                 <MenuItem value={"1080p"}>1080p</MenuItem>
               </Select>
             </FormControl>
-            Background image:
+            Import an image:
             <input
               type="file"
               onChange={(e) => {
-                setBgImage(URL.createObjectURL(e.target?.files?.[0]));
+                addImage(URL.createObjectURL(e.target?.files?.[0]));
               }}
             />
             Template variables:
@@ -128,6 +126,12 @@ const Inspector = ({
                 />
               </React.Fragment>
             ))}
+            Components:
+            <div>
+              {template?.components.map((comp: IComponent) => (
+                <div>{comp.title}</div>
+              ))}
+            </div>
           </form>
         </DialogContentText>
       </DialogContent>

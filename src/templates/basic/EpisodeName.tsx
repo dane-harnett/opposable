@@ -1,6 +1,9 @@
 import * as React from "react";
+import { useContext } from "react";
+import TemplateContext from "../../TemplateContext";
 
-const EpisodeName = ({ name = "" }) => {
+const EpisodeName = ({ zIndex }: { zIndex: number }) => {
+  const { template } = useContext(TemplateContext);
   return (
     <div
       style={{
@@ -15,9 +18,10 @@ const EpisodeName = ({ name = "" }) => {
         position: "absolute",
         bottom: 0,
         right: 0,
+        zIndex,
       }}
     >
-      {name}
+      {template?.data.episodeName}
     </div>
   );
 };
