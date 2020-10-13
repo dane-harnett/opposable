@@ -26,6 +26,9 @@ export interface IComponent {
   title: string;
   type: ComponentType;
   value: any;
+  properties?: {
+    [key: string]: any;
+  };
 }
 
 const App = () => {

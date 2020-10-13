@@ -69,13 +69,54 @@ interface AddImageAction {
     image: string;
   };
 }
-type TemplateAction = ChangeFieldAction | SelectTemplateAction | AddImageAction;
+interface SetPropertyAction {
+  type: "SET_PROPERTY";
+  payload: {
+    componentIndex: number;
+    propertyName: string;
+    propertyValue: any;
+  };
+}
+interface SetTitleAction {
+  type: "SET_TITLE";
+  payload: {
+    componentIndex: number;
+    title: string;
+  };
+}
+interface ReorderComponentAction {
+  type: "REORDER_COMPONENT";
+  payload: {
+    componentIndex: number;
+    desiredIndex: number;
+  };
+}
+type TemplateAction =
+  | ChangeFieldAction
+  | SelectTemplateAction
+  | AddImageAction
+  | SetPropertyAction
+  | SetTitleAction
+  | ReorderComponentAction;
 
 const templateReducer = (
   state: TemplateState = initialTemplateState,
   action: TemplateAction
 ) => {
   switch (action.type) {
+    case "REORDER_COMPONENT":
+      const newComponents = [...state.components];
+      newComponents.splice(
+        action.payload.desiredIndex,
+        0,
+        newComponents.splice(action.payload.componentIndex, 1)[0]
+      );
+      return {
+        ...state,
+        components: newComponents,
+      };
+    // remove the target component from the list
+    // add it back in the desired position
     case "ADD_IMAGE":
       return {
         ...state,
@@ -84,6 +125,10 @@ const templateReducer = (
             title: "Untitled",
             type: "IMAGE",
             value: action.payload.image,
+            properties: {
+              x: 0,
+              y: 0,
+            },
           },
         ]),
       };
@@ -94,6 +139,33 @@ const templateReducer = (
           ...state.data,
           [action.payload.fieldName]: action.payload.fieldValue,
         },
+      };
+    case "SET_PROPERTY":
+      return {
+        ...state,
+        components: state.components.map((comp, index) => {
+          return index === action.payload.componentIndex
+            ? {
+                ...comp,
+                properties: {
+                  ...comp.properties,
+                  [action.payload.propertyName]: action.payload.propertyValue,
+                },
+              }
+            : comp;
+        }),
+      };
+    case "SET_TITLE":
+      return {
+        ...state,
+        components: state.components.map((comp, index) => {
+          return index === action.payload.componentIndex
+            ? {
+                ...comp,
+                title: action.payload.title,
+              }
+            : comp;
+        }),
       };
     case "SELECT_TEMPLATE":
       // @todo: need to handle unlimited templates
@@ -112,6 +184,8 @@ const templateReducer = (
         name: action.payload.name,
         components: mapSchemaToComponents(schema),
       };
+    default:
+      return state;
   }
 };
 const TemplateProvider = ({ children }: TemplateProviderProps) => {
@@ -137,12 +211,40 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
             },
           });
         },
+        setProperty: (componentIndex, propertyName, propertyValue) => {
+          dispatch({
+            type: "SET_PROPERTY",
+            payload: {
+              componentIndex,
+              propertyName,
+              propertyValue,
+            },
+          });
+        },
         template: state,
         selectTemplate: (templateName: string) => {
           dispatch({
             type: "SELECT_TEMPLATE",
             payload: {
               name: templateName,
+            },
+          });
+        },
+        setTitle: (componentIndex: number, title: string) => {
+          dispatch({
+            type: "SET_TITLE",
+            payload: {
+              componentIndex,
+              title,
+            },
+          });
+        },
+        reorderComponent: (componentIndex: number, desiredIndex: number) => {
+          dispatch({
+            type: "REORDER_COMPONENT",
+            payload: {
+              componentIndex,
+              desiredIndex,
             },
           });
         },

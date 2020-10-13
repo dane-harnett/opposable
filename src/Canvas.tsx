@@ -32,22 +32,26 @@ const Canvas = ({ width, height }: CanvasProps) => {
         zIndex: -2,
       }}
     >
+      {template?.components
+        .filter((comp) => comp.type === "TEMPLATE_ITEM")
+        .map((comp, index) => {
+          return <comp.value zIndex={template?.components.length - index} />;
+        })}
       {template?.components.map((comp: IComponent, index: number) => {
         if (comp.type === "IMAGE") {
           return (
             <img
               src={comp.value}
-              width={width}
-              height={height}
+              width={comp.properties?.width || width}
+              height={comp.properties?.height || height}
               style={{
                 position: "absolute",
                 zIndex: template?.components.length - index,
+                left: comp.properties?.x || 0,
+                top: comp.properties?.y || 0,
               }}
             />
           );
-        }
-        if (comp.type === "TEMPLATE_ITEM") {
-          return <comp.value zIndex={template?.components.length - index} />;
         }
         return null;
       })}

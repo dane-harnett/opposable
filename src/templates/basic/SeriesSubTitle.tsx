@@ -14,6 +14,9 @@ const SeriesSubTitle = ({ zIndex }: { zIndex: number }) => {
         fontStyle: "italic",
         fontWeight: "bold",
         padding: 8,
+        position: "absolute",
+        top: 100,
+        left: 0,
         width: "100%",
         zIndex,
       }}
