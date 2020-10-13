@@ -2,7 +2,7 @@
   "name": "opposable",
   "productName": "opposable",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Opposable is a a thumbnail builder.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -14,7 +14,7 @@
   "keywords": [],
   "author": {
     "name": "Dane Harnett",
-    "email": "dane_harnett@flightcentre.com"
+    "email": "dane@daneharnett.com"
   },
   "license": "MIT",
   "config": {
