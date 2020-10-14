@@ -5,6 +5,8 @@ import Inspector from "./Inspector";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import TemplateProvider from "./TemplateProvider";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -38,13 +40,15 @@ const App = () => {
   const canvasHeight = canvasSize === "720p" ? 720 : 1080;
 
   return (
-    <TemplateProvider>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <GlobalStyle />
-        <Canvas width={canvasWidth} height={canvasHeight} />
-        <Inspector canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
-      </div>
-    </TemplateProvider>
+    <DndProvider backend={HTML5Backend}>
+      <TemplateProvider>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <GlobalStyle />
+          <Canvas width={canvasWidth} height={canvasHeight} />
+          <Inspector canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
+        </div>
+      </TemplateProvider>
+    </DndProvider>
   );
 };
 

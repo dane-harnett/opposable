@@ -19,6 +19,7 @@ import {
 import Draggable from "react-draggable";
 import TemplateContext from "./TemplateContext";
 import { IComponent } from "./App";
+import InspectorItem from "./InspectorItem";
 
 function PaperComponent(props: any) {
   return (
@@ -136,84 +137,86 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
             <div>
               {template?.components.map((comp: IComponent, compIndex) => (
                 <div>
-                  <Button
-                    onClick={() => reorderComponent(compIndex, compIndex - 1)}
-                  >
-                    Up
-                  </Button>
-                  <Button
-                    onClick={() => reorderComponent(compIndex, compIndex + 1)}
-                  >
-                    Down
-                  </Button>
-                  {comp.type === "TEMPLATE_ITEM" && <div>{comp.title}</div>}
-                  {comp.type === "IMAGE" && (
-                    <div>
-                      <TextField
-                        onChange={(e) => {
-                          setTitle(compIndex, e.target.value);
-                        }}
-                        label="Title"
-                        value={comp.title}
-                      />
-                      <TextField
-                        onChange={(e) => {
-                          if (
-                            typeof parseInt(e.target.value, 10) === "number"
-                          ) {
-                            setProperty(
-                              compIndex,
-                              "x",
-                              parseInt(e.target.value, 10)
-                            );
-                          }
-                        }}
-                        label="x"
-                      />
-                      <TextField
-                        onChange={(e) => {
-                          if (
-                            typeof parseInt(e.target.value, 10) === "number"
-                          ) {
-                            setProperty(
-                              compIndex,
-                              "y",
-                              parseInt(e.target.value, 10)
-                            );
-                          }
-                        }}
-                        label="y"
-                      />
-                      <TextField
-                        onChange={(e) => {
-                          if (
-                            typeof parseInt(e.target.value, 10) === "number"
-                          ) {
-                            setProperty(
-                              compIndex,
-                              "width",
-                              parseInt(e.target.value, 10)
-                            );
-                          }
-                        }}
-                        label="width"
-                      />
-                      <TextField
-                        onChange={(e) => {
-                          if (
-                            typeof parseInt(e.target.value, 10) === "number"
-                          ) {
-                            setProperty(
-                              compIndex,
-                              "height",
-                              parseInt(e.target.value, 10)
-                            );
-                          }
-                        }}
-                        label="height"
-                      />
-                    </div>
-                  )}
+                  <div>
+                    {comp.type === "TEMPLATE_ITEM" && (
+                      <InspectorItem
+                        onDrop={reorderComponent}
+                        compIndex={compIndex}
+                      >
+                        {comp.title}
+                      </InspectorItem>
+                    )}
+                    {comp.type === "IMAGE" && (
+                      <InspectorItem
+                        onDrop={reorderComponent}
+                        compIndex={compIndex}
+                      >
+                        <TextField
+                          onChange={(e) => {
+                            setTitle(compIndex, e.target.value);
+                          }}
+                          label="Title"
+                          value={comp.title}
+                        />
+                        <TextField
+                          onChange={(e) => {
+                            if (
+                              typeof parseInt(e.target.value, 10) === "number"
+                            ) {
+                              setProperty(
+                                compIndex,
+                                "x",
+                                parseInt(e.target.value, 10)
+                              );
+                            }
+                          }}
+                          label="x"
+                        />
+                        <TextField
+                          onChange={(e) => {
+                            if (
+                              typeof parseInt(e.target.value, 10) === "number"
+                            ) {
+                              setProperty(
+                                compIndex,
+                                "y",
+                                parseInt(e.target.value, 10)
+                              );
+                            }
+                          }}
+                          label="y"
+                        />
+                        <TextField
+                          onChange={(e) => {
+                            if (
+                              typeof parseInt(e.target.value, 10) === "number"
+                            ) {
+                              setProperty(
+                                compIndex,
+                                "width",
+                                parseInt(e.target.value, 10)
+                              );
+                            }
+                          }}
+                          label="width"
+                        />
+                        <TextField
+                          onChange={(e) => {
+                            if (
+                              typeof parseInt(e.target.value, 10) === "number"
+                            ) {
+                              setProperty(
+                                compIndex,
+                                "height",
+                                parseInt(e.target.value, 10)
+                              );
+                            }
+                          }}
+                          label="height"
+                        />
+                      </InspectorItem>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
