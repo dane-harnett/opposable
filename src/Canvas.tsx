@@ -46,12 +46,13 @@ const Canvas = ({ width, height }: CanvasProps) => {
                 height: comp.properties?.height || 320,
               }}
               onDragStop={(_e, d) => {
-                setProperty(index, "x", d.x);
-                setProperty(index, "y", d.y);
+                setProperty(index, { x: d.x, y: d.y });
               }}
               onResizeStop={(_e, _direction, ref) => {
-                setProperty(index, "width", ref.style.width);
-                setProperty(index, "height", ref.style.height);
+                setProperty(index, {
+                  width: ref.style.width.replace("px", ""),
+                  height: ref.style.height.replace("px", ""),
+                });
               }}
               position={{
                 x: comp.properties?.x || 0,

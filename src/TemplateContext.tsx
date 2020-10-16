@@ -16,8 +16,7 @@ const TemplateContext = createContext<{
   setField: (fieldName: string, fieldValue: string) => void;
   setProperty: (
     componentIndex: number,
-    propertyName: string,
-    propertyValue: any
+    properties: { [key: string]: any }
   ) => void;
   template?: TemplateState;
   selectTemplate: (templateName: string) => void;

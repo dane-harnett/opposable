@@ -163,56 +163,52 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                             if (
                               typeof parseInt(e.target.value, 10) === "number"
                             ) {
-                              setProperty(
-                                compIndex,
-                                "x",
-                                parseInt(e.target.value, 10)
-                              );
+                              setProperty(compIndex, {
+                                x: parseInt(e.target.value, 10),
+                              });
                             }
                           }}
                           label="x"
+                          value={comp.properties?.x || ""}
                         />
                         <TextField
                           onChange={(e) => {
                             if (
                               typeof parseInt(e.target.value, 10) === "number"
                             ) {
-                              setProperty(
-                                compIndex,
-                                "y",
-                                parseInt(e.target.value, 10)
-                              );
+                              setProperty(compIndex, {
+                                y: parseInt(e.target.value, 10),
+                              });
                             }
                           }}
                           label="y"
+                          value={comp.properties?.y || ""}
                         />
                         <TextField
                           onChange={(e) => {
                             if (
                               typeof parseInt(e.target.value, 10) === "number"
                             ) {
-                              setProperty(
-                                compIndex,
-                                "width",
-                                parseInt(e.target.value, 10)
-                              );
+                              setProperty(compIndex, {
+                                width: parseInt(e.target.value, 10),
+                              });
                             }
                           }}
                           label="width"
+                          value={comp.properties?.width || ""}
                         />
                         <TextField
                           onChange={(e) => {
                             if (
                               typeof parseInt(e.target.value, 10) === "number"
                             ) {
-                              setProperty(
-                                compIndex,
-                                "height",
-                                parseInt(e.target.value, 10)
-                              );
+                              setProperty(compIndex, {
+                                height: parseInt(e.target.value, 10),
+                              });
                             }
                           }}
                           label="height"
+                          value={comp.properties?.height || ""}
                         />
                       </InspectorItem>
                     )}

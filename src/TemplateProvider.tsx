@@ -73,8 +73,9 @@ interface SetPropertyAction {
   type: "SET_PROPERTY";
   payload: {
     componentIndex: number;
-    propertyName: string;
-    propertyValue: any;
+    properties: {
+      [key: string]: any;
+    };
   };
 }
 interface SetTitleAction {
@@ -148,7 +149,7 @@ const templateReducer = (
                 ...comp,
                 properties: {
                   ...comp.properties,
-                  [action.payload.propertyName]: action.payload.propertyValue,
+                  ...action.payload.properties,
                 },
               }
             : comp;
@@ -210,13 +211,12 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
             },
           });
         },
-        setProperty: (componentIndex, propertyName, propertyValue) => {
+        setProperty: (componentIndex, properties) => {
           dispatch({
             type: "SET_PROPERTY",
             payload: {
               componentIndex,
-              propertyName,
-              propertyValue,
+              properties,
             },
           });
         },
