@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
 import TemplateContext from "./TemplateContext";
-import { IComponent } from "./App";
+import IComponent from "./types/IComponent";
 
 const Checkerboard = styled.div`
   background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
@@ -72,7 +72,6 @@ const Canvas = ({ width, height }: CanvasProps) => {
         }
         return null;
       })}
-      {template?.Component && <template.Component />}
     </Checkerboard>
   );
 };

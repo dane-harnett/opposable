@@ -1,111 +1,34 @@
 import * as React from "react";
 import { useReducer } from "react";
-import { IComponent } from "./App";
-import TemplateContext, { ISchema, ISchemaItem } from "./TemplateContext";
-import Basic, { Schema as BasicSchema } from "./templates/basic";
-import Basic2, { Schema as Basic2Schema } from "./templates/basic2";
+import IComponent from "./types/IComponent";
+import TemplateContext, { ISchema } from "./TemplateContext";
+import TemplateActionTypes from "./types/TemplateActionTypes";
+import TTemplateAction from "./types/TTemplateAction";
+import mapSchemaToData from "./helpers/mapSchemaToData";
+import mapSchemaToComponents from "./helpers/mapSchemaToComponents";
+import { name as basicName, Schema as BasicSchema } from "./templates/basic";
+import { Schema as Basic2Schema } from "./templates/basic2";
 
-const mapSchemaToData = (
-  schema: ISchema,
-  data: { [key: string]: string } = {}
-) => {
-  return Object.fromEntries(
-    schema.map((schemaItem: ISchemaItem) => {
-      return [
-        schemaItem.name,
-        data[schemaItem.name] ? data[schemaItem.name] : schemaItem.defaultValue,
-      ];
-    })
-  );
-};
-
-const mapSchemaItemToComponent: (schemaItem: ISchemaItem) => IComponent = (
-  schemaItem: ISchemaItem
-) => ({
-  title: schemaItem.name,
-  type: "TEMPLATE_ITEM",
-  value: schemaItem.component,
-});
-const mapSchemaToComponents = (schema: ISchema) => {
-  return schema.map(mapSchemaItemToComponent);
-};
-
-interface TemplateProviderProps {
-  children: React.ReactNode;
-}
-
-export interface TemplateState {
+export interface ITemplateState {
   Schema: ISchema;
-  Component: typeof Basic | typeof Basic2;
   data: { [key: string]: string };
   name: string;
   components: IComponent[];
 }
 
-const initialTemplateState: TemplateState = {
+const initialTemplateState: ITemplateState = {
   Schema: BasicSchema,
-  Component: Basic,
   data: mapSchemaToData(BasicSchema),
-  name: "Basic",
+  name: basicName,
   components: mapSchemaToComponents(BasicSchema),
 };
 
-interface SelectTemplateAction {
-  type: "SELECT_TEMPLATE";
-  payload: {
-    name: string;
-  };
-}
-interface ChangeFieldAction {
-  type: "CHANGE_FIELD";
-  payload: {
-    fieldName: string;
-    fieldValue: string;
-  };
-}
-interface AddImageAction {
-  type: "ADD_IMAGE";
-  payload: {
-    image: string;
-  };
-}
-interface SetPropertyAction {
-  type: "SET_PROPERTY";
-  payload: {
-    componentIndex: number;
-    properties: {
-      [key: string]: any;
-    };
-  };
-}
-interface SetTitleAction {
-  type: "SET_TITLE";
-  payload: {
-    componentIndex: number;
-    title: string;
-  };
-}
-interface ReorderComponentAction {
-  type: "REORDER_COMPONENT";
-  payload: {
-    componentIndex: number;
-    desiredIndex: number;
-  };
-}
-type TemplateAction =
-  | ChangeFieldAction
-  | SelectTemplateAction
-  | AddImageAction
-  | SetPropertyAction
-  | SetTitleAction
-  | ReorderComponentAction;
-
 const templateReducer = (
-  state: TemplateState = initialTemplateState,
-  action: TemplateAction
+  state: ITemplateState = initialTemplateState,
+  action: TTemplateAction
 ) => {
   switch (action.type) {
-    case "REORDER_COMPONENT":
+    case TemplateActionTypes.ReorderComponent:
       const newComponents = [...state.components];
       newComponents.splice(
         action.payload.desiredIndex,
@@ -118,7 +41,7 @@ const templateReducer = (
       };
     // remove the target component from the list
     // add it back in the desired position
-    case "ADD_IMAGE":
+    case TemplateActionTypes.AddImage:
       const image: IComponent = {
         title: "Untitled",
         type: "IMAGE",
@@ -132,7 +55,7 @@ const templateReducer = (
         ...state,
         components: [image, ...state.components],
       };
-    case "CHANGE_FIELD":
+    case TemplateActionTypes.ChangeField:
       return {
         ...state,
         data: {
@@ -140,7 +63,7 @@ const templateReducer = (
           [action.payload.fieldName]: action.payload.fieldValue,
         },
       };
-    case "SET_PROPERTY":
+    case TemplateActionTypes.SetProperty:
       return {
         ...state,
         components: state.components.map((comp, index) => {
@@ -155,7 +78,7 @@ const templateReducer = (
             : comp;
         }),
       };
-    case "SET_TITLE":
+    case TemplateActionTypes.SetTitle:
       return {
         ...state,
         components: state.components.map((comp, index) => {
@@ -167,19 +90,16 @@ const templateReducer = (
             : comp;
         }),
       };
-    case "SELECT_TEMPLATE":
+    case TemplateActionTypes.SelectTemplate:
       // @todo: need to handle unlimited templates
-      let schema = BasicSchema,
-        component = Basic;
+      let schema = BasicSchema;
 
       if (action.payload.name === "Basic2") {
         schema = Basic2Schema;
-        component = Basic2;
       }
 
       return {
         Schema: schema,
-        Component: component,
         data: mapSchemaToData(schema, state.data),
         name: action.payload.name,
         components: mapSchemaToComponents(schema),
@@ -188,6 +108,11 @@ const templateReducer = (
       return state;
   }
 };
+
+interface TemplateProviderProps {
+  children: React.ReactNode;
+}
+
 const TemplateProvider = ({ children }: TemplateProviderProps) => {
   const [state, dispatch] = useReducer(templateReducer, initialTemplateState);
 
@@ -196,7 +121,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
       value={{
         addImage: (image) => {
           dispatch({
-            type: "ADD_IMAGE",
+            type: TemplateActionTypes.AddImage,
             payload: {
               image,
             },
@@ -204,7 +129,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
         },
         setField: (fieldName, fieldValue) => {
           dispatch({
-            type: "CHANGE_FIELD",
+            type: TemplateActionTypes.ChangeField,
             payload: {
               fieldName,
               fieldValue,
@@ -213,7 +138,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
         },
         setProperty: (componentIndex, properties) => {
           dispatch({
-            type: "SET_PROPERTY",
+            type: TemplateActionTypes.SetProperty,
             payload: {
               componentIndex,
               properties,
@@ -223,7 +148,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
         template: state,
         selectTemplate: (templateName: string) => {
           dispatch({
-            type: "SELECT_TEMPLATE",
+            type: TemplateActionTypes.SelectTemplate,
             payload: {
               name: templateName,
             },
@@ -231,7 +156,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
         },
         setTitle: (componentIndex: number, title: string) => {
           dispatch({
-            type: "SET_TITLE",
+            type: TemplateActionTypes.SetTitle,
             payload: {
               componentIndex,
               title,
@@ -240,7 +165,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
         },
         reorderComponent: (componentIndex: number, desiredIndex: number) => {
           dispatch({
-            type: "REORDER_COMPONENT",
+            type: TemplateActionTypes.ReorderComponent,
             payload: {
               componentIndex,
               desiredIndex,

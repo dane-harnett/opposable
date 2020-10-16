@@ -17,8 +17,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import Draggable from "react-draggable";
-import TemplateContext from "./TemplateContext";
-import { IComponent } from "./App";
+import TemplateContext, { ISchemaItem } from "./TemplateContext";
+import IComponent from "./types/IComponent";
 import InspectorItem from "./InspectorItem";
 
 function PaperComponent(props: any) {
@@ -93,8 +93,8 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                 label="Template"
                 value={template?.name}
               >
-                <MenuItem value={"Basic"}>Basic</MenuItem>
-                <MenuItem value={"Basic2"}>Basic2</MenuItem>
+                <MenuItem value="Basic">Basic</MenuItem>
+                <MenuItem value="Basic2">Basic2</MenuItem>
               </Select>
             </FormControl>
             <FormControl className={classes.formControl} variant="outlined">
@@ -120,7 +120,7 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
               }}
             />
             Template variables:
-            {template?.Schema?.map((schemaItem, index) => (
+            {template?.Schema?.map((schemaItem: ISchemaItem, index: number) => (
               <React.Fragment key={index}>
                 <TextField
                   className={classes.textField}
@@ -135,86 +135,88 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
             ))}
             Components:
             <div>
-              {template?.components.map((comp: IComponent, compIndex) => (
-                <div>
+              {template?.components.map(
+                (comp: IComponent, compIndex: number) => (
                   <div>
-                    {comp.type === "TEMPLATE_ITEM" && (
-                      <InspectorItem
-                        onDrop={reorderComponent}
-                        compIndex={compIndex}
-                      >
-                        {comp.title}
-                      </InspectorItem>
-                    )}
-                    {comp.type === "IMAGE" && (
-                      <InspectorItem
-                        onDrop={reorderComponent}
-                        compIndex={compIndex}
-                      >
-                        <TextField
-                          onChange={(e) => {
-                            setTitle(compIndex, e.target.value);
-                          }}
-                          label="Title"
-                          value={comp.title}
-                        />
-                        <TextField
-                          onChange={(e) => {
-                            if (
-                              typeof parseInt(e.target.value, 10) === "number"
-                            ) {
-                              setProperty(compIndex, {
-                                x: parseInt(e.target.value, 10),
-                              });
-                            }
-                          }}
-                          label="x"
-                          value={comp.properties?.x || ""}
-                        />
-                        <TextField
-                          onChange={(e) => {
-                            if (
-                              typeof parseInt(e.target.value, 10) === "number"
-                            ) {
-                              setProperty(compIndex, {
-                                y: parseInt(e.target.value, 10),
-                              });
-                            }
-                          }}
-                          label="y"
-                          value={comp.properties?.y || ""}
-                        />
-                        <TextField
-                          onChange={(e) => {
-                            if (
-                              typeof parseInt(e.target.value, 10) === "number"
-                            ) {
-                              setProperty(compIndex, {
-                                width: parseInt(e.target.value, 10),
-                              });
-                            }
-                          }}
-                          label="width"
-                          value={comp.properties?.width || ""}
-                        />
-                        <TextField
-                          onChange={(e) => {
-                            if (
-                              typeof parseInt(e.target.value, 10) === "number"
-                            ) {
-                              setProperty(compIndex, {
-                                height: parseInt(e.target.value, 10),
-                              });
-                            }
-                          }}
-                          label="height"
-                          value={comp.properties?.height || ""}
-                        />
-                      </InspectorItem>
-                    )}
+                    <div>
+                      {comp.type === "TEMPLATE_ITEM" && (
+                        <InspectorItem
+                          onDrop={reorderComponent}
+                          compIndex={compIndex}
+                        >
+                          {comp.title}
+                        </InspectorItem>
+                      )}
+                      {comp.type === "IMAGE" && (
+                        <InspectorItem
+                          onDrop={reorderComponent}
+                          compIndex={compIndex}
+                        >
+                          <TextField
+                            onChange={(e) => {
+                              setTitle(compIndex, e.target.value);
+                            }}
+                            label="Title"
+                            value={comp.title}
+                          />
+                          <TextField
+                            onChange={(e) => {
+                              if (
+                                typeof parseInt(e.target.value, 10) === "number"
+                              ) {
+                                setProperty(compIndex, {
+                                  x: parseInt(e.target.value, 10),
+                                });
+                              }
+                            }}
+                            label="x"
+                            value={comp.properties?.x || ""}
+                          />
+                          <TextField
+                            onChange={(e) => {
+                              if (
+                                typeof parseInt(e.target.value, 10) === "number"
+                              ) {
+                                setProperty(compIndex, {
+                                  y: parseInt(e.target.value, 10),
+                                });
+                              }
+                            }}
+                            label="y"
+                            value={comp.properties?.y || ""}
+                          />
+                          <TextField
+                            onChange={(e) => {
+                              if (
+                                typeof parseInt(e.target.value, 10) === "number"
+                              ) {
+                                setProperty(compIndex, {
+                                  width: parseInt(e.target.value, 10),
+                                });
+                              }
+                            }}
+                            label="width"
+                            value={comp.properties?.width || ""}
+                          />
+                          <TextField
+                            onChange={(e) => {
+                              if (
+                                typeof parseInt(e.target.value, 10) === "number"
+                              ) {
+                                setProperty(compIndex, {
+                                  height: parseInt(e.target.value, 10),
+                                });
+                              }
+                            }}
+                            label="height"
+                            value={comp.properties?.height || ""}
+                          />
+                        </InspectorItem>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </form>
         </DialogContentText>

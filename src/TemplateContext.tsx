@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { TemplateState } from "./TemplateProvider";
+import { ITemplateState } from "./TemplateProvider";
 
 export interface ISchemaItem {
   name: string;
@@ -18,7 +18,7 @@ const TemplateContext = createContext<{
     componentIndex: number,
     properties: { [key: string]: any }
   ) => void;
-  template?: TemplateState;
+  template?: ITemplateState;
   selectTemplate: (templateName: string) => void;
   setTitle: (componentIndex: number, title: string) => void;
   reorderComponent: (componentIndex: number, desiredIndex: number) => void;

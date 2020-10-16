@@ -1,9 +1,7 @@
-import * as React from "react";
-import { useContext } from "react";
 import EpisodeName from "./EpisodeName";
 import SeriesTitle from "./SeriesTitle";
 import SeriesSubTitle from "./SeriesSubTitle";
-import TemplateContext, { ISchema } from "../../TemplateContext";
+import { ISchema } from "../../TemplateContext";
 
 export interface BasicData {
   seriesTitle: string;
@@ -11,10 +9,7 @@ export interface BasicData {
   episodeName: string;
 }
 
-const Basic = () => {
-  const { template } = useContext(TemplateContext);
-  return <></>;
-};
+export const name = "Basic2";
 
 export const Schema: ISchema = [
   {
@@ -39,5 +34,3 @@ export const Schema: ISchema = [
     component: EpisodeName,
   },
 ];
-
-export default Basic;

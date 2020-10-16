@@ -23,16 +23,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-type ComponentType = "IMAGE" | "TEMPLATE_ITEM";
-export interface IComponent {
-  title: string;
-  type: ComponentType;
-  value: any;
-  properties?: {
-    [key: string]: any;
-  };
-}
-
 const App = () => {
   const [canvasSize, setCanvasSize] = useState("720p");
 
