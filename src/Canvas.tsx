@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
+import { Rnd } from "react-rnd";
 import styled from "styled-components";
 import TemplateContext from "./TemplateContext";
 import { IComponent } from "./App";
@@ -20,7 +21,7 @@ interface CanvasProps {
 }
 
 const Canvas = ({ width, height }: CanvasProps) => {
-  const { template } = useContext(TemplateContext);
+  const { setProperty, template } = useContext(TemplateContext);
   return (
     <Checkerboard
       id="canvas"
@@ -29,28 +30,43 @@ const Canvas = ({ width, height }: CanvasProps) => {
         height,
         overflow: "hidden",
         position: "relative",
-        zIndex: -2,
       }}
     >
-      {template?.components
-        .filter((comp) => comp.type === "TEMPLATE_ITEM")
-        .map((comp, index) => {
-          return <comp.value zIndex={template?.components.length - index} />;
-        })}
       {template?.components.map((comp: IComponent, index: number) => {
+        if (comp.type === "TEMPLATE_ITEM") {
+          return <comp.value zIndex={1300 - index} />;
+        }
         if (comp.type === "IMAGE") {
           return (
-            <img
-              src={comp.value}
-              width={comp.properties?.width || width}
-              height={comp.properties?.height || height}
-              style={{
-                position: "absolute",
-                zIndex: template?.components.length - index,
-                left: comp.properties?.x || 0,
-                top: comp.properties?.y || 0,
+            <Rnd
+              default={{
+                x: 0,
+                y: 0,
+                width: comp.properties?.width || 320,
+                height: comp.properties?.height || 320,
               }}
-            />
+              onDragStop={(_e, d) => {
+                setProperty(index, "x", d.x);
+                setProperty(index, "y", d.y);
+              }}
+              onResizeStop={(_e, _direction, ref) => {
+                setProperty(index, "width", ref.style.width);
+                setProperty(index, "height", ref.style.height);
+              }}
+              position={{
+                x: comp.properties?.x || 0,
+                y: comp.properties?.y || 0,
+              }}
+              size={{
+                width: comp.properties?.width || 320,
+                height: comp.properties?.height || 320,
+              }}
+              style={{
+                zIndex: 1300 - index,
+              }}
+            >
+              <img src={comp.value} width={"100%"} height={"100%"} />
+            </Rnd>
           );
         }
         return null;

@@ -7,8 +7,8 @@ const EpisodeName = ({ zIndex }: { zIndex: number }) => {
   return (
     <div
       style={{
-        backgroundColor: "#F0DEBA",
-        color: "#7B2529",
+        backgroundColor: "#333333",
+        color: "#ffffff",
         fontFamily: "Lato",
         fontSize: "64px",
         fontStyle: "italic",

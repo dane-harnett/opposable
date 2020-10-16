@@ -2,6 +2,7 @@ import * as React from "react";
 import { useContext } from "react";
 import EpisodeName from "./EpisodeName";
 import SeriesTitle from "./SeriesTitle";
+import SeriesSubTitle from "./SeriesSubTitle";
 import TemplateContext, { ISchema } from "../../TemplateContext";
 
 export interface BasicData {
@@ -22,6 +23,13 @@ export const Schema: ISchema = [
     label: "Series title",
     defaultValue: "[[ SERIES TITLE ]]",
     component: SeriesTitle,
+  },
+  {
+    name: "seriesSubTitle",
+    type: "text",
+    label: "Series sub-title",
+    defaultValue: "[[ SERIES SUB-TITLE ]]",
+    component: SeriesSubTitle,
   },
   {
     name: "episodeName",

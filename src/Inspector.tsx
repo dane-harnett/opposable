@@ -31,9 +31,6 @@ function PaperComponent(props: any) {
     </Draggable>
   );
 }
-function BackdropComponent(props: any) {
-  return <div>{props.children}</div>;
-}
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -70,9 +67,12 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
   return (
     <Dialog
       open={true}
-      BackdropComponent={BackdropComponent}
+      hideBackdrop
+      disableEnforceFocus
+      disableBackdropClick
       PaperComponent={PaperComponent}
       aria-labelledby="draggable-dialog-title"
+      style={{ right: "unset", bottom: "unset", top: "unset", left: "unset" }}
     >
       <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
         Inspector

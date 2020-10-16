@@ -118,19 +118,18 @@ const templateReducer = (
     // remove the target component from the list
     // add it back in the desired position
     case "ADD_IMAGE":
+      const image: IComponent = {
+        title: "Untitled",
+        type: "IMAGE",
+        value: action.payload.image,
+        properties: {
+          x: 0,
+          y: 0,
+        },
+      };
       return {
         ...state,
-        components: state.components.concat([
-          {
-            title: "Untitled",
-            type: "IMAGE",
-            value: action.payload.image,
-            properties: {
-              x: 0,
-              y: 0,
-            },
-          },
-        ]),
+        components: [image, ...state.components],
       };
     case "CHANGE_FIELD":
       return {
