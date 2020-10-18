@@ -22,6 +22,7 @@ const TemplateContext = createContext<{
   selectTemplate: (templateName: string) => void;
   setTitle: (componentIndex: number, title: string) => void;
   reorderComponent: (componentIndex: number, desiredIndex: number) => void;
+  templates: Array<[string, ISchema]>;
 }>({
   addImage: () => {},
   setField: () => {},
@@ -29,6 +30,7 @@ const TemplateContext = createContext<{
   selectTemplate: () => {},
   setTitle: () => {},
   reorderComponent: () => {},
+  templates: [],
 });
 
 export default TemplateContext;

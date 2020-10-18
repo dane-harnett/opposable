@@ -6,8 +6,7 @@ import TemplateActionTypes from "./types/TemplateActionTypes";
 import TTemplateAction from "./types/TTemplateAction";
 import mapSchemaToData from "./helpers/mapSchemaToData";
 import mapSchemaToComponents from "./helpers/mapSchemaToComponents";
-import { name as basicName, Schema as BasicSchema } from "./templates/basic";
-import { Schema as Basic2Schema } from "./templates/basic2";
+import templates from "./templates";
 
 export interface ITemplateState {
   Schema: ISchema;
@@ -17,10 +16,10 @@ export interface ITemplateState {
 }
 
 const initialTemplateState: ITemplateState = {
-  Schema: BasicSchema,
-  data: mapSchemaToData(BasicSchema),
-  name: basicName,
-  components: mapSchemaToComponents(BasicSchema),
+  Schema: templates[0][1],
+  data: mapSchemaToData(templates[0][1]),
+  name: templates[0][0],
+  components: mapSchemaToComponents(templates[0][1]),
 };
 
 const templateReducer = (
@@ -92,11 +91,10 @@ const templateReducer = (
       };
     case TemplateActionTypes.SelectTemplate:
       // @todo: need to handle unlimited templates
-      let schema = BasicSchema;
-
-      if (action.payload.name === "Basic2") {
-        schema = Basic2Schema;
-      }
+      const template =
+        templates.find((template) => template[0] === action.payload.name) ||
+        templates[0];
+      const schema = template[1];
 
       return {
         Schema: schema,
@@ -172,6 +170,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
             },
           });
         },
+        templates,
       }}
     >
       {children}

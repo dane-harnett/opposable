@@ -61,6 +61,7 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
     selectTemplate,
     setTitle,
     reorderComponent,
+    templates,
   } = useContext(TemplateContext);
   const classes = useStyles();
 
@@ -93,8 +94,9 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                 label="Template"
                 value={template?.name}
               >
-                <MenuItem value="Basic">Basic</MenuItem>
-                <MenuItem value="Basic2">Basic2</MenuItem>
+                {templates.map((template) => (
+                  <MenuItem value={template[0]}>{template[0]}</MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl className={classes.formControl} variant="outlined">
