@@ -32,7 +32,7 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <TemplateProvider>
-        <div style={{ display: "flex", margin: 16 }}>
+        <div style={{ margin: 16 }}>
           <GlobalStyle />
           <Canvas width={canvasWidth} height={canvasHeight} />
           <Inspector canvasSize={canvasSize} setCanvasSize={setCanvasSize} />

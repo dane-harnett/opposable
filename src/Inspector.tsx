@@ -2,43 +2,22 @@ import * as React from "react";
 import { useContext } from "react";
 import domtoimage from "dom-to-image";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   TextField,
+  Typography,
   makeStyles,
 } from "@material-ui/core";
-import Draggable from "react-draggable";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TemplateContext, { ISchemaItem } from "./TemplateContext";
 import IComponent from "./types/IComponent";
 import InspectorItem from "./InspectorItem";
-
-const usePaperStyles = makeStyles(() => ({
-  paper: {
-    maxHeight: 720,
-  },
-}));
-
-function PaperComponent(props: any) {
-  const classes = usePaperStyles();
-
-  return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
-      <Paper {...props} className={`${props.className} ${classes.paper}`} />
-    </Draggable>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -52,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
+  },
+  accordionDetails: {
+    flexDirection: "column",
   },
 }));
 
@@ -74,22 +56,31 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
   const classes = useStyles();
 
   return (
-    <Dialog
-      open={true}
-      hideBackdrop
-      disableEnforceFocus
-      disableBackdropClick
-      PaperComponent={PaperComponent}
-      aria-labelledby="draggable-dialog-title"
-      style={{ right: "unset", bottom: "unset", top: "unset", left: "unset" }}
+    <div
+      style={{
+        backgroundColor: "#ffffff",
+        padding: 16,
+        position: "fixed",
+        overflowY: "scroll",
+        height: "100vh",
+        maxWidth: 320,
+        top: 0,
+        right: 0,
+        zIndex: 1300,
+      }}
     >
-      <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
-        Inspector
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          <form className={classes.form}>
-            <FormControl className={classes.formControl} variant="outlined">
+      <Typography variant="h5">Inspector</Typography>
+      <form className={classes.form}>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>General settings</Typography>
+          </AccordionSummary>
+          <AccordionDetails className={classes.accordionDetails}>
+            <FormControl
+              className={classes.formControl}
+              variant="outlined"
+              fullWidth
+            >
               <InputLabel id="demo-simple-select-outlined-label">
                 Template
               </InputLabel>
@@ -107,7 +98,11 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                 ))}
               </Select>
             </FormControl>
-            <FormControl className={classes.formControl} variant="outlined">
+            <FormControl
+              className={classes.formControl}
+              variant="outlined"
+              fullWidth
+            >
               <InputLabel id="demo-simple-select-outlined-label">
                 Canvas size:
               </InputLabel>
@@ -122,19 +117,13 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                 <MenuItem value={"1080p"}>1080p</MenuItem>
               </Select>
             </FormControl>
-            Import an image:
-            <input
-              type="file"
-              onChange={(e) => {
-                const src = URL.createObjectURL(e.target?.files?.[0]);
-                const img = document.createElement("img");
-                img.onload = () => {
-                  addImage(src, img.width, img.height);
-                };
-                img.src = src;
-              }}
-            />
-            Template variables:
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Template variables</Typography>
+          </AccordionSummary>
+          <AccordionDetails className={classes.accordionDetails}>
             {template?.Schema?.map((schemaItem: ISchemaItem, index: number) => (
               <React.Fragment key={index}>
                 <TextField
@@ -148,7 +137,13 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                 />
               </React.Fragment>
             ))}
-            Components:
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Components</Typography>
+          </AccordionSummary>
+          <AccordionDetails className={classes.accordionDetails}>
             <div>
               {template?.components.map(
                 (comp: IComponent, compIndex: number) => (
@@ -233,30 +228,40 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                 )
               )}
             </div>
-          </form>
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            const node = document.getElementById("canvas");
-            if (!node) {
-              return;
-            }
-            domtoimage.toPng(node).then(function (dataUrl: string) {
-              var link = document.createElement("a");
-              link.download = "thumbnail.png";
-              link.href = dataUrl;
-              link.click();
-            });
-          }}
-        >
-          Save as PNG
-        </Button>
-      </DialogActions>
-    </Dialog>
+          </AccordionDetails>
+        </Accordion>
+      </form>
+      Import an image:
+      <input
+        type="file"
+        onChange={(e) => {
+          const src = URL.createObjectURL(e.target?.files?.[0]);
+          const img = document.createElement("img");
+          img.onload = () => {
+            addImage(src, img.width, img.height);
+          };
+          img.src = src;
+        }}
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => {
+          const node = document.getElementById("canvas");
+          if (!node) {
+            return;
+          }
+          domtoimage.toPng(node).then(function (dataUrl: string) {
+            var link = document.createElement("a");
+            link.download = "thumbnail.png";
+            link.href = dataUrl;
+            link.click();
+          });
+        }}
+      >
+        Save as PNG
+      </Button>
+    </div>
   );
 };
 
