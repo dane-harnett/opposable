@@ -19,7 +19,7 @@ const initialTemplateState: ITemplateState = {
   Schema: templates[0][1],
   data: mapSchemaToData(templates[0][1]),
   name: templates[0][0],
-  components: mapSchemaToComponents(templates[0][1]),
+  components: mapSchemaToComponents(templates[0][1], []),
 };
 
 const templateReducer = (
@@ -38,8 +38,6 @@ const templateReducer = (
         ...state,
         components: newComponents,
       };
-    // remove the target component from the list
-    // add it back in the desired position
     case TemplateActionTypes.AddImage:
       const image: IComponent = {
         title: "Untitled",
@@ -94,7 +92,6 @@ const templateReducer = (
         }),
       };
     case TemplateActionTypes.SelectTemplate:
-      // @todo: need to handle unlimited templates
       const template =
         templates.find((template) => template[0] === action.payload.name) ||
         templates[0];
@@ -104,7 +101,7 @@ const templateReducer = (
         Schema: schema,
         data: mapSchemaToData(schema, state.data),
         name: action.payload.name,
-        components: mapSchemaToComponents(schema),
+        components: mapSchemaToComponents(schema, state.components),
       };
     default:
       return state;
