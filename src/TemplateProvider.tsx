@@ -48,6 +48,10 @@ const templateReducer = (
         properties: {
           x: 0,
           y: 0,
+          width: action.payload.width,
+          height: action.payload.height,
+          sourceWidth: action.payload.width,
+          sourceHeight: action.payload.height,
         },
       };
       return {
@@ -117,11 +121,13 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
   return (
     <TemplateContext.Provider
       value={{
-        addImage: (image) => {
+        addImage: (image, width, height) => {
           dispatch({
             type: TemplateActionTypes.AddImage,
             payload: {
               image,
+              width,
+              height,
             },
           });
         },

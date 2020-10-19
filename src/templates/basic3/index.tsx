@@ -1,6 +1,7 @@
 import EpisodeName from "./EpisodeName";
 import SeriesTitle from "./SeriesTitle";
 import SeriesSubTitle from "./SeriesSubTitle";
+import SeparatorBackground from "./SeparatorBackground";
 import { ISchema } from "../../TemplateContext";
 
 export interface BasicData {
@@ -32,5 +33,12 @@ export const Schema: ISchema = [
     label: "Episode name",
     defaultValue: "[[ EPISODE NAME ]]",
     component: EpisodeName,
+  },
+  {
+    name: "separatorBackground",
+    type: "text",
+    label: "Sep BG",
+    defaultValue: "[[ SEP BG ]]",
+    component: SeparatorBackground,
   },
 ];

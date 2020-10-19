@@ -12,7 +12,7 @@ export interface ISchemaItem {
 export type ISchema = Array<ISchemaItem>;
 
 const TemplateContext = createContext<{
-  addImage: (image: string) => void;
+  addImage: (image: string, width: number, height: number) => void;
   setField: (fieldName: string, fieldValue: string) => void;
   setProperty: (
     componentIndex: number,

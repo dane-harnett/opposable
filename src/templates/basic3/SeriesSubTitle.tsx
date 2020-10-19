@@ -7,17 +7,17 @@ const SeriesSubTitle = ({ zIndex }: { zIndex: number }) => {
   return (
     <div
       style={{
-        backgroundColor: "#000000",
-        color: "#ffffff",
+        color: "#000000",
         fontFamily: "Lato",
         fontSize: "64px",
         fontStyle: "italic",
         fontWeight: "bold",
         padding: 8,
         position: "absolute",
-        top: 112,
-        left: 0,
-        width: "100%",
+        textAlign: "center",
+        top: 262,
+        right: 0,
+        width: "50%",
         zIndex,
       }}
     >

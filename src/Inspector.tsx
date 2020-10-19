@@ -21,13 +21,21 @@ import TemplateContext, { ISchemaItem } from "./TemplateContext";
 import IComponent from "./types/IComponent";
 import InspectorItem from "./InspectorItem";
 
+const usePaperStyles = makeStyles(() => ({
+  paper: {
+    maxHeight: 720,
+  },
+}));
+
 function PaperComponent(props: any) {
+  const classes = usePaperStyles();
+
   return (
     <Draggable
       handle="#draggable-dialog-title"
       cancel={'[class*="MuiDialogContent-root"]'}
     >
-      <Paper {...props} />
+      <Paper {...props} className={`${props.className} ${classes.paper}`} />
     </Draggable>
   );
 }
@@ -118,7 +126,12 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
             <input
               type="file"
               onChange={(e) => {
-                addImage(URL.createObjectURL(e.target?.files?.[0]));
+                const src = URL.createObjectURL(e.target?.files?.[0]);
+                const img = document.createElement("img");
+                img.onload = () => {
+                  addImage(src, img.width, img.height);
+                };
+                img.src = src;
               }}
             />
             Template variables:

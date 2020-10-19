@@ -7,17 +7,17 @@ const SeriesTitle = ({ zIndex }: { zIndex: number }) => {
   return (
     <div
       style={{
-        backgroundColor: "#e91530",
-        color: "#333333",
+        color: "#ffffff",
         fontFamily: "Lato",
         fontSize: "80px",
         fontStyle: "italic",
         fontWeight: "bold",
         padding: 16,
         position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
+        textAlign: "center",
+        top: 150,
+        right: 0,
+        width: "50%",
         zIndex,
       }}
     >

@@ -42,8 +42,9 @@ const Canvas = ({ width, height }: CanvasProps) => {
               default={{
                 x: 0,
                 y: 0,
-                width: comp.properties?.width || 320,
-                height: comp.properties?.height || 320,
+                width: comp.properties?.width || comp.properties?.sourceWidth,
+                height:
+                  comp.properties?.height || comp.properties?.sourceHeight,
               }}
               onDragStop={(_e, position) => {
                 setProperty(index, { x: position.x, y: position.y });
@@ -61,8 +62,9 @@ const Canvas = ({ width, height }: CanvasProps) => {
                 y: comp.properties?.y || 0,
               }}
               size={{
-                width: comp.properties?.width || 320,
-                height: comp.properties?.height || 320,
+                width: comp.properties?.width || comp.properties?.sourceWidth,
+                height:
+                  comp.properties?.height || comp.properties?.sourceHeight,
               }}
               style={{
                 zIndex: 1300 - index,
