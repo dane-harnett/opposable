@@ -221,6 +221,19 @@ const Inspector = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                             label="height"
                             value={comp.properties?.height || ""}
                           />
+                          <TextField
+                            onChange={(e) => {
+                              if (
+                                typeof parseInt(e.target.value, 10) === "number"
+                              ) {
+                                setProperty(compIndex, {
+                                  blurRadius: parseInt(e.target.value, 10),
+                                });
+                              }
+                            }}
+                            label="Blur radius"
+                            value={comp.properties?.blurRadius || ""}
+                          />
                         </InspectorItem>
                       )}
                     </div>

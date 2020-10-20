@@ -70,7 +70,17 @@ const Canvas = ({ width, height }: CanvasProps) => {
                 zIndex: 1300 - index,
               }}
             >
-              <img src={comp.value} width={"100%"} height={"100%"} />
+              <img
+                src={comp.value}
+                style={{
+                  filter:
+                    comp.properties?.blurRadius > 0
+                      ? `blur(${comp.properties?.blurRadius}px)`
+                      : "none",
+                }}
+                width={"100%"}
+                height={"100%"}
+              />
             </Rnd>
           );
         }
