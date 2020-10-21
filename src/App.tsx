@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import Canvas from "./Canvas";
 import Inspector from "./Inspector";
+import Toolbar from "./Toolbar";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import TemplateProvider from "./TemplateProvider";
@@ -32,15 +33,18 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <TemplateProvider>
-        <div style={{ margin: 16 }}>
+        <div>
           <GlobalStyle />
-          <Canvas width={canvasWidth} height={canvasHeight} />
-          <Inspector
+          <Toolbar
             canvasWidth={canvasWidth}
             canvasHeight={canvasHeight}
             canvasSize={canvasSize}
             setCanvasSize={setCanvasSize}
           />
+          <div style={{ padding: 16 }}>
+            <Canvas width={canvasWidth} height={canvasHeight} />
+          </div>
+          <Inspector />
         </div>
       </TemplateProvider>
     </DndProvider>
