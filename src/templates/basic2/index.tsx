@@ -11,26 +11,32 @@ export interface BasicData {
 
 export const name = "Basic2";
 
+export const components = {
+  SeriesTitle,
+  SeriesSubTitle,
+  EpisodeName,
+};
+
 export const Schema: ISchema = [
   {
     name: "seriesTitle",
     type: "text",
     label: "Series title",
     defaultValue: "[[ SERIES TITLE ]]",
-    component: SeriesTitle,
+    component: "SeriesTitle",
   },
   {
     name: "seriesSubTitle",
     type: "text",
     label: "Series sub-title",
     defaultValue: "[[ SERIES SUB-TITLE ]]",
-    component: SeriesSubTitle,
+    component: "SeriesSubTitle",
   },
   {
     name: "episodeName",
     type: "text",
     label: "Episode name",
     defaultValue: "[[ EPISODE NAME ]]",
-    component: EpisodeName,
+    component: "EpisodeName",
   },
 ];

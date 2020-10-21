@@ -21,7 +21,13 @@ interface CanvasProps {
 }
 
 const Canvas = ({ width, height }: CanvasProps) => {
-  const { setProperty, template } = useContext(TemplateContext);
+  const { setProperty, template, templates } = useContext(TemplateContext);
+  const currentTemplate = templates.find((t) => t.name === template?.name);
+  if (!currentTemplate) {
+    return null;
+  }
+  const components = currentTemplate.components;
+
   return (
     <Checkerboard
       id="canvas"
@@ -34,7 +40,8 @@ const Canvas = ({ width, height }: CanvasProps) => {
     >
       {template?.components.map((comp: IComponent, index: number) => {
         if (comp.type === "TEMPLATE_ITEM") {
-          return <comp.value zIndex={1300 - index} />;
+          const C = components[comp.value];
+          return <C zIndex={1300 - index} />;
         }
         if (comp.type === "IMAGE") {
           return (

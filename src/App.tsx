@@ -35,7 +35,12 @@ const App = () => {
         <div style={{ margin: 16 }}>
           <GlobalStyle />
           <Canvas width={canvasWidth} height={canvasHeight} />
-          <Inspector canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
+          <Inspector
+            canvasWidth={canvasWidth}
+            canvasHeight={canvasHeight}
+            canvasSize={canvasSize}
+            setCanvasSize={setCanvasSize}
+          />
         </div>
       </TemplateProvider>
     </DndProvider>

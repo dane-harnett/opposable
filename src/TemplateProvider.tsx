@@ -16,10 +16,10 @@ export interface ITemplateState {
 }
 
 const initialTemplateState: ITemplateState = {
-  Schema: templates[0][1],
-  data: mapSchemaToData(templates[0][1]),
-  name: templates[0][0],
-  components: mapSchemaToComponents(templates[0][1], []),
+  Schema: templates[0].Schema,
+  data: mapSchemaToData(templates[0].Schema),
+  name: templates[0].name,
+  components: mapSchemaToComponents(templates[0].Schema, []),
 };
 
 const templateReducer = (
@@ -27,6 +27,8 @@ const templateReducer = (
   action: TTemplateAction
 ) => {
   switch (action.type) {
+    case TemplateActionTypes.LoadProject:
+      return JSON.parse(action.payload.project);
     case TemplateActionTypes.ReorderComponent:
       const newComponents = [...state.components];
       newComponents.splice(
@@ -94,9 +96,9 @@ const templateReducer = (
       };
     case TemplateActionTypes.SelectTemplate:
       const template =
-        templates.find((template) => template[0] === action.payload.name) ||
+        templates.find((template) => template.name === action.payload.name) ||
         templates[0];
-      const schema = template[1];
+      const schema = template.Schema;
 
       return {
         Schema: schema,
@@ -175,6 +177,12 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
           });
         },
         templates,
+        loadProject: (project: string) => {
+          dispatch({
+            type: TemplateActionTypes.LoadProject,
+            payload: { project },
+          });
+        },
       }}
     >
       {children}
