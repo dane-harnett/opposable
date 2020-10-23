@@ -5,7 +5,11 @@ import {
   Button,
   FormControl,
   InputLabel,
+  List,
+  ListItem,
+  ListItemText,
   MenuItem,
+  Menu,
   Select,
   makeStyles,
 } from "@material-ui/core";
@@ -26,6 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
   accordionDetails: {
     flexDirection: "column",
+  },
+  list: {
+    paddingBottom: 0,
+    paddingTop: 0,
+  },
+  listItemText: {
+    marginBottom: 0,
+    marginTop: 0,
   },
 }));
 
@@ -50,11 +62,14 @@ const Toolbar = ({
     templates,
   } = useContext(TemplateContext);
   const classes = useStyles();
+  const [templateAnchorEl, setTemplateAnchorEl] = React.useState<any>(null);
+  const [canvasSizeAnchorEl, setCanvasSizeAnchorEl] = React.useState<any>(null);
 
   return (
     <div
       style={{
         backgroundColor: "#ffffff",
+        display: "flex",
         padding: 16,
         width: "calc(100% - 320px)",
       }}
@@ -105,33 +120,86 @@ const Toolbar = ({
       >
         Save Project
       </Button>
-      <FormControl className={classes.formControl} variant="outlined">
-        <InputLabel id="demo-simple-select-outlined-label">Template</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          onChange={(event) => selectTemplate(event.target.value as string)}
-          label="Template"
-          value={template?.name}
+      <List
+        aria-label="Template"
+        className={classes.list}
+        component="div"
+        dense
+      >
+        <ListItem
+          button
+          onClick={(event) => {
+            setTemplateAnchorEl(event.currentTarget);
+          }}
         >
-          {templates.map((template) => (
-            <MenuItem value={template.name}>{template.name}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl className={classes.formControl} variant="outlined">
-        <InputLabel id="demo-simple-select-outlined-label">
-          Canvas size:
-        </InputLabel>
-        <Select
-          onChange={(event) => setCanvasSize(event.target.value as string)}
-          label="Canvas size"
-          value={canvasSize}
+          <ListItemText
+            className={classes.listItemText}
+            primary="Template:"
+            secondary={template?.name}
+          />
+        </ListItem>
+      </List>
+      <Menu
+        id="select-template-menu"
+        anchorEl={templateAnchorEl}
+        keepMounted
+        open={Boolean(templateAnchorEl)}
+        onClose={() => {
+          setTemplateAnchorEl(null);
+        }}
+      >
+        {templates.map((template) => (
+          <MenuItem
+            value={template.name}
+            onClick={() => {
+              selectTemplate(template.name);
+              setTemplateAnchorEl(null);
+            }}
+          >
+            {template.name}
+          </MenuItem>
+        ))}
+      </Menu>
+      <List
+        aria-label="Canvas size"
+        className={classes.list}
+        component="div"
+        dense
+      >
+        <ListItem
+          button
+          onClick={(event) => {
+            setCanvasSizeAnchorEl(event.currentTarget);
+          }}
         >
-          <MenuItem value={"720p"}>720p</MenuItem>
-          <MenuItem value={"1080p"}>1080p</MenuItem>
-        </Select>
-      </FormControl>
+          <ListItemText
+            className={classes.listItemText}
+            primary="Canvas size:"
+            secondary={canvasSize}
+          />
+        </ListItem>
+      </List>
+      <Menu
+        id="select-template-menu"
+        anchorEl={canvasSizeAnchorEl}
+        keepMounted
+        open={Boolean(canvasSizeAnchorEl)}
+        onClose={() => {
+          setCanvasSizeAnchorEl(null);
+        }}
+      >
+        {["720p", "1080p"].map((size) => (
+          <MenuItem
+            value={size}
+            onClick={() => {
+              setCanvasSize(size);
+              setCanvasSizeAnchorEl(null);
+            }}
+          >
+            {size}
+          </MenuItem>
+        ))}
+      </Menu>
       <input
         id="import-image-input"
         style={{ display: "none" }}
