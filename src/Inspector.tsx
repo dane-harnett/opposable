@@ -122,6 +122,7 @@ const Inspector = () => {
                             value={comp.title}
                           />
                           <TextField
+                            type="number"
                             style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
@@ -136,6 +137,7 @@ const Inspector = () => {
                             value={comp.properties?.x || ""}
                           />
                           <TextField
+                            type="number"
                             style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
@@ -150,6 +152,7 @@ const Inspector = () => {
                             value={comp.properties?.y || ""}
                           />
                           <TextField
+                            type="number"
                             style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
@@ -164,6 +167,7 @@ const Inspector = () => {
                             value={comp.properties?.width || ""}
                           />
                           <TextField
+                            type="number"
                             style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
@@ -178,6 +182,7 @@ const Inspector = () => {
                             value={comp.properties?.height || ""}
                           />
                           <TextField
+                            type="number"
                             onChange={(e) => {
                               if (
                                 typeof parseInt(e.target.value, 10) === "number"
