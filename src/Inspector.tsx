@@ -16,6 +16,19 @@ import IComponent from "./types/IComponent";
 import InspectorItem from "./InspectorItem";
 
 const useStyles = makeStyles((theme) => ({
+  inspector: {
+    backgroundColor: "#ffffff",
+    boxShadow: "-5px 0 5px -5px #333",
+    padding: 16,
+    position: "fixed",
+    overflowY: "scroll",
+    height: "calc(100vh - 80px)",
+    maxWidth: 320,
+    bottom: 0,
+    right: 0,
+    width: 320,
+    zIndex: 1300,
+  },
   form: {
     display: "flex",
     flexDirection: "column",
@@ -45,20 +58,7 @@ const Inspector = () => {
   const classes = useStyles();
 
   return (
-    <div
-      style={{
-        backgroundColor: "#ffffff",
-        padding: 16,
-        position: "fixed",
-        overflowY: "scroll",
-        height: "100vh",
-        maxWidth: 320,
-        top: 0,
-        right: 0,
-        width: 320,
-        zIndex: 1300,
-      }}
-    >
+    <div className={classes.inspector}>
       <Typography variant="h5">Inspector</Typography>
       <form className={classes.form}>
         <Accordion>
