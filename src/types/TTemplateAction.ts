@@ -1,6 +1,7 @@
 import IAddImageAction from "./IAddImageAction";
 import IChangeFieldAction from "./IChangeFieldAction";
 import ILoadProjectAction from "./ILoadProjectAction";
+import IRemoveComponentAction from "./IRemoveComponentAction";
 import IReorderComponentAction from "./IReorderComponentAction";
 import ISelectTemplateAction from "./ISelectTemplateAction";
 import ISetPropertyAction from "./ISetPropertyAction";
@@ -11,6 +12,7 @@ type TTemplateAction =
   | IChangeFieldAction
   | ILoadProjectAction
   | ISelectTemplateAction
+  | IRemoveComponentAction
   | IReorderComponentAction
   | ISetPropertyAction
   | ISetTitleAction;

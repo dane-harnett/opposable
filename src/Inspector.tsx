@@ -4,10 +4,12 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  IconButton,
   TextField,
   Typography,
   makeStyles,
 } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TemplateContext, { ISchemaItem } from "./TemplateContext";
 import IComponent from "./types/IComponent";
@@ -37,6 +39,7 @@ const Inspector = () => {
     setField,
     setProperty,
     setTitle,
+    removeComponent,
     reorderComponent,
   } = useContext(TemplateContext);
   const classes = useStyles();
@@ -101,6 +104,15 @@ const Inspector = () => {
                           onDrop={reorderComponent}
                           compIndex={compIndex}
                         >
+                          <IconButton
+                            aria-label="delete"
+                            size="small"
+                            onClick={() => {
+                              removeComponent(compIndex);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
                           <TextField
                             onChange={(e) => {
                               setTitle(compIndex, e.target.value);

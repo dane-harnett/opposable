@@ -29,6 +29,14 @@ const templateReducer = (
   switch (action.type) {
     case TemplateActionTypes.LoadProject:
       return JSON.parse(action.payload.project);
+    case TemplateActionTypes.RemoveComponent:
+      return {
+        ...state,
+        components: [
+          ...state.components.slice(0, action.payload.componentIndex),
+          ...state.components.slice(action.payload.componentIndex + 1),
+        ],
+      };
     case TemplateActionTypes.ReorderComponent:
       const newComponents = [...state.components];
       newComponents.splice(
@@ -164,6 +172,14 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
             payload: {
               componentIndex,
               title,
+            },
+          });
+        },
+        removeComponent: (componentIndex: number) => {
+          dispatch({
+            type: TemplateActionTypes.RemoveComponent,
+            payload: {
+              componentIndex,
             },
           });
         },

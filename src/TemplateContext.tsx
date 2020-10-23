@@ -21,6 +21,7 @@ const TemplateContext = createContext<{
   template?: ITemplateState;
   selectTemplate: (templateName: string) => void;
   setTitle: (componentIndex: number, title: string) => void;
+  removeComponent: (componentIndex: number) => void;
   reorderComponent: (componentIndex: number, desiredIndex: number) => void;
   templates: Array<any>;
   loadProject: (project: string) => void;
@@ -30,6 +31,7 @@ const TemplateContext = createContext<{
   setProperty: () => {},
   selectTemplate: () => {},
   setTitle: () => {},
+  removeComponent: () => {},
   reorderComponent: () => {},
   templates: [],
   loadProject: () => {},
