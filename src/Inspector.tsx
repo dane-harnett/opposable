@@ -114,6 +114,7 @@ const Inspector = () => {
                             <DeleteIcon />
                           </IconButton>
                           <TextField
+                            style={{ width: "100%" }}
                             onChange={(e) => {
                               setTitle(compIndex, e.target.value);
                             }}
@@ -121,6 +122,7 @@ const Inspector = () => {
                             value={comp.title}
                           />
                           <TextField
+                            style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
                                 typeof parseInt(e.target.value, 10) === "number"
@@ -134,6 +136,7 @@ const Inspector = () => {
                             value={comp.properties?.x || ""}
                           />
                           <TextField
+                            style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
                                 typeof parseInt(e.target.value, 10) === "number"
@@ -147,6 +150,7 @@ const Inspector = () => {
                             value={comp.properties?.y || ""}
                           />
                           <TextField
+                            style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
                                 typeof parseInt(e.target.value, 10) === "number"
@@ -160,6 +164,7 @@ const Inspector = () => {
                             value={comp.properties?.width || ""}
                           />
                           <TextField
+                            style={{ width: "50%" }}
                             onChange={(e) => {
                               if (
                                 typeof parseInt(e.target.value, 10) === "number"

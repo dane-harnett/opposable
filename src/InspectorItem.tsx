@@ -31,7 +31,7 @@ export default function InspectorItem({
         <div>
           <DragIndicatorIcon />
         </div>
-        <div>{children}</div>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>{children}</div>
       </div>
     </div>
   );
