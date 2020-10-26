@@ -8,7 +8,6 @@ import {
   MenuItem,
   Menu,
   Toolbar as MuiToolbar,
-  makeStyles,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
@@ -110,6 +109,7 @@ const Toolbar = ({
         >
           {templates.map((template) => (
             <MenuItem
+              key={template.name}
               value={template.name}
               onClick={() => {
                 selectTemplate(template.name);
@@ -141,6 +141,7 @@ const Toolbar = ({
         >
           {["720p", "1080p"].map((size) => (
             <MenuItem
+              key={size}
               value={size}
               onClick={() => {
                 setCanvasSize(size);

@@ -50,6 +50,7 @@ const Canvas = ({
           const C = components[comp.value];
           return (
             <C
+              key={index}
               zIndex={1300 - index}
               style={
                 index === selectedComponentIndex
@@ -60,14 +61,35 @@ const Canvas = ({
           );
         }
         if (comp.type === "IMAGE") {
+          const actingWidth =
+            parseInt(comp.properties?.width, 10) ??
+            parseInt(comp.properties?.sourceWidth, 10);
+          const actingHeight =
+            parseInt(comp.properties?.height, 10) ??
+            parseInt(comp.properties?.sourceHeight, 10);
+          const imageWidth =
+            comp.properties?.blurRadius > 0 &&
+            comp.properties?.blurPreserveEdges
+              ? actingWidth + comp.properties?.blurRadius * 2
+              : actingWidth;
+          const imageHeight =
+            comp.properties?.blurRadius > 0 &&
+            comp.properties?.blurPreserveEdges
+              ? actingHeight + comp.properties?.blurRadius * 2
+              : actingHeight;
+          const size = {
+            width: actingWidth,
+            height: actingHeight,
+          };
           return (
             <Rnd
+              key={index}
               default={{
                 x: 0,
                 y: 0,
-                width: comp.properties?.width || comp.properties?.sourceWidth,
+                width: comp.properties?.width ?? comp.properties?.sourceWidth,
                 height:
-                  comp.properties?.height || comp.properties?.sourceHeight,
+                  comp.properties?.height ?? comp.properties?.sourceHeight,
               }}
               lockAspectRatio={comp.properties?.lockAspectRatio ?? true}
               onClick={() => setSelectedComponentIndex(index)}
@@ -86,12 +108,9 @@ const Canvas = ({
                 x: comp.properties?.x || 0,
                 y: comp.properties?.y || 0,
               }}
-              size={{
-                width: comp.properties?.width || comp.properties?.sourceWidth,
-                height:
-                  comp.properties?.height || comp.properties?.sourceHeight,
-              }}
+              size={size}
               style={{
+                overflow: "hidden",
                 zIndex: 1300 - index,
                 ...(index === selectedComponentIndex
                   ? { border: "4px solid mediumseagreen" }
@@ -105,9 +124,19 @@ const Canvas = ({
                     comp.properties?.blurRadius > 0
                       ? `blur(${comp.properties?.blurRadius}px)`
                       : "none",
+                  width: `${imageWidth}px`,
+                  height: `${imageHeight}px`,
+                  marginLeft:
+                    comp.properties?.blurRadius > 0 &&
+                    comp.properties?.blurPreserveEdges
+                      ? -comp.properties?.blurRadius
+                      : 0,
+                  marginTop:
+                    comp.properties?.blurRadius > 0 &&
+                    comp.properties?.blurPreserveEdges
+                      ? -comp.properties?.blurRadius
+                      : 0,
                 }}
-                width={"100%"}
-                height={"100%"}
               />
             </Rnd>
           );

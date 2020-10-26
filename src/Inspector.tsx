@@ -100,7 +100,7 @@ const Inspector = ({
             <div>
               {template?.components.map(
                 (comp: IComponent, compIndex: number) => (
-                  <div>
+                  <div key={compIndex}>
                     <div>
                       {comp.type === "TEMPLATE_ITEM" && (
                         <InspectorItem
@@ -231,8 +231,8 @@ const Inspector = ({
                                 </IconButton>
                               </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                              <Grid item xs={12}>
+                            <Grid alignItems="center" container item xs={12}>
+                              <Grid item xs={10}>
                                 <TextField
                                   type="number"
                                   onChange={(e) => {
@@ -251,6 +251,23 @@ const Inspector = ({
                                   label="Blur radius"
                                   value={comp.properties?.blurRadius || ""}
                                 />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <IconButton
+                                  size="small"
+                                  onClick={() => {
+                                    setProperty(compIndex, {
+                                      blurPreserveEdges: !comp.properties
+                                        ?.blurPreserveEdges,
+                                    });
+                                  }}
+                                >
+                                  {comp.properties?.blurPreserveEdges ? (
+                                    <LinkIcon />
+                                  ) : (
+                                    <LinkOffIcon />
+                                  )}
+                                </IconButton>
                               </Grid>
                             </Grid>
                           </Grid>

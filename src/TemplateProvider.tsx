@@ -55,6 +55,7 @@ const templateReducer = (
         value: action.payload.image,
         properties: {
           blurRadius: 0,
+          blurPreserveEdges: false,
           x: 0,
           y: 0,
           width: action.payload.width,
