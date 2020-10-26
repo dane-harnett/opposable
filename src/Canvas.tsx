@@ -69,6 +69,7 @@ const Canvas = ({
                 height:
                   comp.properties?.height || comp.properties?.sourceHeight,
               }}
+              lockAspectRatio={comp.properties?.lockAspectRatio ?? true}
               onClick={() => setSelectedComponentIndex(index)}
               onDragStop={(_e, position) => {
                 setProperty(index, { x: position.x, y: position.y });

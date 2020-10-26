@@ -4,6 +4,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Grid,
   IconButton,
   TextField,
   Typography,
@@ -11,6 +12,8 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import LinkIcon from "@material-ui/icons/Link";
+import LinkOffIcon from "@material-ui/icons/LinkOff";
 import TemplateContext, { ISchemaItem } from "./TemplateContext";
 import IComponent from "./types/IComponent";
 import InspectorItem from "./InspectorItem";
@@ -116,97 +119,141 @@ const Inspector = ({
                           selectedComponentIndex={selectedComponentIndex}
                           setSelectedComponentIndex={setSelectedComponentIndex}
                         >
-                          <IconButton
-                            aria-label="delete"
-                            size="small"
-                            onClick={() => {
-                              removeComponent(compIndex);
-                            }}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                          <TextField
-                            style={{ width: "100%" }}
-                            onChange={(e) => {
-                              setTitle(compIndex, e.target.value);
-                            }}
-                            label="Title"
-                            value={comp.title}
-                          />
-                          <TextField
-                            type="number"
-                            style={{ width: "50%" }}
-                            onChange={(e) => {
-                              if (
-                                typeof parseInt(e.target.value, 10) === "number"
-                              ) {
-                                setProperty(compIndex, {
-                                  x: parseInt(e.target.value, 10),
-                                });
-                              }
-                            }}
-                            label="x"
-                            value={comp.properties?.x || ""}
-                          />
-                          <TextField
-                            type="number"
-                            style={{ width: "50%" }}
-                            onChange={(e) => {
-                              if (
-                                typeof parseInt(e.target.value, 10) === "number"
-                              ) {
-                                setProperty(compIndex, {
-                                  y: parseInt(e.target.value, 10),
-                                });
-                              }
-                            }}
-                            label="y"
-                            value={comp.properties?.y || ""}
-                          />
-                          <TextField
-                            type="number"
-                            style={{ width: "50%" }}
-                            onChange={(e) => {
-                              if (
-                                typeof parseInt(e.target.value, 10) === "number"
-                              ) {
-                                setProperty(compIndex, {
-                                  width: parseInt(e.target.value, 10),
-                                });
-                              }
-                            }}
-                            label="width"
-                            value={comp.properties?.width || ""}
-                          />
-                          <TextField
-                            type="number"
-                            style={{ width: "50%" }}
-                            onChange={(e) => {
-                              if (
-                                typeof parseInt(e.target.value, 10) === "number"
-                              ) {
-                                setProperty(compIndex, {
-                                  height: parseInt(e.target.value, 10),
-                                });
-                              }
-                            }}
-                            label="height"
-                            value={comp.properties?.height || ""}
-                          />
-                          <TextField
-                            type="number"
-                            onChange={(e) => {
-                              if (
-                                typeof parseInt(e.target.value, 10) === "number"
-                              ) {
-                                setProperty(compIndex, {
-                                  blurRadius: parseInt(e.target.value, 10),
-                                });
-                              }
-                            }}
-                            label="Blur radius"
-                            value={comp.properties?.blurRadius || ""}
-                          />
+                          <Grid container>
+                            <Grid alignItems="center" container item xs={12}>
+                              <Grid item xs={10}>
+                                <TextField
+                                  onChange={(e) => {
+                                    setTitle(compIndex, e.target.value);
+                                  }}
+                                  label="Title"
+                                  value={comp.title}
+                                />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <IconButton
+                                  aria-label="delete"
+                                  size="small"
+                                  onClick={() => {
+                                    removeComponent(compIndex);
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              </Grid>
+                            </Grid>
+                            <Grid container item xs={12}>
+                              <Grid item xs={5}>
+                                <TextField
+                                  type="number"
+                                  onChange={(e) => {
+                                    if (
+                                      typeof parseInt(e.target.value, 10) ===
+                                      "number"
+                                    ) {
+                                      setProperty(compIndex, {
+                                        x: parseInt(e.target.value, 10),
+                                      });
+                                    }
+                                  }}
+                                  label="x"
+                                  value={comp.properties?.x || ""}
+                                />
+                              </Grid>
+                              <Grid item xs={5}>
+                                <TextField
+                                  type="number"
+                                  onChange={(e) => {
+                                    if (
+                                      typeof parseInt(e.target.value, 10) ===
+                                      "number"
+                                    ) {
+                                      setProperty(compIndex, {
+                                        y: parseInt(e.target.value, 10),
+                                      });
+                                    }
+                                  }}
+                                  label="y"
+                                  value={comp.properties?.y || ""}
+                                />
+                              </Grid>
+                            </Grid>
+                            <Grid alignItems="center" container item xs={12}>
+                              <Grid item xs={5}>
+                                <TextField
+                                  type="number"
+                                  onChange={(e) => {
+                                    if (
+                                      typeof parseInt(e.target.value, 10) ===
+                                      "number"
+                                    ) {
+                                      setProperty(compIndex, {
+                                        width: parseInt(e.target.value, 10),
+                                      });
+                                    }
+                                  }}
+                                  label="width"
+                                  value={comp.properties?.width || ""}
+                                />
+                              </Grid>
+                              <Grid item xs={5}>
+                                <TextField
+                                  type="number"
+                                  onChange={(e) => {
+                                    if (
+                                      typeof parseInt(e.target.value, 10) ===
+                                      "number"
+                                    ) {
+                                      setProperty(compIndex, {
+                                        height: parseInt(e.target.value, 10),
+                                      });
+                                    }
+                                  }}
+                                  label="height"
+                                  value={comp.properties?.height || ""}
+                                />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <IconButton
+                                  size="small"
+                                  onClick={() => {
+                                    setProperty(compIndex, {
+                                      lockAspectRatio: !comp.properties
+                                        ?.lockAspectRatio,
+                                    });
+                                  }}
+                                >
+                                  {comp.properties?.lockAspectRatio ? (
+                                    <LinkIcon />
+                                  ) : (
+                                    <LinkOffIcon />
+                                  )}
+                                </IconButton>
+                              </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Grid item xs={12}>
+                                <TextField
+                                  type="number"
+                                  onChange={(e) => {
+                                    if (
+                                      typeof parseInt(e.target.value, 10) ===
+                                      "number"
+                                    ) {
+                                      setProperty(compIndex, {
+                                        blurRadius: parseInt(
+                                          e.target.value,
+                                          10
+                                        ),
+                                      });
+                                    }
+                                  }}
+                                  label="Blur radius"
+                                  value={comp.properties?.blurRadius || ""}
+                                />
+                              </Grid>
+                            </Grid>
+                          </Grid>
                         </InspectorItem>
                       )}
                     </div>

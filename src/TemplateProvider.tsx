@@ -59,6 +59,7 @@ const templateReducer = (
           y: 0,
           width: action.payload.width,
           height: action.payload.height,
+          lockAspectRatio: true,
           sourceWidth: action.payload.width,
           sourceHeight: action.payload.height,
         },
