@@ -46,7 +46,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Inspector = () => {
+interface IInspectorProps {
+  selectedComponentIndex: number | null;
+  setSelectedComponentIndex: (selectedComponentIndex: number | null) => void;
+}
+
+const Inspector = ({
+  selectedComponentIndex,
+  setSelectedComponentIndex,
+}: IInspectorProps) => {
   const {
     template,
     setField,
@@ -95,6 +103,8 @@ const Inspector = () => {
                         <InspectorItem
                           onDrop={reorderComponent}
                           compIndex={compIndex}
+                          selectedComponentIndex={selectedComponentIndex}
+                          setSelectedComponentIndex={setSelectedComponentIndex}
                         >
                           {comp.title}
                         </InspectorItem>
@@ -103,6 +113,8 @@ const Inspector = () => {
                         <InspectorItem
                           onDrop={reorderComponent}
                           compIndex={compIndex}
+                          selectedComponentIndex={selectedComponentIndex}
+                          setSelectedComponentIndex={setSelectedComponentIndex}
                         >
                           <IconButton
                             aria-label="delete"

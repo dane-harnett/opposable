@@ -5,13 +5,17 @@ import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 interface IInspectorItemProps {
   children?: React.ReactNode;
   compIndex: number;
+  selectedComponentIndex: number | null;
   onDrop: (compIndex: number, desiredIndex: number) => void;
+  setSelectedComponentIndex: (selectedComponentIndex: number | null) => void;
 }
 
 export default function InspectorItem({
   compIndex,
   onDrop,
   children,
+  selectedComponentIndex,
+  setSelectedComponentIndex,
 }: IInspectorItemProps) {
   const [{ opacity }, dragRef] = useDrag({
     item: { type: "InspectorItem", compIndex },
@@ -28,7 +32,13 @@ export default function InspectorItem({
   return (
     <div ref={dropRef}>
       <div ref={dragRef} style={{ display: "flex", opacity }}>
-        <div>
+        <div
+          onClick={() =>
+            setSelectedComponentIndex(
+              compIndex === selectedComponentIndex ? null : compIndex
+            )
+          }
+        >
           <DragIndicatorIcon />
         </div>
         <div style={{ display: "flex", flexWrap: "wrap" }}>{children}</div>

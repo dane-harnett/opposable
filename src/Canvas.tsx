@@ -18,9 +18,16 @@ interface CanvasProps {
   width: number;
   height: number;
   children?: React.ReactNode;
+  selectedComponentIndex: number | null;
+  setSelectedComponentIndex: (selectedComponentIndex: number | null) => void;
 }
 
-const Canvas = ({ width, height }: CanvasProps) => {
+const Canvas = ({
+  width,
+  height,
+  selectedComponentIndex = null,
+  setSelectedComponentIndex,
+}: CanvasProps) => {
   const { setProperty, template, templates } = useContext(TemplateContext);
   const currentTemplate = templates.find((t) => t.name === template?.name);
   if (!currentTemplate) {
@@ -41,7 +48,16 @@ const Canvas = ({ width, height }: CanvasProps) => {
       {template?.components.map((comp: IComponent, index: number) => {
         if (comp.type === "TEMPLATE_ITEM") {
           const C = components[comp.value];
-          return <C zIndex={1300 - index} />;
+          return (
+            <C
+              zIndex={1300 - index}
+              style={
+                index === selectedComponentIndex
+                  ? { border: "4px solid mediumseagreen" }
+                  : {}
+              }
+            />
+          );
         }
         if (comp.type === "IMAGE") {
           return (
@@ -53,6 +69,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
                 height:
                   comp.properties?.height || comp.properties?.sourceHeight,
               }}
+              onClick={() => setSelectedComponentIndex(index)}
               onDragStop={(_e, position) => {
                 setProperty(index, { x: position.x, y: position.y });
               }}
@@ -75,6 +92,9 @@ const Canvas = ({ width, height }: CanvasProps) => {
               }}
               style={{
                 zIndex: 1300 - index,
+                ...(index === selectedComponentIndex
+                  ? { border: "4px solid mediumseagreen" }
+                  : {}),
               }}
             >
               <img

@@ -2,11 +2,12 @@ import * as React from "react";
 import { useContext } from "react";
 import TemplateContext from "../../TemplateContext";
 
-const SeriesTitle = ({ zIndex }: { zIndex: number }) => {
+const SeriesTitle = ({ zIndex, style }: { zIndex: number; style: any }) => {
   const { template } = useContext(TemplateContext);
   return (
     <div
       style={{
+        ...style,
         backgroundColor: "#e91530",
         color: "#333333",
         fontFamily: "Lato",

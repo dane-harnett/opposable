@@ -26,7 +26,9 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   const [canvasSize, setCanvasSize] = useState("720p");
-
+  const [selectedComponentIndex, setSelectedComponentIndex] = useState<
+    number | null
+  >(null);
   const canvasWidth = canvasSize === "720p" ? 1280 : 1920;
   const canvasHeight = canvasSize === "720p" ? 720 : 1080;
 
@@ -42,9 +44,17 @@ const App = () => {
             setCanvasSize={setCanvasSize}
           />
           <div style={{ padding: 16 }}>
-            <Canvas width={canvasWidth} height={canvasHeight} />
+            <Canvas
+              width={canvasWidth}
+              height={canvasHeight}
+              selectedComponentIndex={selectedComponentIndex}
+              setSelectedComponentIndex={setSelectedComponentIndex}
+            />
           </div>
-          <Inspector />
+          <Inspector
+            selectedComponentIndex={selectedComponentIndex}
+            setSelectedComponentIndex={setSelectedComponentIndex}
+          />
         </div>
       </TemplateProvider>
     </DndProvider>

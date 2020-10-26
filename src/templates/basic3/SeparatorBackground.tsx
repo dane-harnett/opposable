@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const SeparatorBackground = ({ zIndex }: { zIndex: number }) => {
+const SeparatorBackground = ({ zIndex }: { zIndex: number; style: any }) => {
   return (
     <>
       <div
