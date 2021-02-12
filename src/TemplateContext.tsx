@@ -13,6 +13,7 @@ export type ISchema = Array<ISchemaItem>;
 
 const TemplateContext = createContext<{
   addImage: (image: string, width: number, height: number) => void;
+  addTextBox: () => void;
   setField: (fieldName: string, fieldValue: string) => void;
   setProperty: (
     componentIndex: number,
@@ -27,6 +28,7 @@ const TemplateContext = createContext<{
   loadProject: (project: string) => void;
 }>({
   addImage: () => {},
+  addTextBox: () => {},
   setField: () => {},
   setProperty: () => {},
   selectTemplate: () => {},

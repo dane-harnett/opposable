@@ -141,6 +141,43 @@ const Canvas = ({
             </Rnd>
           );
         }
+        if (comp.type === "TEXT_BOX") {
+          return (
+            <Rnd
+              key={index}
+              default={{ x: 0, y: 0, width: "auto", height: "auto" }}
+              onClick={() => setSelectedComponentIndex(index)}
+              onDragStop={(_e, position) => {
+                setProperty(index, { x: position.x, y: position.y });
+              }}
+              onResizeStop={(_e, _direction, _ref, _delta, position) => {
+                setProperty(index, {
+                  x: position.x,
+                  y: position.y,
+                });
+              }}
+              position={{
+                x: comp.properties?.x || 0,
+                y: comp.properties?.y || 0,
+              }}
+              style={{
+                overflow: "hidden",
+                zIndex: 1300 - index,
+                ...(index === selectedComponentIndex
+                  ? { border: "4px solid mediumseagreen" }
+                  : {}),
+              }}
+            >
+              <div
+                style={{
+                  ...comp.properties,
+                }}
+              >
+                {comp.title}
+              </div>
+            </Rnd>
+          );
+        }
         return null;
       })}
     </Checkerboard>

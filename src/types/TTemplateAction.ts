@@ -1,4 +1,5 @@
 import IAddImageAction from "./IAddImageAction";
+import IAddTextBoxAction from "./IAddTextBoxAction";
 import IChangeFieldAction from "./IChangeFieldAction";
 import ILoadProjectAction from "./ILoadProjectAction";
 import IRemoveComponentAction from "./IRemoveComponentAction";
@@ -9,6 +10,7 @@ import ISetTitleAction from "./ISetTitleAction";
 
 type TTemplateAction =
   | IAddImageAction
+  | IAddTextBoxAction
   | IChangeFieldAction
   | ILoadProjectAction
   | ISelectTemplateAction

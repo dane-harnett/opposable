@@ -1,5 +1,6 @@
 enum TemplateActionTypes {
   AddImage = "ADD_IMAGE",
+  AddTextBox = "ADD_TEXT_BOX",
   ChangeField = "CHANGE_FIELD",
   LoadProject = "LOAD_PROJECT",
   RemoveComponent = "REMOVE_COMPONENT",

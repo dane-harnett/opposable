@@ -14,6 +14,7 @@ import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 import SaveIcon from "@material-ui/icons/Save";
 import ImageIcon from "@material-ui/icons/Image";
+import TextFieldsIcon from "@material-ui/icons/TextFields";
 import TemplateContext from "./TemplateContext";
 
 interface InspectorProps {
@@ -31,6 +32,7 @@ const Toolbar = ({
 }: InspectorProps) => {
   const {
     addImage,
+    addTextBox,
     loadProject,
     template,
     selectTemplate,
@@ -186,6 +188,14 @@ const Toolbar = ({
           }}
         >
           <ImageIcon />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          onClick={() => {
+            addTextBox();
+          }}
+        >
+          <TextFieldsIcon />
         </IconButton>
         <IconButton
           color="inherit"

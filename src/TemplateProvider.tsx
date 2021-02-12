@@ -69,6 +69,27 @@ const templateReducer = (
         ...state,
         components: [image, ...state.components],
       };
+    case TemplateActionTypes.AddTextBox:
+      const textBox: IComponent = {
+        title: "Untitled",
+        type: "TEXT_BOX",
+        value: "Intentionally left blank",
+        properties: {
+          x: 0,
+          y: 0,
+          color: "#000000",
+          backgroundColor: "#FFFFFF",
+          fontSize: "128px",
+          padding: "8px",
+        },
+      };
+      const newState = {
+        ...state,
+        components: [textBox, ...state.components],
+      };
+
+      console.log({ state, action, newState });
+      return newState;
     case TemplateActionTypes.ChangeField:
       return {
         ...state,
@@ -139,6 +160,12 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
               width,
               height,
             },
+          });
+        },
+        addTextBox: () => {
+          dispatch({
+            type: TemplateActionTypes.AddTextBox,
+            payload: {},
           });
         },
         setField: (fieldName, fieldValue) => {
