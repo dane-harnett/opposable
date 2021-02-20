@@ -25,28 +25,24 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  const [canvasSize, setCanvasSize] = useState("720p");
+  const [canvasSize, setCanvasSize] = useState({
+    width: 1280,
+    height: 720,
+  });
   const [selectedComponentIndex, setSelectedComponentIndex] = useState<
     number | null
   >(null);
-  const canvasWidth = canvasSize === "720p" ? 1280 : 1920;
-  const canvasHeight = canvasSize === "720p" ? 720 : 1080;
 
   return (
     <DndProvider backend={HTML5Backend}>
       <TemplateProvider>
         <div>
           <GlobalStyle />
-          <Toolbar
-            canvasWidth={canvasWidth}
-            canvasHeight={canvasHeight}
-            canvasSize={canvasSize}
-            setCanvasSize={setCanvasSize}
-          />
+          <Toolbar canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
           <div style={{ padding: 16 }}>
             <Canvas
-              width={canvasWidth}
-              height={canvasHeight}
+              width={canvasSize.width}
+              height={canvasSize.height}
               selectedComponentIndex={selectedComponentIndex}
               setSelectedComponentIndex={setSelectedComponentIndex}
             />

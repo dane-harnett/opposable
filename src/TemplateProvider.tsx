@@ -79,6 +79,7 @@ const templateReducer = (
           y: 0,
           color: "#000000",
           backgroundColor: "#FFFFFF",
+          fontFamily: "inherit",
           fontSize: "128px",
           padding: "8px",
         },

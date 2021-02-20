@@ -18,18 +18,14 @@ import TextFieldsIcon from "@material-ui/icons/TextFields";
 import TemplateContext from "./TemplateContext";
 
 interface InspectorProps {
-  canvasHeight: number;
-  canvasSize: string;
-  canvasWidth: number;
-  setCanvasSize: (canvasSize: string) => void;
+  canvasSize: {
+    width: number;
+    height: number;
+  };
+  setCanvasSize: (canvasSize: { width: number; height: number }) => void;
 }
 
-const Toolbar = ({
-  canvasHeight,
-  canvasSize,
-  canvasWidth,
-  setCanvasSize,
-}: InspectorProps) => {
+const Toolbar = ({ canvasSize, setCanvasSize }: InspectorProps) => {
   const {
     addImage,
     addTextBox,
@@ -129,7 +125,7 @@ const Toolbar = ({
             setCanvasSizeAnchorEl(event.currentTarget);
           }}
         >
-          {canvasSize}
+          {canvasSize.width}x{canvasSize.height}
           <ExpandMoreIcon fontSize="small" />
         </Button>
         <Menu
@@ -141,12 +137,22 @@ const Toolbar = ({
             setCanvasSizeAnchorEl(null);
           }}
         >
-          {["720p", "1080p"].map((size) => (
+          {["851x515", "1280x720", "1920x1080"].map((size) => (
             <MenuItem
               key={size}
               value={size}
               onClick={() => {
-                setCanvasSize(size);
+                switch (size) {
+                  case "851x515":
+                    setCanvasSize({ width: 851, height: 515 });
+                    break;
+                  case "1280x720":
+                    setCanvasSize({ width: 1280, height: 720 });
+                    break;
+                  case "1920x1080":
+                    setCanvasSize({ width: 1920, height: 1080 });
+                    break;
+                }
                 setCanvasSizeAnchorEl(null);
               }}
             >
@@ -205,7 +211,10 @@ const Toolbar = ({
               return;
             }
             domtoimage
-              .toPng(node, { width: canvasWidth, height: canvasHeight })
+              .toPng(node, {
+                width: canvasSize.width,
+                height: canvasSize.height,
+              })
               .then(function (dataUrl: string) {
                 var link = document.createElement("a");
                 link.download = "thumbnail.png";

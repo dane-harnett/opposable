@@ -72,26 +72,30 @@ const Inspector = ({
     <div className={classes.inspector}>
       <Typography variant="h5">Inspector</Typography>
       <form className={classes.form}>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Template variables</Typography>
-          </AccordionSummary>
-          <AccordionDetails className={classes.accordionDetails}>
-            {template?.Schema?.map((schemaItem: ISchemaItem, index: number) => (
-              <React.Fragment key={index}>
-                <TextField
-                  className={classes.textField}
-                  label={schemaItem.label}
-                  variant="outlined"
-                  value={template?.data[schemaItem.name]}
-                  onChange={(evt) =>
-                    setField(schemaItem.name, evt.target.value)
-                  }
-                />
-              </React.Fragment>
-            ))}
-          </AccordionDetails>
-        </Accordion>
+        {(template?.Schema?.length || 0) > 0 && (
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Template variables</Typography>
+            </AccordionSummary>
+            <AccordionDetails className={classes.accordionDetails}>
+              {template?.Schema?.map(
+                (schemaItem: ISchemaItem, index: number) => (
+                  <React.Fragment key={index}>
+                    <TextField
+                      className={classes.textField}
+                      label={schemaItem.label}
+                      variant="outlined"
+                      value={template?.data[schemaItem.name]}
+                      onChange={(evt) =>
+                        setField(schemaItem.name, evt.target.value)
+                      }
+                    />
+                  </React.Fragment>
+                )
+              )}
+            </AccordionDetails>
+          </Accordion>
+        )}
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Components</Typography>
@@ -108,6 +112,7 @@ const Inspector = ({
                           compIndex={compIndex}
                           selectedComponentIndex={selectedComponentIndex}
                           setSelectedComponentIndex={setSelectedComponentIndex}
+                          title={comp.title}
                         >
                           {comp.title}
                         </InspectorItem>
@@ -118,6 +123,7 @@ const Inspector = ({
                           compIndex={compIndex}
                           selectedComponentIndex={selectedComponentIndex}
                           setSelectedComponentIndex={setSelectedComponentIndex}
+                          title={comp.title}
                         >
                           <Grid container>
                             <Grid alignItems="center" container item xs={12}>
@@ -279,18 +285,10 @@ const Inspector = ({
                           compIndex={compIndex}
                           selectedComponentIndex={selectedComponentIndex}
                           setSelectedComponentIndex={setSelectedComponentIndex}
+                          title={comp.title}
                         >
                           <Grid container>
-                            <Grid alignItems="center" container item xs={12}>
-                              <Grid item xs={10}>
-                                <TextField
-                                  onChange={(e) => {
-                                    setTitle(compIndex, e.target.value);
-                                  }}
-                                  label="Title"
-                                  value={comp.title}
-                                />
-                              </Grid>
+                            <Grid container item xs={12}>
                               <Grid item xs={2}>
                                 <IconButton
                                   aria-label="delete"
@@ -303,8 +301,20 @@ const Inspector = ({
                                 </IconButton>
                               </Grid>
                             </Grid>
+                            <Grid alignItems="center" container item xs={12}>
+                              <Grid item xs={12}>
+                                <TextField
+                                  onChange={(e) => {
+                                    setTitle(compIndex, e.target.value);
+                                  }}
+                                  label="Title"
+                                  value={comp.title}
+                                  fullWidth
+                                />
+                              </Grid>
+                            </Grid>
                             <Grid container item xs={12}>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="number"
                                   onChange={(e) => {
@@ -321,7 +331,7 @@ const Inspector = ({
                                   value={comp.properties?.x || ""}
                                 />
                               </Grid>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="number"
                                   onChange={(e) => {
@@ -340,7 +350,7 @@ const Inspector = ({
                               </Grid>
                             </Grid>
                             <Grid container item xs={12}>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="text"
                                   onChange={(e) => {
@@ -352,7 +362,7 @@ const Inspector = ({
                                   value={comp.properties?.color || "#000000"}
                                 />
                               </Grid>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="text"
                                   onChange={(e) => {
@@ -368,8 +378,40 @@ const Inspector = ({
                                 />
                               </Grid>
                             </Grid>
+                            <Grid alignItems="center" container item xs={12}>
+                              <Grid item xs={12}>
+                                <TextField
+                                  onChange={(e) => {
+                                    setProperty(compIndex, {
+                                      fontFamily: e.target.value,
+                                    });
+                                  }}
+                                  label="Font family"
+                                  value={
+                                    comp.properties?.fontFamily || "inherit"
+                                  }
+                                  fullWidth
+                                />
+                              </Grid>
+                            </Grid>
+                            <Grid alignItems="center" container item xs={12}>
+                              <Grid item xs={12}>
+                                <TextField
+                                  onChange={(e) => {
+                                    setProperty(compIndex, {
+                                      WebkitTextStroke: e.target.value,
+                                    });
+                                  }}
+                                  label="Text stroke"
+                                  value={
+                                    comp.properties?.WebkitTextStroke || ""
+                                  }
+                                  fullWidth
+                                />
+                              </Grid>
+                            </Grid>
                             <Grid container item xs={12}>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="text"
                                   onChange={(e) => {
@@ -381,7 +423,7 @@ const Inspector = ({
                                   value={comp.properties?.fontSize || "32px"}
                                 />
                               </Grid>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="text"
                                   onChange={(e) => {
@@ -395,7 +437,7 @@ const Inspector = ({
                               </Grid>
                             </Grid>
                             <Grid container item xs={12}>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="text"
                                   onChange={(e) => {
@@ -407,7 +449,7 @@ const Inspector = ({
                                   value={comp.properties?.fontWeight || "500"}
                                 />
                               </Grid>
-                              <Grid item xs={5}>
+                              <Grid item xs={6}>
                                 <TextField
                                   type="text"
                                   onChange={(e) => {

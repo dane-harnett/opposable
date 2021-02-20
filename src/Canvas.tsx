@@ -165,7 +165,7 @@ const Canvas = ({
                 zIndex: 1300 - index,
                 ...(index === selectedComponentIndex
                   ? { border: "4px solid mediumseagreen" }
-                  : {}),
+                  : { border: "4px solid transparent" }),
               }}
             >
               <div
