@@ -1,8 +1,10 @@
 import * as React from "react";
 import { useContext } from "react";
-import { Rnd } from "react-rnd";
 import styled from "styled-components";
+import Image from "./Image";
 import TemplateContext from "./TemplateContext";
+import TemplateItem from "./TemplateItem";
+import TextBox from "./TextBox";
 import IComponent from "./types/IComponent";
 
 const Checkerboard = styled.div`
@@ -28,7 +30,7 @@ const Canvas = ({
   selectedComponentIndex = null,
   setSelectedComponentIndex,
 }: CanvasProps) => {
-  const { setProperty, template, templates } = useContext(TemplateContext);
+  const { template, templates } = useContext(TemplateContext);
   const currentTemplate = templates.find((t) => t.name === template?.name);
   if (!currentTemplate) {
     return null;
@@ -47,135 +49,39 @@ const Canvas = ({
     >
       {template?.components.map((comp: IComponent, index: number) => {
         if (comp.type === "TEMPLATE_ITEM") {
-          const C = components[comp.value];
           return (
-            <C
+            <TemplateItem
               key={index}
-              zIndex={1300 - index}
-              style={
-                index === selectedComponentIndex
-                  ? { border: "4px solid mediumseagreen" }
-                  : {}
-              }
+              index={index}
+              Component={components[comp.value]}
+              isSelected={index === selectedComponentIndex}
             />
           );
         }
         if (comp.type === "IMAGE") {
-          const actingWidth =
-            parseInt(comp.properties?.width, 10) ??
-            parseInt(comp.properties?.sourceWidth, 10);
-          const actingHeight =
-            parseInt(comp.properties?.height, 10) ??
-            parseInt(comp.properties?.sourceHeight, 10);
-          const imageWidth =
-            comp.properties?.blurRadius > 0 &&
-            comp.properties?.blurPreserveEdges
-              ? actingWidth + comp.properties?.blurRadius * 2
-              : actingWidth;
-          const imageHeight =
-            comp.properties?.blurRadius > 0 &&
-            comp.properties?.blurPreserveEdges
-              ? actingHeight + comp.properties?.blurRadius * 2
-              : actingHeight;
-          const size = {
-            width: actingWidth,
-            height: actingHeight,
-          };
           return (
-            <Rnd
+            <Image
               key={index}
-              default={{
-                x: 0,
-                y: 0,
-                width: comp.properties?.width ?? comp.properties?.sourceWidth,
-                height:
-                  comp.properties?.height ?? comp.properties?.sourceHeight,
+              comp={comp}
+              index={index}
+              onClick={() => {
+                setSelectedComponentIndex(index);
               }}
-              lockAspectRatio={comp.properties?.lockAspectRatio ?? true}
-              onClick={() => setSelectedComponentIndex(index)}
-              onDragStop={(_e, position) => {
-                setProperty(index, { x: position.x, y: position.y });
-              }}
-              onResizeStop={(_e, _direction, ref, _delta, position) => {
-                setProperty(index, {
-                  x: position.x,
-                  y: position.y,
-                  width: ref.style.width.replace("px", ""),
-                  height: ref.style.height.replace("px", ""),
-                });
-              }}
-              position={{
-                x: comp.properties?.x || 0,
-                y: comp.properties?.y || 0,
-              }}
-              size={size}
-              style={{
-                overflow: "hidden",
-                zIndex: 1300 - index,
-                ...(index === selectedComponentIndex
-                  ? { border: "4px solid mediumseagreen" }
-                  : {}),
-              }}
-            >
-              <img
-                src={comp.value}
-                style={{
-                  filter:
-                    comp.properties?.blurRadius > 0
-                      ? `blur(${comp.properties?.blurRadius}px)`
-                      : "none",
-                  width: `${imageWidth}px`,
-                  height: `${imageHeight}px`,
-                  marginLeft:
-                    comp.properties?.blurRadius > 0 &&
-                    comp.properties?.blurPreserveEdges
-                      ? -comp.properties?.blurRadius
-                      : 0,
-                  marginTop:
-                    comp.properties?.blurRadius > 0 &&
-                    comp.properties?.blurPreserveEdges
-                      ? -comp.properties?.blurRadius
-                      : 0,
-                }}
-              />
-            </Rnd>
+              isSelected={index === selectedComponentIndex}
+            />
           );
         }
         if (comp.type === "TEXT_BOX") {
           return (
-            <Rnd
+            <TextBox
               key={index}
-              default={{ x: 0, y: 0, width: "auto", height: "auto" }}
-              onClick={() => setSelectedComponentIndex(index)}
-              onDragStop={(_e, position) => {
-                setProperty(index, { x: position.x, y: position.y });
+              comp={comp}
+              index={index}
+              onClick={() => {
+                setSelectedComponentIndex(index);
               }}
-              onResizeStop={(_e, _direction, _ref, _delta, position) => {
-                setProperty(index, {
-                  x: position.x,
-                  y: position.y,
-                });
-              }}
-              position={{
-                x: comp.properties?.x || 0,
-                y: comp.properties?.y || 0,
-              }}
-              style={{
-                overflow: "hidden",
-                zIndex: 1300 - index,
-                ...(index === selectedComponentIndex
-                  ? { border: "4px solid mediumseagreen" }
-                  : { border: "4px solid transparent" }),
-              }}
-            >
-              <div
-                style={{
-                  ...comp.properties,
-                }}
-              >
-                {comp.title}
-              </div>
-            </Rnd>
+              isSelected={index === selectedComponentIndex}
+            />
           );
         }
         return null;
