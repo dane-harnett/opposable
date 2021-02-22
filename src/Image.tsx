@@ -64,6 +64,9 @@ const Image: React.FC<Props> = ({ index, isSelected, comp, onClick }) => {
       <img
         src={comp.value}
         style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
           filter:
             comp.properties?.blurRadius > 0
               ? `blur(${comp.properties?.blurRadius}px)`
@@ -82,6 +85,17 @@ const Image: React.FC<Props> = ({ index, isSelected, comp, onClick }) => {
               : 0,
         }}
       />
+      <div
+        style={{
+          backgroundColor: comp.properties?.solidColorOverlayColor,
+          opacity: comp.properties?.solidColorOverlayOpacity,
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+        }}
+      ></div>
     </Rnd>
   );
 };

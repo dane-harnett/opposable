@@ -276,6 +276,45 @@ const Inspector = ({
                                 </IconButton>
                               </Grid>
                             </Grid>
+                            <Grid container item xs={12}>
+                              <Grid item xs={5}>
+                                <TextField
+                                  type="text"
+                                  onChange={(e) => {
+                                    setProperty(compIndex, {
+                                      solidColorOverlayColor: e.target.value,
+                                    });
+                                  }}
+                                  label="Solid color overlay color"
+                                  value={
+                                    comp.properties?.solidColorOverlayColor ||
+                                    ""
+                                  }
+                                />
+                              </Grid>
+                              <Grid item xs={5}>
+                                <TextField
+                                  type="number"
+                                  onChange={(e) => {
+                                    if (
+                                      typeof parseInt(e.target.value, 10) ===
+                                      "number"
+                                    ) {
+                                      setProperty(compIndex, {
+                                        solidColorOverlayOpacity: parseFloat(
+                                          e.target.value
+                                        ),
+                                      });
+                                    }
+                                  }}
+                                  label="Solid color overlay opacity"
+                                  value={
+                                    comp.properties?.solidColorOverlayOpacity ||
+                                    0
+                                  }
+                                />
+                              </Grid>
+                            </Grid>
                           </Grid>
                         </InspectorItem>
                       )}
