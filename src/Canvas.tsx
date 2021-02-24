@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useContext } from "react";
 import styled from "styled-components";
-import Image from "./Image";
+import Image from "./widgets/Image/Image";
+import SelectionContext from "./SelectionContext";
 import TemplateContext from "./TemplateContext";
-import TemplateItem from "./TemplateItem";
-import TextBox from "./TextBox";
+import TemplateItem from "./widgets/TemplateItem/TemplateItem";
+import TextBox from "./widgets/TextBox/TextBox";
 import IComponent from "./types/IComponent";
 
 const Checkerboard = styled.div`
@@ -20,16 +21,12 @@ interface CanvasProps {
   width: number;
   height: number;
   children?: React.ReactNode;
-  selectedComponentIndex: number | null;
-  setSelectedComponentIndex: (selectedComponentIndex: number | null) => void;
 }
 
-const Canvas = ({
-  width,
-  height,
-  selectedComponentIndex = null,
-  setSelectedComponentIndex,
-}: CanvasProps) => {
+const Canvas = ({ width, height }: CanvasProps) => {
+  const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
+    SelectionContext
+  );
   const { template, templates } = useContext(TemplateContext);
   const currentTemplate = templates.find((t) => t.name === template?.name);
   if (!currentTemplate) {

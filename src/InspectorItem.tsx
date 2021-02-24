@@ -1,7 +1,7 @@
 import * as React from "react";
+import { useContext } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
-
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
   Accordion,
@@ -9,6 +9,7 @@ import {
   AccordionSummary as MuiAccordionSummary,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import SelectionContext from "./SelectionContext";
 
 const AccordionSummary = withStyles({
   root: {
@@ -30,9 +31,7 @@ const AccordionSummary = withStyles({
 interface IInspectorItemProps {
   children?: React.ReactNode;
   compIndex: number;
-  selectedComponentIndex: number | null;
   onDrop: (compIndex: number, desiredIndex: number) => void;
-  setSelectedComponentIndex: (selectedComponentIndex: number | null) => void;
   title: string;
 }
 
@@ -41,9 +40,10 @@ export default function InspectorItem({
   compIndex,
   onDrop,
   children,
-  selectedComponentIndex,
-  setSelectedComponentIndex,
 }: IInspectorItemProps) {
+  const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
+    SelectionContext
+  );
   const [{ opacity }, dragRef] = useDrag({
     item: { type: "InspectorItem", compIndex },
     collect: (monitor) => ({

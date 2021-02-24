@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Rnd } from "react-rnd";
-import TemplateContext from "./TemplateContext";
+import TemplateContext from "../../TemplateContext";
 
 interface Props {
   index: number;
@@ -10,6 +10,14 @@ interface Props {
 }
 const TextBox: React.FC<Props> = ({ comp, index, isSelected, onClick }) => {
   const { setProperty } = useContext(TemplateContext);
+  const cspem = parseInt(comp.properties?.customStrokePercent || 1, 10) / 100;
+  const cspColor = comp.properties?.customStrokeColor;
+  const customStroke = cspColor
+    ? {
+        textShadow: `-${cspem}em -${cspem}em 0 ${cspColor}, ${cspem}em -${cspem}em 0 ${cspColor}, -${cspem}em ${cspem}em 0 ${cspColor}, ${cspem}em ${cspem}em 0 ${cspColor}`,
+      }
+    : {};
+
   return (
     <Rnd
       key={index}
@@ -39,6 +47,7 @@ const TextBox: React.FC<Props> = ({ comp, index, isSelected, onClick }) => {
       <div
         style={{
           ...comp.properties,
+          ...customStroke,
         }}
       >
         {comp.title}

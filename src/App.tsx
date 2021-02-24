@@ -5,9 +5,10 @@ import Inspector from "./Inspector";
 import Toolbar from "./Toolbar";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import TemplateProvider from "./TemplateProvider";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import SelectionProvider from "./SelectionProvider";
+import TemplateProvider from "./TemplateProvider";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -35,24 +36,18 @@ const App = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <TemplateProvider>
-        <div>
-          <GlobalStyle />
-          <Toolbar canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
-          <div style={{ padding: 16 }}>
-            <Canvas
-              width={canvasSize.width}
-              height={canvasSize.height}
-              selectedComponentIndex={selectedComponentIndex}
-              setSelectedComponentIndex={setSelectedComponentIndex}
-            />
+      <SelectionProvider>
+        <TemplateProvider>
+          <div>
+            <GlobalStyle />
+            <Toolbar canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
+            <div style={{ padding: 16 }}>
+              <Canvas width={canvasSize.width} height={canvasSize.height} />
+            </div>
+            <Inspector />
           </div>
-          <Inspector
-            selectedComponentIndex={selectedComponentIndex}
-            setSelectedComponentIndex={setSelectedComponentIndex}
-          />
-        </div>
-      </TemplateProvider>
+        </TemplateProvider>
+      </SelectionProvider>
     </DndProvider>
   );
 };

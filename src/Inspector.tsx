@@ -4,19 +4,17 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Grid,
-  IconButton,
   TextField,
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import LinkIcon from "@material-ui/icons/Link";
-import LinkOffIcon from "@material-ui/icons/LinkOff";
+import SelectionContext from "./SelectionContext";
 import TemplateContext, { ISchemaItem } from "./TemplateContext";
 import IComponent from "./types/IComponent";
-import InspectorItem from "./InspectorItem";
+import ImageInspectorItem from "./widgets/Image/InspectorItem";
+import TemplateItemInspectorItem from "./widgets/TemplateItem/InspectorItem";
+import TextBoxInspectorItem from "./widgets/TextBox/InspectorItem";
 
 const useStyles = makeStyles((theme) => ({
   inspector: {
@@ -49,24 +47,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface IInspectorProps {
-  selectedComponentIndex: number | null;
-  setSelectedComponentIndex: (selectedComponentIndex: number | null) => void;
-}
-
-const Inspector = ({
-  selectedComponentIndex,
-  setSelectedComponentIndex,
-}: IInspectorProps) => {
-  const {
-    template,
-    setField,
-    setProperty,
-    setTitle,
-    removeComponent,
-    reorderComponent,
-  } = useContext(TemplateContext);
+const Inspector = () => {
+  const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
+    SelectionContext
+  );
+  const { template, setField } = useContext(TemplateContext);
   const classes = useStyles();
+
+  const inspectorItemMap = {
+    IMAGE: ImageInspectorItem,
+    TEMPLATE_ITEM: TemplateItemInspectorItem,
+    TEXT_BOX: TextBoxInspectorItem,
+  };
 
   return (
     <div className={classes.inspector}>
@@ -103,410 +95,19 @@ const Inspector = ({
           <AccordionDetails className={classes.accordionDetails}>
             <div>
               {template?.components.map(
-                (comp: IComponent, compIndex: number) => (
-                  <div key={compIndex}>
-                    <div>
-                      {comp.type === "TEMPLATE_ITEM" && (
-                        <InspectorItem
-                          onDrop={reorderComponent}
-                          compIndex={compIndex}
-                          selectedComponentIndex={selectedComponentIndex}
-                          setSelectedComponentIndex={setSelectedComponentIndex}
-                          title={comp.title}
-                        >
-                          {comp.title}
-                        </InspectorItem>
-                      )}
-                      {comp.type === "IMAGE" && (
-                        <InspectorItem
-                          onDrop={reorderComponent}
-                          compIndex={compIndex}
-                          selectedComponentIndex={selectedComponentIndex}
-                          setSelectedComponentIndex={setSelectedComponentIndex}
-                          title={comp.title}
-                        >
-                          <Grid container>
-                            <Grid alignItems="center" container item xs={12}>
-                              <Grid item xs={10}>
-                                <TextField
-                                  onChange={(e) => {
-                                    setTitle(compIndex, e.target.value);
-                                  }}
-                                  label="Title"
-                                  value={comp.title}
-                                />
-                              </Grid>
-                              <Grid item xs={2}>
-                                <IconButton
-                                  aria-label="delete"
-                                  size="small"
-                                  onClick={() => {
-                                    removeComponent(compIndex);
-                                  }}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Grid>
-                            </Grid>
-                            <Grid container item xs={12}>
-                              <Grid item xs={5}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        x: parseInt(e.target.value, 10),
-                                      });
-                                    }
-                                  }}
-                                  label="x"
-                                  value={comp.properties?.x || ""}
-                                />
-                              </Grid>
-                              <Grid item xs={5}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        y: parseInt(e.target.value, 10),
-                                      });
-                                    }
-                                  }}
-                                  label="y"
-                                  value={comp.properties?.y || ""}
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid alignItems="center" container item xs={12}>
-                              <Grid item xs={5}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        width: parseInt(e.target.value, 10),
-                                      });
-                                    }
-                                  }}
-                                  label="width"
-                                  value={comp.properties?.width || ""}
-                                />
-                              </Grid>
-                              <Grid item xs={5}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        height: parseInt(e.target.value, 10),
-                                      });
-                                    }
-                                  }}
-                                  label="height"
-                                  value={comp.properties?.height || ""}
-                                />
-                              </Grid>
-                              <Grid item xs={2}>
-                                <IconButton
-                                  size="small"
-                                  onClick={() => {
-                                    setProperty(compIndex, {
-                                      lockAspectRatio: !comp.properties
-                                        ?.lockAspectRatio,
-                                    });
-                                  }}
-                                >
-                                  {comp.properties?.lockAspectRatio ? (
-                                    <LinkIcon />
-                                  ) : (
-                                    <LinkOffIcon />
-                                  )}
-                                </IconButton>
-                              </Grid>
-                            </Grid>
-                            <Grid alignItems="center" container item xs={12}>
-                              <Grid item xs={10}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        blurRadius: parseInt(
-                                          e.target.value,
-                                          10
-                                        ),
-                                      });
-                                    }
-                                  }}
-                                  label="Blur radius"
-                                  value={comp.properties?.blurRadius || ""}
-                                />
-                              </Grid>
-                              <Grid item xs={2}>
-                                <IconButton
-                                  size="small"
-                                  onClick={() => {
-                                    setProperty(compIndex, {
-                                      blurPreserveEdges: !comp.properties
-                                        ?.blurPreserveEdges,
-                                    });
-                                  }}
-                                >
-                                  {comp.properties?.blurPreserveEdges ? (
-                                    <LinkIcon />
-                                  ) : (
-                                    <LinkOffIcon />
-                                  )}
-                                </IconButton>
-                              </Grid>
-                            </Grid>
-                            <Grid container item xs={12}>
-                              <Grid item xs={5}>
-                                <TextField
-                                  type="text"
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      solidColorOverlayColor: e.target.value,
-                                    });
-                                  }}
-                                  label="Solid color overlay color"
-                                  value={
-                                    comp.properties?.solidColorOverlayColor ||
-                                    ""
-                                  }
-                                />
-                              </Grid>
-                              <Grid item xs={5}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        solidColorOverlayOpacity: parseFloat(
-                                          e.target.value
-                                        ),
-                                      });
-                                    }
-                                  }}
-                                  label="Solid color overlay opacity"
-                                  value={
-                                    comp.properties?.solidColorOverlayOpacity ||
-                                    0
-                                  }
-                                />
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </InspectorItem>
-                      )}
-                      {comp.type === "TEXT_BOX" && (
-                        <InspectorItem
-                          onDrop={reorderComponent}
-                          compIndex={compIndex}
-                          selectedComponentIndex={selectedComponentIndex}
-                          setSelectedComponentIndex={setSelectedComponentIndex}
-                          title={comp.title}
-                        >
-                          <Grid container>
-                            <Grid container item xs={12}>
-                              <Grid item xs={2}>
-                                <IconButton
-                                  aria-label="delete"
-                                  size="small"
-                                  onClick={() => {
-                                    removeComponent(compIndex);
-                                  }}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Grid>
-                            </Grid>
-                            <Grid alignItems="center" container item xs={12}>
-                              <Grid item xs={12}>
-                                <TextField
-                                  onChange={(e) => {
-                                    setTitle(compIndex, e.target.value);
-                                  }}
-                                  label="Title"
-                                  value={comp.title}
-                                  fullWidth
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid container item xs={12}>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        x: parseInt(e.target.value, 10),
-                                      });
-                                    }
-                                  }}
-                                  label="x"
-                                  value={comp.properties?.x || ""}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="number"
-                                  onChange={(e) => {
-                                    if (
-                                      typeof parseInt(e.target.value, 10) ===
-                                      "number"
-                                    ) {
-                                      setProperty(compIndex, {
-                                        y: parseInt(e.target.value, 10),
-                                      });
-                                    }
-                                  }}
-                                  label="y"
-                                  value={comp.properties?.y || ""}
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid container item xs={12}>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="text"
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      color: e.target.value,
-                                    });
-                                  }}
-                                  label="Color"
-                                  value={comp.properties?.color || "#000000"}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="text"
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      backgroundColor: e.target.value,
-                                    });
-                                  }}
-                                  label="Background color"
-                                  value={
-                                    comp.properties?.backgroundColor ||
-                                    "transparent"
-                                  }
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid alignItems="center" container item xs={12}>
-                              <Grid item xs={12}>
-                                <TextField
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      fontFamily: e.target.value,
-                                    });
-                                  }}
-                                  label="Font family"
-                                  value={
-                                    comp.properties?.fontFamily || "inherit"
-                                  }
-                                  fullWidth
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid alignItems="center" container item xs={12}>
-                              <Grid item xs={12}>
-                                <TextField
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      WebkitTextStroke: e.target.value,
-                                    });
-                                  }}
-                                  label="Text stroke"
-                                  value={
-                                    comp.properties?.WebkitTextStroke || ""
-                                  }
-                                  fullWidth
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid container item xs={12}>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="text"
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      fontSize: e.target.value,
-                                    });
-                                  }}
-                                  label="Font size"
-                                  value={comp.properties?.fontSize || "32px"}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="text"
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      padding: e.target.value,
-                                    });
-                                  }}
-                                  label="Padding"
-                                  value={comp.properties?.padding || "8px"}
-                                />
-                              </Grid>
-                            </Grid>
-                            <Grid container item xs={12}>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="text"
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      fontWeight: e.target.value,
-                                    });
-                                  }}
-                                  label="Font weight"
-                                  value={comp.properties?.fontWeight || "500"}
-                                />
-                              </Grid>
-                              <Grid item xs={6}>
-                                <TextField
-                                  type="text"
-                                  onChange={(e) => {
-                                    setProperty(compIndex, {
-                                      padding: e.target.value,
-                                    });
-                                  }}
-                                  label="Padding"
-                                  value={comp.properties?.padding || "8px"}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </InspectorItem>
-                      )}
-                    </div>
-                  </div>
-                )
+                (comp: IComponent, compIndex: number) => {
+                  const InspItem = inspectorItemMap[comp.type];
+                  if (!InspItem) {
+                    return null;
+                  }
+                  return (
+                    <InspItem
+                      comp={comp}
+                      compIndex={compIndex}
+                      key={compIndex}
+                    />
+                  );
+                }
               )}
             </div>
           </AccordionDetails>

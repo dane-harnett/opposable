@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Rnd } from "react-rnd";
-import TemplateContext from "./TemplateContext";
+import TemplateContext from "../../TemplateContext";
 
 interface Props {
   comp: any;
