@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Grid, IconButton, TextField } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import LinkIcon from "@material-ui/icons/Link";
 import LinkOffIcon from "@material-ui/icons/LinkOff";
 import InspectorItem from "../../InspectorItem";
@@ -12,12 +11,9 @@ interface Props {
 }
 
 const InspectorPanel: React.FC<Props> = ({ compIndex, comp }) => {
-  const {
-    setProperty,
-    setTitle,
-    removeComponent,
-    reorderComponent,
-  } = useContext(TemplateContext);
+  const { setProperty, setTitle, reorderComponent } = useContext(
+    TemplateContext
+  );
 
   return (
     <InspectorItem
@@ -35,17 +31,6 @@ const InspectorPanel: React.FC<Props> = ({ compIndex, comp }) => {
               label="Title"
               value={comp.title}
             />
-          </Grid>
-          <Grid item xs={2}>
-            <IconButton
-              aria-label="delete"
-              size="small"
-              onClick={() => {
-                removeComponent(compIndex);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
           </Grid>
         </Grid>
         <Grid container item xs={12}>

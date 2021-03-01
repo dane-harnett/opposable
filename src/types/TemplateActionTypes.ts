@@ -3,6 +3,7 @@ enum TemplateActionTypes {
   AddTextBox = "ADD_TEXT_BOX",
   ChangeField = "CHANGE_FIELD",
   LoadProject = "LOAD_PROJECT",
+  DuplicateComponent = "DUPLICATE_COMPONENT",
   RemoveComponent = "REMOVE_COMPONENT",
   ReorderComponent = "REORDER_COMPONENT",
   SetProperty = "SET_PROPERTY",

@@ -1,15 +1,20 @@
 import * as React from "react";
 import { useContext } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import DeleteIcon from "@material-ui/icons/Delete";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary as MuiAccordionSummary,
+  Grid,
+  IconButton,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import SelectionContext from "./SelectionContext";
+import TemplateContext from "./TemplateContext";
 
 const AccordionSummary = withStyles({
   root: {
@@ -41,6 +46,7 @@ export default function InspectorItem({
   onDrop,
   children,
 }: IInspectorItemProps) {
+  const { duplicateComponent, removeComponent } = useContext(TemplateContext);
   const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
     SelectionContext
   );
@@ -89,7 +95,31 @@ export default function InspectorItem({
             </div>
           </AccordionSummary>
           <AccordionDetails>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>{children}</div>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
+              <Grid container item xs={12}>
+                <Grid item xs={12}>
+                  <IconButton
+                    aria-label="delete"
+                    size="small"
+                    onClick={() => {
+                      removeComponent(compIndex);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="duplicate"
+                    size="small"
+                    onClick={() => {
+                      duplicateComponent(compIndex);
+                    }}
+                  >
+                    <FileCopyIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+              {children}
+            </div>
           </AccordionDetails>
         </Accordion>
       </div>

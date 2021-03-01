@@ -9,7 +9,6 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import SelectionContext from "./SelectionContext";
 import TemplateContext, { ISchemaItem } from "./TemplateContext";
 import IComponent from "./types/IComponent";
 import ImageInspectorItem from "./widgets/Image/InspectorItem";
@@ -48,9 +47,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Inspector = () => {
-  const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
-    SelectionContext
-  );
   const { template, setField } = useContext(TemplateContext);
   const classes = useStyles();
 

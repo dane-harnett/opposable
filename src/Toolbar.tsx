@@ -74,11 +74,11 @@ const Toolbar = ({ canvasSize, setCanvasSize }: InspectorProps) => {
         <IconButton
           color="inherit"
           onClick={() => {
-            var dataStr =
+            const dataStr =
               "data:text/json;charset=utf-8," +
               encodeURIComponent(JSON.stringify(template));
 
-            var link = document.createElement("a");
+            const link = document.createElement("a");
             link.download = "project.json";
             link.href = dataStr;
             link.click();
@@ -216,7 +216,7 @@ const Toolbar = ({ canvasSize, setCanvasSize }: InspectorProps) => {
                 height: canvasSize.height,
               })
               .then(function (dataUrl: string) {
-                var link = document.createElement("a");
+                const link = document.createElement("a");
                 link.download = "thumbnail.png";
                 link.href = dataUrl;
                 link.click();

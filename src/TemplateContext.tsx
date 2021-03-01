@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 import { createContext } from "react";
 import { ITemplateState } from "./TemplateProvider";
 
@@ -22,6 +24,7 @@ const TemplateContext = createContext<{
   template?: ITemplateState;
   selectTemplate: (templateName: string) => void;
   setTitle: (componentIndex: number, title: string) => void;
+  duplicateComponent: (componentIndex: number) => void;
   removeComponent: (componentIndex: number) => void;
   reorderComponent: (componentIndex: number, desiredIndex: number) => void;
   templates: Array<any>;
@@ -33,6 +36,7 @@ const TemplateContext = createContext<{
   setProperty: () => {},
   selectTemplate: () => {},
   setTitle: () => {},
+  duplicateComponent: () => {},
   removeComponent: () => {},
   reorderComponent: () => {},
   templates: [],

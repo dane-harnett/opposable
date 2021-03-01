@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useReducer } from "react";
 import IComponent from "./types/IComponent";
+import ImageComponent from "./widgets/Image/ImageComponent";
+import TextBoxComponent from "./widgets/TextBox/TextBoxComponent";
 import TemplateContext, { ISchema } from "./TemplateContext";
 import TemplateActionTypes from "./types/TemplateActionTypes";
 import TTemplateAction from "./types/TTemplateAction";
@@ -29,6 +31,14 @@ const templateReducer = (
   switch (action.type) {
     case TemplateActionTypes.LoadProject:
       return JSON.parse(action.payload.project);
+    case TemplateActionTypes.DuplicateComponent:
+      return {
+        ...state,
+        components: [
+          ...state.components,
+          state.components[action.payload.componentIndex],
+        ],
+      };
     case TemplateActionTypes.RemoveComponent:
       return {
         ...state,
@@ -49,20 +59,20 @@ const templateReducer = (
         components: newComponents,
       };
     case TemplateActionTypes.AddImage:
-      const image: IComponent = {
+      const image: ImageComponent = {
         title: "Untitled",
         type: "IMAGE",
         value: action.payload.image,
         properties: {
-          blurRadius: 0,
           blurPreserveEdges: false,
-          x: 0,
-          y: 0,
-          width: action.payload.width,
+          blurRadius: 0,
           height: action.payload.height,
           lockAspectRatio: true,
-          sourceWidth: action.payload.width,
           sourceHeight: action.payload.height,
+          sourceWidth: action.payload.width,
+          width: action.payload.width,
+          x: 0,
+          y: 0,
         },
       };
       return {
@@ -70,18 +80,19 @@ const templateReducer = (
         components: [image, ...state.components],
       };
     case TemplateActionTypes.AddTextBox:
-      const textBox: IComponent = {
+      const textBox: TextBoxComponent = {
         title: "Untitled",
         type: "TEXT_BOX",
-        value: "Intentionally left blank",
         properties: {
-          x: 0,
-          y: 0,
-          color: "#000000",
           backgroundColor: "#FFFFFF",
+          color: "#000000",
+          customStrokeColor: "",
+          customStrokePercent: "",
           fontFamily: "inherit",
           fontSize: "128px",
           padding: "8px",
+          x: 0,
+          y: 0,
         },
       };
       const newState = {
@@ -202,6 +213,14 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
             payload: {
               componentIndex,
               title,
+            },
+          });
+        },
+        duplicateComponent: (componentIndex: number) => {
+          dispatch({
+            type: TemplateActionTypes.DuplicateComponent,
+            payload: {
+              componentIndex,
             },
           });
         },
