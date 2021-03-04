@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   index: number;
-  Component: any;
+  Component: React.FC<{ zIndex: number; style: { [key: string]: string } }>;
   isSelected: boolean;
 }
 const TemplateItem: React.FC<Props> = ({ index, isSelected, Component }) => {

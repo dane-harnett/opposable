@@ -92,7 +92,10 @@ const Inspector = () => {
             <div>
               {template?.components.map(
                 (comp: IComponent, compIndex: number) => {
-                  const InspItem = inspectorItemMap[comp.type];
+                  const InspItem =
+                    inspectorItemMap[
+                      comp.type as "IMAGE" | "TEMPLATE_ITEM" | "TEXT_BOX"
+                    ];
                   if (!InspItem) {
                     return null;
                   }

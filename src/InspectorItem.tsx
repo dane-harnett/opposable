@@ -45,7 +45,7 @@ export default function InspectorItem({
   compIndex,
   onDrop,
   children,
-}: IInspectorItemProps) {
+}: IInspectorItemProps): JSX.Element {
   const { duplicateComponent, removeComponent } = useContext(TemplateContext);
   const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
     SelectionContext

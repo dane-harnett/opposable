@@ -90,7 +90,10 @@ const templateReducer = (
           customStrokePercent: "",
           fontFamily: "inherit",
           fontSize: "128px",
+          fontWeight: "normal",
           padding: "8px",
+          textShadow: "",
+          WebkitTextStroke: "",
           x: 0,
           y: 0,
         },
@@ -177,7 +180,6 @@ const TemplateProvider = ({ children }: TemplateProviderProps) => {
         addTextBox: () => {
           dispatch({
             type: TemplateActionTypes.AddTextBox,
-            payload: {},
           });
         },
         setField: (fieldName, fieldValue) => {

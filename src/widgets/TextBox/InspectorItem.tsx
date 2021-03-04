@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import InspectorItem from "../../InspectorItem";
 import TemplateContext from "../../TemplateContext";
+import TextBoxComponent from "./TextBoxComponent";
 
 interface Props {
-  comp: any;
+  comp: TextBoxComponent;
   compIndex: number;
 }
 

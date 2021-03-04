@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import InspectorItem from "../../InspectorItem";
 import TemplateContext from "../../TemplateContext";
+import TemplateItemComponent from "./TemplateItemComponent";
 
 interface Props {
-  comp: any;
+  comp: TemplateItemComponent;
   compIndex: number;
 }
 

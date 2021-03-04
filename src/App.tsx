@@ -25,14 +25,11 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = () => {
+const App = (): JSX.Element => {
   const [canvasSize, setCanvasSize] = useState({
     width: 1280,
     height: 720,
   });
-  const [selectedComponentIndex, setSelectedComponentIndex] = useState<
-    number | null
-  >(null);
 
   return (
     <DndProvider backend={HTML5Backend}>
