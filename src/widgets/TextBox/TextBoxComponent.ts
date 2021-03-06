@@ -16,7 +16,6 @@ export default interface TextBoxComponent {
       | "unset"
       | "normal"
       | "bold"
-      | (number & {})
       | "bolder"
       | "lighter"
       | undefined;
