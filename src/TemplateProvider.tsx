@@ -68,6 +68,8 @@ const templateReducer = (
           blurRadius: 0,
           height: action.payload.height,
           lockAspectRatio: true,
+          solidColorOverlayColor: "",
+          solidColorOverlayOpacity: 0,
           sourceHeight: action.payload.height,
           sourceWidth: action.payload.width,
           width: action.payload.width,

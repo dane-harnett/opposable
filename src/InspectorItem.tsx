@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop, DragObjectWithType } from "react-dnd";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -58,7 +58,7 @@ export default function InspectorItem({
   });
   const [, dropRef] = useDrop({
     accept: "InspectorItem",
-    drop: (item: any) => {
+    drop: (item: { compIndex: number } & DragObjectWithType) => {
       onDrop(item.compIndex, compIndex);
     },
   });

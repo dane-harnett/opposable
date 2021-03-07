@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { Rnd } from "react-rnd";
 import TemplateContext from "../../TemplateContext";
+import ImageComponent from "./ImageComponent";
 
 interface Props {
-  comp: any;
+  comp: ImageComponent;
   index: number;
   isSelected: boolean;
   onClick: () => void;
@@ -11,13 +12,13 @@ interface Props {
 const Image: React.FC<Props> = ({ index, isSelected, comp, onClick }) => {
   const { setProperty } = useContext(TemplateContext);
   const actingWidth =
-    parseInt(comp.properties?.width, 10) ??
-    parseInt(comp.properties?.sourceWidth, 10);
+    parseInt(comp.properties.width.toString() || "0", 10) ??
+    parseInt(comp.properties.sourceWidth.toString() || "0", 10);
   const actingHeight =
-    parseInt(comp.properties?.height, 10) ??
-    parseInt(comp.properties?.sourceHeight, 10);
+    parseInt(comp.properties.height.toString() || "0", 10) ??
+    parseInt(comp.properties.sourceHeight.toString() || "0", 10);
   const imageWidth =
-    comp.properties?.blurRadius > 0 && comp.properties?.blurPreserveEdges
+    comp.properties.blurRadius > 0 && comp.properties?.blurPreserveEdges
       ? actingWidth + comp.properties?.blurRadius * 2
       : actingWidth;
   const imageHeight =
@@ -34,10 +35,14 @@ const Image: React.FC<Props> = ({ index, isSelected, comp, onClick }) => {
       default={{
         x: 0,
         y: 0,
-        width: comp.properties?.width ?? comp.properties?.sourceWidth,
-        height: comp.properties?.height ?? comp.properties?.sourceHeight,
+        width:
+          comp.properties.width.toString() ??
+          comp.properties.sourceWidth.toString(),
+        height:
+          comp.properties.height.toString() ??
+          comp.properties.sourceHeight.toString(),
       }}
-      lockAspectRatio={comp.properties?.lockAspectRatio ?? true}
+      lockAspectRatio={comp.properties.lockAspectRatio ?? true}
       onClick={onClick}
       onDragStop={(_e, position) => {
         setProperty(index, { x: position.x, y: position.y });
@@ -51,8 +56,8 @@ const Image: React.FC<Props> = ({ index, isSelected, comp, onClick }) => {
         });
       }}
       position={{
-        x: comp.properties?.x || 0,
-        y: comp.properties?.y || 0,
+        x: comp.properties.x || 0,
+        y: comp.properties.y || 0,
       }}
       size={size}
       style={{
@@ -68,27 +73,25 @@ const Image: React.FC<Props> = ({ index, isSelected, comp, onClick }) => {
           top: 0,
           left: 0,
           filter:
-            comp.properties?.blurRadius > 0
-              ? `blur(${comp.properties?.blurRadius}px)`
+            (comp.properties.blurRadius || 0) > 0
+              ? `blur(${comp.properties.blurRadius}px)`
               : "none",
           width: `${imageWidth}px`,
           height: `${imageHeight}px`,
           marginLeft:
-            comp.properties?.blurRadius > 0 &&
-            comp.properties?.blurPreserveEdges
-              ? -comp.properties?.blurRadius
+            comp.properties.blurRadius > 0 && comp.properties.blurPreserveEdges
+              ? -comp.properties.blurRadius
               : 0,
           marginTop:
-            comp.properties?.blurRadius > 0 &&
-            comp.properties?.blurPreserveEdges
-              ? -comp.properties?.blurRadius
+            comp.properties.blurRadius > 0 && comp.properties.blurPreserveEdges
+              ? -comp.properties.blurRadius
               : 0,
         }}
       />
       <div
         style={{
-          backgroundColor: comp.properties?.solidColorOverlayColor,
-          opacity: comp.properties?.solidColorOverlayOpacity,
+          backgroundColor: comp.properties.solidColorOverlayColor,
+          opacity: comp.properties.solidColorOverlayOpacity,
           width: "100%",
           height: "100%",
           position: "absolute",

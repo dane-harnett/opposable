@@ -4,9 +4,10 @@ import LinkIcon from "@material-ui/icons/Link";
 import LinkOffIcon from "@material-ui/icons/LinkOff";
 import InspectorItem from "../../InspectorItem";
 import TemplateContext from "../../TemplateContext";
+import ImageComponent from "./ImageComponent";
 
 interface Props {
-  comp: any;
+  comp: ImageComponent;
   compIndex: number;
 }
 

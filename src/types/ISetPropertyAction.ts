@@ -3,7 +3,7 @@ export default interface SetPropertyAction {
   payload: {
     componentIndex: number;
     properties: {
-      [key: string]: any;
+      [key: string]: boolean | number | string;
     };
   };
 }

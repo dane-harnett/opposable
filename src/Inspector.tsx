@@ -46,15 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Inspector = () => {
+const Inspector = (): JSX.Element => {
   const { template, setField } = useContext(TemplateContext);
   const classes = useStyles();
-
-  const inspectorItemMap = {
-    IMAGE: ImageInspectorItem,
-    TEMPLATE_ITEM: TemplateItemInspectorItem,
-    TEXT_BOX: TextBoxInspectorItem,
-  };
 
   return (
     <div className={classes.inspector}>
@@ -92,20 +86,34 @@ const Inspector = () => {
             <div>
               {template?.components.map(
                 (comp: IComponent, compIndex: number) => {
-                  const InspItem =
-                    inspectorItemMap[
-                      comp.type as "IMAGE" | "TEMPLATE_ITEM" | "TEXT_BOX"
-                    ];
-                  if (!InspItem) {
-                    return null;
+                  switch (comp.type) {
+                    case "IMAGE":
+                      return (
+                        <ImageInspectorItem
+                          comp={comp}
+                          compIndex={compIndex}
+                          key={compIndex}
+                        />
+                      );
+                    case "TEMPLATE_ITEM":
+                      return (
+                        <TemplateItemInspectorItem
+                          comp={comp}
+                          compIndex={compIndex}
+                          key={compIndex}
+                        />
+                      );
+                    case "TEXT_BOX":
+                      return (
+                        <TextBoxInspectorItem
+                          comp={comp}
+                          compIndex={compIndex}
+                          key={compIndex}
+                        />
+                      );
+                    default:
+                      return null;
                   }
-                  return (
-                    <InspItem
-                      comp={comp}
-                      compIndex={compIndex}
-                      key={compIndex}
-                    />
-                  );
                 }
               )}
             </div>

@@ -1,5 +1,5 @@
 export default interface ImageComponent {
-  properties?: {
+  properties: {
     width: number;
     height: number;
     x: number;
@@ -9,6 +9,8 @@ export default interface ImageComponent {
     lockAspectRatio: boolean;
     sourceWidth: number;
     sourceHeight: number;
+    solidColorOverlayColor: string;
+    solidColorOverlayOpacity: number;
   };
   title: string;
   type: "IMAGE";
