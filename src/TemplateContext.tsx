@@ -18,6 +18,7 @@ const TemplateContext = createContext<{
   canvasSize: { width: number; height: number };
   addImage: (image: string, width: number, height: number) => void;
   addTextBox: () => void;
+  setCanvasSize: (canvasSize: { width: number; height: number }) => void;
   setField: (fieldName: string, fieldValue: string) => void;
   setProperty: (
     componentIndex: number,
@@ -35,6 +36,7 @@ const TemplateContext = createContext<{
   canvasSize: { width: 0, height: 0 },
   addImage: () => {},
   addTextBox: () => {},
+  setCanvasSize: () => {},
   setField: () => {},
   setProperty: () => {},
   selectTemplate: () => {},

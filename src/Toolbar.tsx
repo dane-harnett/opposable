@@ -17,24 +17,15 @@ import ImageIcon from "@material-ui/icons/Image";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
 import TemplateContext from "./TemplateContext";
 
-interface InspectorProps {
-  canvasSize: {
-    width: number;
-    height: number;
-  };
-  setCanvasSize: (canvasSize: { width: number; height: number }) => void;
-}
-
-const Toolbar = ({
-  canvasSize,
-  setCanvasSize,
-}: InspectorProps): JSX.Element => {
+const Toolbar = (): JSX.Element => {
   const {
+    canvasSize,
     addImage,
     addTextBox,
     loadProject,
     template,
     selectTemplate,
+    setCanvasSize,
     templates,
   } = useContext(TemplateContext);
   const [

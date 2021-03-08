@@ -6,6 +6,7 @@ enum TemplateActionTypes {
   DuplicateComponent = "DUPLICATE_COMPONENT",
   RemoveComponent = "REMOVE_COMPONENT",
   ReorderComponent = "REORDER_COMPONENT",
+  SetCanvasSize = "SET_CANVAS_SIZE",
   SetProperty = "SET_PROPERTY",
   SetTitle = "SET_TITLE",
   SelectTemplate = "SELECT_TEMPLATE",

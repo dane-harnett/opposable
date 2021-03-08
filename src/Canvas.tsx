@@ -18,18 +18,12 @@ const Checkerboard = styled.div`
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 `;
 
-interface CanvasProps {
-  width: number;
-  height: number;
-  children?: React.ReactNode;
-}
-
-const Canvas = ({ width, height }: CanvasProps): JSX.Element | null => {
+const Canvas = (): JSX.Element | null => {
   useKeyBinds();
   const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
     SelectionContext
   );
-  const { template, templates } = useContext(TemplateContext);
+  const { canvasSize, template, templates } = useContext(TemplateContext);
   const currentTemplate = templates.find((t) => t.name === template?.name);
   if (!currentTemplate) {
     return null;
@@ -40,8 +34,8 @@ const Canvas = ({ width, height }: CanvasProps): JSX.Element | null => {
     <Checkerboard
       id="canvas"
       style={{
-        width,
-        height,
+        width: canvasSize.width,
+        height: canvasSize.height,
         overflow: "hidden",
         position: "relative",
       }}

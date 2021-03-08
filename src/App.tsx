@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import Canvas from "./Canvas";
 import Inspector from "./Inspector";
 import Toolbar from "./Toolbar";
@@ -26,20 +25,15 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = (): JSX.Element => {
-  const [canvasSize, setCanvasSize] = useState({
-    width: 1280,
-    height: 720,
-  });
-
   return (
     <DndProvider backend={HTML5Backend}>
       <SelectionProvider>
-        <TemplateProvider canvasSize={canvasSize}>
+        <TemplateProvider>
           <div>
             <GlobalStyle />
-            <Toolbar canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
+            <Toolbar />
             <div style={{ padding: 16 }}>
-              <Canvas width={canvasSize.width} height={canvasSize.height} />
+              <Canvas />
             </div>
             <Inspector />
           </div>

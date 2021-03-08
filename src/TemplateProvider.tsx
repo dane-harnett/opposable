@@ -11,6 +11,10 @@ import mapSchemaToComponents from "./helpers/mapSchemaToComponents";
 import templates from "./templates";
 
 export interface ITemplateState {
+  canvasSize: {
+    width: number;
+    height: number;
+  };
   Schema: ISchema;
   data: { [key: string]: string };
   name: string;
@@ -18,6 +22,10 @@ export interface ITemplateState {
 }
 
 const initialTemplateState: ITemplateState = {
+  canvasSize: {
+    width: 1280,
+    height: 720,
+  },
   Schema: templates[0].Schema,
   data: mapSchemaToData(templates[0].Schema),
   name: templates[0].name,
@@ -112,6 +120,11 @@ const templateReducer = (
           [action.payload.fieldName]: action.payload.fieldValue,
         },
       };
+    case TemplateActionTypes.SetCanvasSize:
+      return {
+        ...state,
+        canvasSize: action.payload.canvasSize,
+      };
     case TemplateActionTypes.SetProperty:
       return {
         ...state,
@@ -157,20 +170,16 @@ const templateReducer = (
 };
 
 interface TemplateProviderProps {
-  canvasSize: { width: number; height: number };
   children: React.ReactNode;
 }
 
-const TemplateProvider = ({
-  canvasSize,
-  children,
-}: TemplateProviderProps): JSX.Element => {
+const TemplateProvider = ({ children }: TemplateProviderProps): JSX.Element => {
   const [state, dispatch] = useReducer(templateReducer, initialTemplateState);
 
   return (
     <TemplateContext.Provider
       value={{
-        canvasSize,
+        canvasSize: state.canvasSize,
         addImage: (image, width, height) => {
           dispatch({
             type: TemplateActionTypes.AddImage,
@@ -184,6 +193,14 @@ const TemplateProvider = ({
         addTextBox: () => {
           dispatch({
             type: TemplateActionTypes.AddTextBox,
+          });
+        },
+        setCanvasSize: (canvasSize) => {
+          dispatch({
+            type: TemplateActionTypes.SetCanvasSize,
+            payload: {
+              canvasSize,
+            },
           });
         },
         setField: (fieldName, fieldValue) => {

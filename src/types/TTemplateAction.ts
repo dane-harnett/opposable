@@ -6,6 +6,7 @@ import IDuplicateComponentAction from "./IDuplicateComponentAction";
 import IRemoveComponentAction from "./IRemoveComponentAction";
 import IReorderComponentAction from "./IReorderComponentAction";
 import ISelectTemplateAction from "./ISelectTemplateAction";
+import SetCanvasSizeAction from "./SetCanvasSizeAction";
 import ISetPropertyAction from "./ISetPropertyAction";
 import ISetTitleAction from "./ISetTitleAction";
 
@@ -19,6 +20,7 @@ type TTemplateAction =
   | IRemoveComponentAction
   | IReorderComponentAction
   | ISetPropertyAction
+  | SetCanvasSizeAction
   | ISetTitleAction;
 
 export default TTemplateAction;
