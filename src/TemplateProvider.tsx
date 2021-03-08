@@ -100,13 +100,10 @@ const templateReducer = (
           y: 0,
         },
       };
-      const newState = {
+      return {
         ...state,
         components: [textBox, ...state.components],
       };
-
-      console.log({ state, action, newState });
-      return newState;
     case TemplateActionTypes.ChangeField:
       return {
         ...state,
@@ -160,15 +157,20 @@ const templateReducer = (
 };
 
 interface TemplateProviderProps {
+  canvasSize: { width: number; height: number };
   children: React.ReactNode;
 }
 
-const TemplateProvider = ({ children }: TemplateProviderProps) => {
+const TemplateProvider = ({
+  canvasSize,
+  children,
+}: TemplateProviderProps): JSX.Element => {
   const [state, dispatch] = useReducer(templateReducer, initialTemplateState);
 
   return (
     <TemplateContext.Provider
       value={{
+        canvasSize,
         addImage: (image, width, height) => {
           dispatch({
             type: TemplateActionTypes.AddImage,

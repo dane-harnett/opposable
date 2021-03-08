@@ -14,6 +14,7 @@ export interface ISchemaItem {
 export type ISchema = Array<ISchemaItem>;
 
 const TemplateContext = createContext<{
+  canvasSize: { width: number; height: number };
   addImage: (image: string, width: number, height: number) => void;
   addTextBox: () => void;
   setField: (fieldName: string, fieldValue: string) => void;
@@ -30,6 +31,7 @@ const TemplateContext = createContext<{
   templates: Array<any>;
   loadProject: (project: string) => void;
 }>({
+  canvasSize: { width: 0, height: 0 },
   addImage: () => {},
   addTextBox: () => {},
   setField: () => {},

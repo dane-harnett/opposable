@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Grid, IconButton, TextField } from "@material-ui/core";
 import LinkIcon from "@material-ui/icons/Link";
 import LinkOffIcon from "@material-ui/icons/LinkOff";
+import ZoomOutMapIcon from "@material-ui/icons/ZoomOutMap";
 import InspectorItem from "../../InspectorItem";
 import TemplateContext from "../../TemplateContext";
 import ImageComponent from "./ImageComponent";
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const InspectorPanel: React.FC<Props> = ({ compIndex, comp }) => {
-  const { setProperty, setTitle, reorderComponent } = useContext(
+  const { canvasSize, setProperty, setTitle, reorderComponent } = useContext(
     TemplateContext
   );
 
@@ -107,6 +108,14 @@ const InspectorPanel: React.FC<Props> = ({ compIndex, comp }) => {
               ) : (
                 <LinkOffIcon />
               )}
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => {
+                setProperty(compIndex, canvasSize);
+              }}
+            >
+              <ZoomOutMapIcon />
             </IconButton>
           </Grid>
         </Grid>

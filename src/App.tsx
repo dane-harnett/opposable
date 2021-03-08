@@ -34,7 +34,7 @@ const App = (): JSX.Element => {
   return (
     <DndProvider backend={HTML5Backend}>
       <SelectionProvider>
-        <TemplateProvider>
+        <TemplateProvider canvasSize={canvasSize}>
           <div>
             <GlobalStyle />
             <Toolbar canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
