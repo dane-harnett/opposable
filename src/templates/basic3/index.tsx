@@ -2,7 +2,7 @@ import EpisodeName from "./EpisodeName";
 import SeriesTitle from "./SeriesTitle";
 import SeriesSubTitle from "./SeriesSubTitle";
 import SeparatorBackground from "./SeparatorBackground";
-import { ISchema } from "../../TemplateContext";
+import { Schema as SchemaType } from "../../TemplateContext";
 
 export interface BasicData {
   seriesTitle: string;
@@ -19,7 +19,7 @@ export const components = {
   SeparatorBackground,
 };
 
-export const Schema: ISchema = [
+export const Schema: SchemaType = [
   {
     name: "seriesTitle",
     type: "text",

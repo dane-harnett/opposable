@@ -1,7 +1,7 @@
-import { ISchema } from "../../TemplateContext";
+import { Schema as SchemaType } from "../../TemplateContext";
 
 export const name = "Blank";
 
 export const components = {};
 
-export const Schema: ISchema = [];
+export const Schema: SchemaType = [];

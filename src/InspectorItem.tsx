@@ -33,7 +33,7 @@ const AccordionSummary = withStyles({
   expanded: {},
 })(MuiAccordionSummary);
 
-interface IInspectorItemProps {
+interface InspectorItemProps {
   children?: React.ReactNode;
   compIndex: number;
   onDrop: (compIndex: number, desiredIndex: number) => void;
@@ -45,7 +45,7 @@ export default function InspectorItem({
   compIndex,
   onDrop,
   children,
-}: IInspectorItemProps): JSX.Element {
+}: InspectorItemProps): JSX.Element {
   const { duplicateComponent, removeComponent } = useContext(TemplateContext);
   const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
     SelectionContext

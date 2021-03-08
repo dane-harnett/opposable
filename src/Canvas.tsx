@@ -7,7 +7,7 @@ import SelectionContext from "./SelectionContext";
 import TemplateContext from "./TemplateContext";
 import TemplateItem from "./widgets/TemplateItem/TemplateItem";
 import TextBox from "./widgets/TextBox/TextBox";
-import IComponent from "./types/IComponent";
+import Component from "./types/Component";
 
 const Checkerboard = styled.div`
   background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
@@ -40,7 +40,7 @@ const Canvas = (): JSX.Element | null => {
         position: "relative",
       }}
     >
-      {template?.components.map((comp: IComponent, index: number) => {
+      {template?.components.map((comp: Component, index: number) => {
         if (comp.type === "TEMPLATE_ITEM") {
           return (
             <TemplateItem

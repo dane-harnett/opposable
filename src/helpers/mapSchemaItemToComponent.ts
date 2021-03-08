@@ -1,8 +1,8 @@
-import IComponent from "../types/IComponent";
-import { ISchemaItem } from "../TemplateContext";
+import Component from "../types/Component";
+import { SchemaItem } from "../TemplateContext";
 
-const mapSchemaItemToComponent: (schemaItem: ISchemaItem) => IComponent = (
-  schemaItem: ISchemaItem
+const mapSchemaItemToComponent: (schemaItem: SchemaItem) => Component = (
+  schemaItem: SchemaItem
 ) => ({
   title: schemaItem.name,
   type: "TEMPLATE_ITEM",

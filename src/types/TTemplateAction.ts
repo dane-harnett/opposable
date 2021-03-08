@@ -1,26 +1,26 @@
-import IAddImageAction from "./IAddImageAction";
-import IAddTextBoxAction from "./IAddTextBoxAction";
-import IChangeFieldAction from "./IChangeFieldAction";
-import ILoadProjectAction from "./ILoadProjectAction";
-import IDuplicateComponentAction from "./IDuplicateComponentAction";
-import IRemoveComponentAction from "./IRemoveComponentAction";
-import IReorderComponentAction from "./IReorderComponentAction";
-import ISelectTemplateAction from "./ISelectTemplateAction";
+import AddImageAction from "./AddImageAction";
+import AddTextBoxAction from "./AddTextBoxAction";
+import ChangeFieldAction from "./ChangeFieldAction";
+import LoadProjectAction from "./LoadProjectAction";
+import DuplicateComponentAction from "./DuplicateComponentAction";
+import RemoveComponentAction from "./RemoveComponentAction";
+import ReorderComponentAction from "./ReorderComponentAction";
+import SelectTemplateAction from "./SelectTemplateAction";
 import SetCanvasSizeAction from "./SetCanvasSizeAction";
-import ISetPropertyAction from "./ISetPropertyAction";
-import ISetTitleAction from "./ISetTitleAction";
+import SetPropertyAction from "./SetPropertyAction";
+import SetTitleAction from "./SetTitleAction";
 
 type TTemplateAction =
-  | IAddImageAction
-  | IAddTextBoxAction
-  | IChangeFieldAction
-  | ILoadProjectAction
-  | ISelectTemplateAction
-  | IDuplicateComponentAction
-  | IRemoveComponentAction
-  | IReorderComponentAction
-  | ISetPropertyAction
+  | AddImageAction
+  | AddTextBoxAction
+  | ChangeFieldAction
+  | LoadProjectAction
+  | SelectTemplateAction
+  | DuplicateComponentAction
+  | RemoveComponentAction
+  | ReorderComponentAction
+  | SetPropertyAction
   | SetCanvasSizeAction
-  | ISetTitleAction;
+  | SetTitleAction;
 
 export default TTemplateAction;

@@ -9,8 +9,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import TemplateContext, { ISchemaItem } from "./TemplateContext";
-import IComponent from "./types/IComponent";
+import TemplateContext, { SchemaItem } from "./TemplateContext";
+import Component from "./types/Component";
 import ImageInspectorItem from "./widgets/Image/InspectorItem";
 import TemplateItemInspectorItem from "./widgets/TemplateItem/InspectorItem";
 import TextBoxInspectorItem from "./widgets/TextBox/InspectorItem";
@@ -61,7 +61,7 @@ const Inspector = (): JSX.Element => {
             </AccordionSummary>
             <AccordionDetails className={classes.accordionDetails}>
               {template?.Schema?.map(
-                (schemaItem: ISchemaItem, index: number) => (
+                (schemaItem: SchemaItem, index: number) => (
                   <React.Fragment key={index}>
                     <TextField
                       className={classes.textField}
@@ -85,7 +85,7 @@ const Inspector = (): JSX.Element => {
           <AccordionDetails className={classes.accordionDetails}>
             <div>
               {template?.components.map(
-                (comp: IComponent, compIndex: number) => {
+                (comp: Component, compIndex: number) => {
                   switch (comp.type) {
                     case "IMAGE":
                       return (

@@ -1,27 +1,27 @@
 import * as React from "react";
 import { useReducer } from "react";
-import IComponent from "./types/IComponent";
+import Component from "./types/Component";
 import ImageComponent from "./widgets/Image/ImageComponent";
 import TextBoxComponent from "./widgets/TextBox/TextBoxComponent";
-import TemplateContext, { ISchema } from "./TemplateContext";
+import TemplateContext, { Schema } from "./TemplateContext";
 import TemplateActionTypes from "./types/TemplateActionTypes";
 import TTemplateAction from "./types/TTemplateAction";
 import mapSchemaToData from "./helpers/mapSchemaToData";
 import mapSchemaToComponents from "./helpers/mapSchemaToComponents";
 import templates from "./templates";
 
-export interface ITemplateState {
+export interface TemplateState {
   canvasSize: {
     width: number;
     height: number;
   };
-  Schema: ISchema;
+  Schema: Schema;
   data: { [key: string]: string };
   name: string;
-  components: IComponent[];
+  components: Component[];
 }
 
-const initialTemplateState: ITemplateState = {
+const initialTemplateState: TemplateState = {
   canvasSize: {
     width: 1280,
     height: 720,
@@ -33,7 +33,7 @@ const initialTemplateState: ITemplateState = {
 };
 
 const templateReducer = (
-  state: ITemplateState = initialTemplateState,
+  state: TemplateState = initialTemplateState,
   action: TTemplateAction
 ) => {
   switch (action.type) {

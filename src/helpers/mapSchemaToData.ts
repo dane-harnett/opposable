@@ -1,11 +1,11 @@
-import { ISchema, ISchemaItem } from "../TemplateContext";
+import { Schema } from "../TemplateContext";
 
 const mapSchemaToData = (
-  schema: ISchema,
+  schema: Schema,
   data: { [key: string]: string } = {}
 ): { [key: string]: string } => {
   return Object.fromEntries(
-    schema.map((schemaItem: ISchemaItem) => {
+    schema.map((schemaItem) => {
       return [
         schemaItem.name,
         data[schemaItem.name] ? data[schemaItem.name] : schemaItem.defaultValue,

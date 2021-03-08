@@ -1,11 +1,11 @@
-import { ISchema } from "../TemplateContext";
-import IComponent from "../types/IComponent";
+import { Schema } from "../TemplateContext";
+import Component from "../types/Component";
 import mapSchemaItemToComponent from "./mapSchemaItemToComponent";
 
 const mapSchemaToComponents = (
-  schema: ISchema,
-  components: IComponent[]
-): IComponent[] => {
+  schema: Schema,
+  components: Component[]
+): Component[] => {
   const schemaComponents = schema.map(mapSchemaItemToComponent);
   return [
     ...schemaComponents,

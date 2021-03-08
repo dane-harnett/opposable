@@ -4,7 +4,7 @@ import * as basic from "./basic";
 import * as basic2 from "./basic2";
 import * as basic3 from "./basic3";
 import * as basic3Alt from "./basic3-alt";
-import { ISchema } from "../TemplateContext";
+import { Schema } from "../TemplateContext";
 
 interface TemplateItemProps {
   zIndex: number;
@@ -15,7 +15,7 @@ export interface TemplateModule {
     [key: string]: (props: TemplateItemProps) => JSX.Element;
   };
   name: string;
-  Schema: ISchema;
+  Schema: Schema;
 }
 const templates: TemplateModule[] = [blank, basic, basic2, basic3, basic3Alt];
 

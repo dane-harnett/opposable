@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import { createContext } from "react";
-import { ITemplateState } from "./TemplateProvider";
+import { TemplateState } from "./TemplateProvider";
 import { TemplateModule } from "./templates";
 
-export interface ISchemaItem {
+export interface SchemaItem {
   name: string;
   type: string;
   label: string;
@@ -12,7 +12,7 @@ export interface ISchemaItem {
   component: string;
 }
 
-export type ISchema = Array<ISchemaItem>;
+export type Schema = Array<SchemaItem>;
 
 const TemplateContext = createContext<{
   canvasSize: { width: number; height: number };
@@ -24,7 +24,7 @@ const TemplateContext = createContext<{
     componentIndex: number,
     properties: { [key: string]: boolean | number | string }
   ) => void;
-  template?: ITemplateState;
+  template?: TemplateState;
   selectTemplate: (templateName: string) => void;
   setTitle: (componentIndex: number, title: string) => void;
   duplicateComponent: (componentIndex: number) => void;
