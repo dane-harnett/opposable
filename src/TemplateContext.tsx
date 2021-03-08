@@ -16,6 +16,7 @@ export type Schema = Array<SchemaItem>;
 
 const TemplateContext = createContext<{
   canvasSize: { width: number; height: number };
+  selectedComponentIndex: number | null;
   addImage: (image: string, width: number, height: number) => void;
   addTextBox: () => void;
   setCanvasSize: (canvasSize: { width: number; height: number }) => void;
@@ -27,6 +28,7 @@ const TemplateContext = createContext<{
   template?: TemplateState;
   selectTemplate: (templateName: string) => void;
   setTitle: (componentIndex: number, title: string) => void;
+  setSelectedComponentIndex: (newSelectedComponentIndex: number | null) => void;
   duplicateComponent: (componentIndex: number) => void;
   removeComponent: (componentIndex: number) => void;
   reorderComponent: (componentIndex: number, desiredIndex: number) => void;
@@ -34,6 +36,7 @@ const TemplateContext = createContext<{
   loadProject: (project: string) => void;
 }>({
   canvasSize: { width: 0, height: 0 },
+  selectedComponentIndex: null,
   addImage: () => {},
   addTextBox: () => {},
   setCanvasSize: () => {},
@@ -41,6 +44,7 @@ const TemplateContext = createContext<{
   setProperty: () => {},
   selectTemplate: () => {},
   setTitle: () => {},
+  setSelectedComponentIndex: () => {},
   duplicateComponent: () => {},
   removeComponent: () => {},
   reorderComponent: () => {},

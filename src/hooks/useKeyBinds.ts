@@ -1,10 +1,12 @@
 import { useContext, useEffect } from "react";
-import SelectionContext from "../SelectionContext";
 import TemplateContext from "../TemplateContext";
 
 const useKeyBinds = (): void => {
-  const { selectedComponentIndex } = useContext(SelectionContext);
-  const { duplicateComponent, removeComponent } = useContext(TemplateContext);
+  const {
+    duplicateComponent,
+    removeComponent,
+    selectedComponentIndex,
+  } = useContext(TemplateContext);
   useEffect(() => {
     const onKeyUp = (evt: KeyboardEvent) => {
       if (

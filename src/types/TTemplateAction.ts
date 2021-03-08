@@ -9,6 +9,7 @@ import SelectTemplateAction from "./SelectTemplateAction";
 import SetCanvasSizeAction from "./SetCanvasSizeAction";
 import SetPropertyAction from "./SetPropertyAction";
 import SetTitleAction from "./SetTitleAction";
+import SetSelectedComponentIndexAction from "./SetSelectedComponentIndexAction";
 
 type TTemplateAction =
   | AddImageAction
@@ -21,6 +22,7 @@ type TTemplateAction =
   | ReorderComponentAction
   | SetPropertyAction
   | SetCanvasSizeAction
+  | SetSelectedComponentIndexAction
   | SetTitleAction;
 
 export default TTemplateAction;

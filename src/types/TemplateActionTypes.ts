@@ -9,6 +9,7 @@ enum TemplateActionTypes {
   SetCanvasSize = "SET_CANVAS_SIZE",
   SetProperty = "SET_PROPERTY",
   SetTitle = "SET_TITLE",
+  SetSelectedComponentIndex = "SET_SELECTED_COMPONENT_INDEX",
   SelectTemplate = "SELECT_TEMPLATE",
 }
 export default TemplateActionTypes;

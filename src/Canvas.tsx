@@ -3,7 +3,6 @@ import { useContext } from "react";
 import styled from "styled-components";
 import useKeyBinds from "./hooks/useKeyBinds";
 import Image from "./widgets/Image/Image";
-import SelectionContext from "./SelectionContext";
 import TemplateContext from "./TemplateContext";
 import TemplateItem from "./widgets/TemplateItem/TemplateItem";
 import TextBox from "./widgets/TextBox/TextBox";
@@ -20,10 +19,13 @@ const Checkerboard = styled.div`
 
 const Canvas = (): JSX.Element | null => {
   useKeyBinds();
-  const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
-    SelectionContext
-  );
-  const { canvasSize, template, templates } = useContext(TemplateContext);
+  const {
+    canvasSize,
+    selectedComponentIndex,
+    setSelectedComponentIndex,
+    template,
+    templates,
+  } = useContext(TemplateContext);
   const currentTemplate = templates.find((t) => t.name === template?.name);
   if (!currentTemplate) {
     return null;

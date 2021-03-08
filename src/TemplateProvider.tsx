@@ -11,6 +11,7 @@ import mapSchemaToComponents from "./helpers/mapSchemaToComponents";
 import templates from "./templates";
 
 export interface TemplateState {
+  selectedComponentIndex: number | null;
   canvasSize: {
     width: number;
     height: number;
@@ -22,6 +23,7 @@ export interface TemplateState {
 }
 
 const initialTemplateState: TemplateState = {
+  selectedComponentIndex: null,
   canvasSize: {
     width: 1280,
     height: 720,
@@ -152,6 +154,11 @@ const templateReducer = (
             : comp;
         }),
       };
+    case TemplateActionTypes.SetSelectedComponentIndex:
+      return {
+        ...state,
+        selectedComponentIndex: action.payload.selectedComponentIndex,
+      };
     case TemplateActionTypes.SelectTemplate:
       const template =
         templates.find((template) => template.name === action.payload.name) ||
@@ -180,6 +187,7 @@ const TemplateProvider = ({ children }: TemplateProviderProps): JSX.Element => {
     <TemplateContext.Provider
       value={{
         canvasSize: state.canvasSize,
+        selectedComponentIndex: state.selectedComponentIndex,
         addImage: (image, width, height) => {
           dispatch({
             type: TemplateActionTypes.AddImage,
@@ -218,6 +226,14 @@ const TemplateProvider = ({ children }: TemplateProviderProps): JSX.Element => {
             payload: {
               componentIndex,
               properties,
+            },
+          });
+        },
+        setSelectedComponentIndex: (newSelectedComponentIndex) => {
+          dispatch({
+            type: TemplateActionTypes.SetSelectedComponentIndex,
+            payload: {
+              selectedComponentIndex: newSelectedComponentIndex,
             },
           });
         },

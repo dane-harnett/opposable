@@ -13,7 +13,6 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import SelectionContext from "./SelectionContext";
 import TemplateContext from "./TemplateContext";
 
 const AccordionSummary = withStyles({
@@ -46,10 +45,12 @@ export default function InspectorItem({
   onDrop,
   children,
 }: InspectorItemProps): JSX.Element {
-  const { duplicateComponent, removeComponent } = useContext(TemplateContext);
-  const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
-    SelectionContext
-  );
+  const {
+    duplicateComponent,
+    removeComponent,
+    selectedComponentIndex,
+    setSelectedComponentIndex,
+  } = useContext(TemplateContext);
   const [{ opacity }, dragRef] = useDrag({
     item: { type: "InspectorItem", compIndex },
     collect: (monitor) => ({
