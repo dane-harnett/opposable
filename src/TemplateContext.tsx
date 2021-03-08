@@ -2,13 +2,14 @@
 
 import { createContext } from "react";
 import { ITemplateState } from "./TemplateProvider";
+import { TemplateModule } from "./templates";
 
 export interface ISchemaItem {
   name: string;
   type: string;
   label: string;
   defaultValue: string;
-  component: any;
+  component: string;
 }
 
 export type ISchema = Array<ISchemaItem>;
@@ -20,7 +21,7 @@ const TemplateContext = createContext<{
   setField: (fieldName: string, fieldValue: string) => void;
   setProperty: (
     componentIndex: number,
-    properties: { [key: string]: any }
+    properties: { [key: string]: boolean | number | string }
   ) => void;
   template?: ITemplateState;
   selectTemplate: (templateName: string) => void;
@@ -28,7 +29,7 @@ const TemplateContext = createContext<{
   duplicateComponent: (componentIndex: number) => void;
   removeComponent: (componentIndex: number) => void;
   reorderComponent: (componentIndex: number, desiredIndex: number) => void;
-  templates: Array<any>;
+  templates: TemplateModule[];
   loadProject: (project: string) => void;
 }>({
   canvasSize: { width: 0, height: 0 },

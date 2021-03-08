@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { app, BrowserWindow } from "electron";
 declare let MAIN_WINDOW_WEBPACK_ENTRY: any;
 

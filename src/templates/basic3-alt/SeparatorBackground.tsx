@@ -1,6 +1,11 @@
 import * as React from "react";
+import { CSSProperties } from "react";
 
-const SeparatorBackground = ({ zIndex }: { zIndex: number; style: any }) => {
+interface Props {
+  zIndex: number;
+  style: CSSProperties;
+}
+const SeparatorBackground = ({ zIndex }: Props): JSX.Element => {
   return (
     <>
       <div

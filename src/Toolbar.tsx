@@ -25,7 +25,10 @@ interface InspectorProps {
   setCanvasSize: (canvasSize: { width: number; height: number }) => void;
 }
 
-const Toolbar = ({ canvasSize, setCanvasSize }: InspectorProps) => {
+const Toolbar = ({
+  canvasSize,
+  setCanvasSize,
+}: InspectorProps): JSX.Element => {
   const {
     addImage,
     addTextBox,
@@ -34,8 +37,14 @@ const Toolbar = ({ canvasSize, setCanvasSize }: InspectorProps) => {
     selectTemplate,
     templates,
   } = useContext(TemplateContext);
-  const [templateAnchorEl, setTemplateAnchorEl] = React.useState<any>(null);
-  const [canvasSizeAnchorEl, setCanvasSizeAnchorEl] = React.useState<any>(null);
+  const [
+    templateAnchorEl,
+    setTemplateAnchorEl,
+  ] = React.useState<HTMLElement | null>(null);
+  const [
+    canvasSizeAnchorEl,
+    setCanvasSizeAnchorEl,
+  ] = React.useState<HTMLElement | null>(null);
 
   return (
     <AppBar position="static">

@@ -4,8 +4,8 @@ import mapSchemaItemToComponent from "./mapSchemaItemToComponent";
 
 const mapSchemaToComponents = (
   schema: ISchema,
-  components: Array<IComponent>
-) => {
+  components: IComponent[]
+): IComponent[] => {
   const schemaComponents = schema.map(mapSchemaItemToComponent);
   return [
     ...schemaComponents,

@@ -1,8 +1,12 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, CSSProperties } from "react";
 import TemplateContext from "../../TemplateContext";
 
-const EpisodeName = ({ zIndex, style }: { zIndex: number; style: any }) => {
+interface Props {
+  zIndex: number;
+  style: CSSProperties;
+}
+const EpisodeName = ({ zIndex, style }: Props): JSX.Element => {
   const { template } = useContext(TemplateContext);
   return (
     <div
