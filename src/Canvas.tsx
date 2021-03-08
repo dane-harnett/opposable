@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useContext } from "react";
 import styled from "styled-components";
+import useKeyBinds from "./hooks/useKeyBinds";
 import Image from "./widgets/Image/Image";
 import SelectionContext from "./SelectionContext";
 import TemplateContext from "./TemplateContext";
@@ -23,7 +24,8 @@ interface CanvasProps {
   children?: React.ReactNode;
 }
 
-const Canvas = ({ width, height }: CanvasProps) => {
+const Canvas = ({ width, height }: CanvasProps): JSX.Element | null => {
+  useKeyBinds();
   const { selectedComponentIndex, setSelectedComponentIndex } = useContext(
     SelectionContext
   );
