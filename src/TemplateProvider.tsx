@@ -35,8 +35,8 @@ const templateReducer = (
       return {
         ...state,
         components: [
-          ...state.components,
           state.components[action.payload.componentIndex],
+          ...state.components,
         ],
       };
     case TemplateActionTypes.RemoveComponent:
