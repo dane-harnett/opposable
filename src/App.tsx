@@ -4,8 +4,6 @@ import Inspector from "./Inspector";
 import Toolbar from "./Toolbar";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import TemplateProvider from "./TemplateProvider";
 
 const GlobalStyle = createGlobalStyle`
@@ -25,18 +23,16 @@ const GlobalStyle = createGlobalStyle`
 
 const App = (): JSX.Element => {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <TemplateProvider>
-        <div>
-          <GlobalStyle />
-          <Toolbar />
-          <div style={{ padding: 16 }}>
-            <Canvas />
-          </div>
-          <Inspector />
+    <TemplateProvider>
+      <div>
+        <GlobalStyle />
+        <Toolbar />
+        <div style={{ padding: 16 }}>
+          <Canvas />
         </div>
-      </TemplateProvider>
-    </DndProvider>
+        <Inspector />
+      </div>
+    </TemplateProvider>
   );
 };
 
