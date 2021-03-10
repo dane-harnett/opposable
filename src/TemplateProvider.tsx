@@ -165,6 +165,7 @@ const templateReducer = (
       const schema = template.Schema;
 
       return {
+        ...state,
         Schema: schema,
         data: mapSchemaToData(schema, state.data),
         name: action.payload.name,
