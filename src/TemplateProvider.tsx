@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useReducer } from "react";
 import Component from "./types/Component";
 import ImageComponent from "./widgets/Image/ImageComponent";
 import TextBoxComponent from "./widgets/TextBox/TextBoxComponent";
@@ -181,7 +180,10 @@ interface TemplateProviderProps {
 }
 
 const TemplateProvider = ({ children }: TemplateProviderProps): JSX.Element => {
-  const [state, dispatch] = useReducer(templateReducer, initialTemplateState);
+  const [state, dispatch] = React.useReducer(
+    templateReducer,
+    initialTemplateState
+  );
 
   return (
     <TemplateContext.Provider
