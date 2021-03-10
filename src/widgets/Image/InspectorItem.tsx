@@ -13,16 +13,10 @@ interface Props {
 }
 
 const InspectorPanel: React.FC<Props> = ({ compIndex, comp }) => {
-  const { canvasSize, setProperty, setTitle, reorderComponent } = useContext(
-    TemplateContext
-  );
+  const { canvasSize, setProperty, setTitle } = useContext(TemplateContext);
 
   return (
-    <InspectorItem
-      onDrop={reorderComponent}
-      compIndex={compIndex}
-      title={comp.title}
-    >
+    <InspectorItem compIndex={compIndex} title={comp.title}>
       <Grid container>
         <Grid alignItems="center" container item xs={12}>
           <Grid item xs={10}>

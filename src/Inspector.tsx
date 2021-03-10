@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { DragDropContext } from "react-beautiful-dnd";
 import TemplateContext, { SchemaItem } from "./TemplateContext";
 import Component from "./types/Component";
 import ImageInspectorItem from "./widgets/Image/InspectorItem";
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Inspector = (): JSX.Element => {
-  const { template, setField } = useContext(TemplateContext);
+  const { template, reorderComponent, setField } = useContext(TemplateContext);
   const classes = useStyles();
 
   return (
@@ -84,38 +85,49 @@ const Inspector = (): JSX.Element => {
           </AccordionSummary>
           <AccordionDetails className={classes.accordionDetails}>
             <div>
-              {template?.components.map(
-                (comp: Component, compIndex: number) => {
-                  switch (comp.type) {
-                    case "IMAGE":
-                      return (
-                        <ImageInspectorItem
-                          comp={comp}
-                          compIndex={compIndex}
-                          key={compIndex}
-                        />
-                      );
-                    case "TEMPLATE_ITEM":
-                      return (
-                        <TemplateItemInspectorItem
-                          comp={comp}
-                          compIndex={compIndex}
-                          key={compIndex}
-                        />
-                      );
-                    case "TEXT_BOX":
-                      return (
-                        <TextBoxInspectorItem
-                          comp={comp}
-                          compIndex={compIndex}
-                          key={compIndex}
-                        />
-                      );
-                    default:
-                      return null;
+              <DragDropContext
+                onDragEnd={(result) => {
+                  if (result.destination) {
+                    reorderComponent(
+                      result.source.index,
+                      result.destination.index
+                    );
                   }
-                }
-              )}
+                }}
+              >
+                {template?.components.map(
+                  (comp: Component, compIndex: number) => {
+                    switch (comp.type) {
+                      case "IMAGE":
+                        return (
+                          <ImageInspectorItem
+                            comp={comp}
+                            compIndex={compIndex}
+                            key={compIndex}
+                          />
+                        );
+                      case "TEMPLATE_ITEM":
+                        return (
+                          <TemplateItemInspectorItem
+                            comp={comp}
+                            compIndex={compIndex}
+                            key={compIndex}
+                          />
+                        );
+                      case "TEXT_BOX":
+                        return (
+                          <TextBoxInspectorItem
+                            comp={comp}
+                            compIndex={compIndex}
+                            key={compIndex}
+                          />
+                        );
+                      default:
+                        return null;
+                    }
+                  }
+                )}
+              </DragDropContext>
             </div>
           </AccordionDetails>
         </Accordion>
