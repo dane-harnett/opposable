@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Grid, TextField } from "@material-ui/core";
+import { Grid, IconButton, TextField } from "@material-ui/core";
+import VerticalAlignCenterIcon from "@material-ui/icons/VerticalAlignCenter";
 import InspectorItem from "../../InspectorItem";
 import TemplateContext from "../../TemplateContext";
 import TextBoxComponent from "./TextBoxComponent";
@@ -10,7 +11,7 @@ interface Props {
 }
 
 const TextBoxInspectorItem: React.FC<Props> = ({ comp, compIndex }) => {
-  const { setProperty, setTitle } = useContext(TemplateContext);
+  const { canvasSize, setProperty, setTitle } = useContext(TemplateContext);
 
   return (
     <InspectorItem compIndex={compIndex} title={comp.title}>
@@ -28,7 +29,7 @@ const TextBoxInspectorItem: React.FC<Props> = ({ comp, compIndex }) => {
           </Grid>
         </Grid>
         <Grid container item xs={12}>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <TextField
               type="number"
               onChange={(e) => {
@@ -42,7 +43,7 @@ const TextBoxInspectorItem: React.FC<Props> = ({ comp, compIndex }) => {
               value={comp.properties?.x || ""}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <TextField
               type="number"
               onChange={(e) => {
@@ -55,6 +56,40 @@ const TextBoxInspectorItem: React.FC<Props> = ({ comp, compIndex }) => {
               label="y"
               value={comp.properties?.y || ""}
             />
+          </Grid>
+          <Grid item xs={2}>
+            <IconButton
+              size="small"
+              onClick={() => {
+                const el: HTMLElement | null = document.querySelector(
+                  `[data-component-index="${compIndex}"]`
+                );
+                if (el) {
+                  const height = el.offsetHeight;
+                  setProperty(compIndex, {
+                    y: Math.floor(canvasSize.height / 2 - height / 2),
+                  });
+                }
+              }}
+            >
+              <VerticalAlignCenterIcon />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => {
+                const el: HTMLElement | null = document.querySelector(
+                  `[data-component-index="${compIndex}"]`
+                );
+                if (el) {
+                  const width = el.offsetWidth;
+                  setProperty(compIndex, {
+                    x: Math.floor(canvasSize.width / 2 - width / 2),
+                  });
+                }
+              }}
+            >
+              <VerticalAlignCenterIcon style={{ transform: "rotate(90deg)" }} />
+            </IconButton>
           </Grid>
         </Grid>
         <Grid container item xs={12}>

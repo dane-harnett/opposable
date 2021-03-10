@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Grid, IconButton, TextField } from "@material-ui/core";
 import LinkIcon from "@material-ui/icons/Link";
 import LinkOffIcon from "@material-ui/icons/LinkOff";
+import VerticalAlignCenterIcon from "@material-ui/icons/VerticalAlignCenter";
 import ZoomOutMapIcon from "@material-ui/icons/ZoomOutMap";
 import InspectorItem from "../../InspectorItem";
 import TemplateContext from "../../TemplateContext";
@@ -57,6 +58,32 @@ const InspectorPanel: React.FC<Props> = ({ compIndex, comp }) => {
               label="y"
               value={comp.properties?.y || ""}
             />
+          </Grid>
+          <Grid item xs={2}>
+            <IconButton
+              size="small"
+              onClick={() => {
+                setProperty(compIndex, {
+                  y: Math.floor(
+                    canvasSize.height / 2 - comp.properties.height / 2
+                  ),
+                });
+              }}
+            >
+              <VerticalAlignCenterIcon />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => {
+                setProperty(compIndex, {
+                  x: Math.floor(
+                    canvasSize.width / 2 - comp.properties.width / 2
+                  ),
+                });
+              }}
+            >
+              <VerticalAlignCenterIcon style={{ transform: "rotate(90deg)" }} />
+            </IconButton>
           </Grid>
         </Grid>
         <Grid alignItems="center" container item xs={12}>

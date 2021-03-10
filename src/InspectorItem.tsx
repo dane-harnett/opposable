@@ -52,10 +52,10 @@ export default function InspectorItem({
   const isSelectedComponent = compIndex === selectedComponentIndex;
   return (
     <Droppable droppableId="droppable">
-      {(provided, _snapshot) => (
+      {(provided) => (
         <div {...provided.droppableProps} ref={provided.innerRef}>
           <Draggable draggableId={`${compIndex}`} index={compIndex}>
-            {(provided, _snapshot) => (
+            {(provided) => (
               <div
                 ref={provided.innerRef}
                 {...provided.draggableProps}

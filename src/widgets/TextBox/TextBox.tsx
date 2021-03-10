@@ -22,6 +22,7 @@ const TextBox: React.FC<Props> = ({ comp, index, isSelected, onClick }) => {
 
   return (
     <Rnd
+      data-component-index={index}
       key={index}
       default={{ x: 0, y: 0, width: "auto", height: "auto" }}
       onClick={onClick}

@@ -31,6 +31,7 @@ const Image: React.FC<Props> = ({ index, isSelected, comp, onClick }) => {
   };
   return (
     <Rnd
+      data-component-index={index}
       key={index}
       default={{
         x: 0,

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import InspectorItem from "../../InspectorItem";
 import TemplateItemComponent from "./TemplateItemComponent";
 
